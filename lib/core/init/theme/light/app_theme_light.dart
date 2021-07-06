@@ -1,4 +1,4 @@
-import 'package:crm_app/core/init/theme/light/ilight_theme.dart';
+import 'ilight_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../iapp_theme.dart';
@@ -35,7 +35,7 @@ class AppThemeLight extends IAppTheme with ILightTheme {
       primary: colorSchemeLight.black,
       primaryVariant: colorSchemeLight.azure,
       secondary: Colors.green,
-      secondaryVariant: Colors.indigo,
+      secondaryVariant: colorSchemeLight.limedSpruce,
       surface: Colors.blue, //xx
       background: colorSchemeLight.blackSqueeze, //xx
       error: Colors.red[900]!,

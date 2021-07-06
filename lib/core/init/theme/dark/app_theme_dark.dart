@@ -1,4 +1,4 @@
-import 'package:crm_app/core/init/theme/iapp_theme.dart';
+import '../iapp_theme.dart';
 import 'package:flutter/material.dart';
 
 class AppThemeDark extends IAppTheme {
