@@ -32,7 +32,7 @@ class TextThemeLight {
           //XX
           color: Color(0xff3C4854),
           fontSize: 25,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.bold,
           fontStyle: FontStyle.normal,
         ),
         headline4: TextStyle(

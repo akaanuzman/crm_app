@@ -36,83 +36,95 @@ class BottomTabView extends StatelessWidget {
       length: items.length,
       child: Scaffold(
         key: scaffoldKey,
-        appBar: AppBar(
-          title: Image.network(
-            "http://192.168.3.53/assets/images/logo-light.png",
-            width: context.dynamicWidth(0.28),
-          ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  scaffoldKey.currentState!.openEndDrawer();
-                },
-                icon: const Icon(Icons.settings))
-          ],
-          centerTitle: true,
-        ),
+        appBar: _buildAppBar(context, scaffoldKey),
         bottomNavigationBar: BottomAppBar(
           child: _buildTabBar(items, context),
         ),
         body: _buildTabBarView(items),
-        drawer: Drawer(
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  color: ColorSchemeLight.instance.limedSpruce,
-                  child: Padding(
-                    padding: context.paddingLow,
-                    child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: RowCavatarText(),
-                        ),
-                        context.emptySizedHeightBoxLow,
-                        Expanded(
-                          child: CardIconText(
-                            cardColor: ColorSchemeLight.instance.limedSpruce,
-                            text: "Profilim",
-                            icon: Icons.account_circle,
-                          ),
-                        ),
-                        Expanded(
-                          child: CardIconText(
-                            cardColor: context.colorScheme.secondaryVariant,
-                            text: "Uygulama Ayarları",
-                            icon: Icons.settings,
-                          ),
-                        ),
-                        Expanded(
-                          child: CardIconText(
-                            cardColor: ColorSchemeLight.instance.limedSpruce,
-                            text: "Çıkış Yap",
-                            icon: Icons.exit_to_app,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  children: [
-                    _buildFastMenuCard(context),
-                    _buildFlagsCard(context),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+        drawer: _buildDrawer(context),
         endDrawer: _buildEndDrawer(context, _viewModel),
       ),
     );
   }
 
+  AppBar _buildAppBar(
+          BuildContext context, GlobalKey<ScaffoldState> scaffoldKey) =>
+      AppBar(
+        title: Image.network(
+          "http://192.168.3.53/assets/images/logo-light.png",
+          width: context.dynamicWidth(0.28),
+        ),
+        actions: [_buildSettingsButton(scaffoldKey)],
+        centerTitle: true,
+      );
+
+  IconButton _buildSettingsButton(GlobalKey<ScaffoldState> scaffoldKey) =>
+      IconButton(
+          onPressed: () {
+            scaffoldKey.currentState!.openEndDrawer();
+          },
+          icon: const Icon(Icons.settings));
+
+  Drawer _buildDrawer(BuildContext context) => Drawer(
+        child: Column(
+          children: [
+            Expanded(
+              child: _buildProfileContainer(context),
+            ),
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  _buildFastMenuCard(context),
+                  _buildFlagsCard(context),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Container _buildProfileContainer(BuildContext context) => Container(
+        color: ColorSchemeLight.instance.limedSpruce,
+        child: Padding(
+          padding: context.paddingLow,
+          child: _buildProfileColumn(context),
+        ),
+      );
+
+  Column _buildProfileColumn(BuildContext context) => Column(
+        children: [
+          Padding(
+            padding: context.paddingLow,
+            child: const RowCavatarText(),
+          ),
+          context.emptySizedHeightBoxLow,
+          Expanded(
+            child: CardIconText(
+              cardColor: ColorSchemeLight.instance.limedSpruce,
+              text: "Profilim",
+              icon: Icons.account_circle,
+            ),
+          ),
+          Expanded(
+            child: CardIconText(
+              cardColor: context.colorScheme.secondaryVariant,
+              text: "Uygulama Ayarları",
+              icon: Icons.settings,
+            ),
+          ),
+          Expanded(
+            child: CardIconText(
+              cardColor: ColorSchemeLight.instance.limedSpruce,
+              text: "Çıkış Yap",
+              icon: Icons.exit_to_app,
+            ),
+          ),
+        ],
+      );
+
   Card _buildFastMenuCard(BuildContext context) => Card(
+    color: context.colorScheme.secondary,
         child: ExpansionTile(
           title: const RowIconText(icon: Icons.home, text: "Hızlı Menü"),
           children: [_buildFastMenuContainer(context)],

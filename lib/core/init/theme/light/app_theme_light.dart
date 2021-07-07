@@ -29,14 +29,15 @@ class AppThemeLight extends IAppTheme with ILightTheme {
         labelColor: _colorScheme.surface,
         unselectedLabelColor: colorSchemeLight.limedSpruce,
       ),
-      appBarTheme: AppBarTheme(color: colorSchemeLight.limedSpruce));
+      appBarTheme: AppBarTheme(color: colorSchemeLight.limedSpruce),
+      scaffoldBackgroundColor: colorSchemeLight.athensGray);
 
   ColorScheme get _colorScheme => ColorScheme(
       primary: colorSchemeLight.black,
       primaryVariant: colorSchemeLight.azure,
-      secondary: Colors.green,
+      secondary: colorSchemeLight.athensGray,
       secondaryVariant: colorSchemeLight.limedSpruce,
-      surface: Colors.blue, //xx
+      surface: colorSchemeLight.doggerBlue, //xx
       background: colorSchemeLight.blackSqueeze, //xx
       error: Colors.red[900]!,
       onPrimary: colorSchemeLight.shamrock,

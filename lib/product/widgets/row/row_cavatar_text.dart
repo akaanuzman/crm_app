@@ -1,3 +1,4 @@
+import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
@@ -13,10 +14,8 @@ class RowCavatarText extends StatelessWidget {
           child: Text("AK"),
         ),
         context.emptySizedWidthBoxLow3x,
-        Text(
-          "Ahmet Kaan Uzman",
-          style: context.textTheme.bodyText2,
-        ),
+        BodyText2Copy(
+            data: "Ahmet Kaan Uzman", color: context.colorScheme.onSurface)
       ],
     );
   }

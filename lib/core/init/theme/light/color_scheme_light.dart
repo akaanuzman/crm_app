@@ -16,7 +16,7 @@ class ColorSchemeLight {
   final Color brown = const Color(0xffa87e6f);
   final Color red = const Color(0xffc10e0e);
   final Color white = const Color(0xffffffff);
-  final Color gray = const Color(0xffa5a6ae);
+  final Color athensGray = const Color(0xffF5F6F9);
   final Color lightGray = const Color(0xfff7f7f7);
   final Color darkGray = const Color(0xff676870);
   final Color black = const Color(0xff020306);
@@ -25,4 +25,5 @@ class ColorSchemeLight {
   final Color sun = const Color(0xffF9B916);
   final Color limedSpruce = const Color(0xff3C4854);
   final Color shamrock = const Color(0xff44CF9C);
+  final Color doggerBlue = const Color(0xff3283F6);
 }
