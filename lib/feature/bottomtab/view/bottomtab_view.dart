@@ -73,11 +73,14 @@ class BottomTabView extends StatelessWidget {
             ),
             Expanded(
               flex: 2,
-              child: Column(
-                children: [
-                  _buildFastMenuCard(context),
-                  _buildFlagsCard(context),
-                ],
+              child: Container(
+                color: context.colorScheme.secondary,
+                child: Column(
+                  children: [
+                    _buildFastMenuCard(context),
+                    _buildFlagsCard(context),
+                  ],
+                ),
               ),
             ),
           ],
@@ -124,7 +127,6 @@ class BottomTabView extends StatelessWidget {
       );
 
   Card _buildFastMenuCard(BuildContext context) => Card(
-    color: context.colorScheme.secondary,
         child: ExpansionTile(
           title: const RowIconText(icon: Icons.home, text: "Hızlı Menü"),
           children: [_buildFastMenuContainer(context)],

@@ -1,16 +1,57 @@
+import 'dart:convert';
+
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/bold_text.dart';
+import 'package:crm_app/feature/model/model.dart';
+import 'package:mysql1/mysql1.dart';
+import 'package:http/http.dart' as http;
 
 import '../../projectdetail/view/project_detail_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
-class ProjectView extends StatelessWidget {
+class ProjectView extends StatefulWidget {
   const ProjectView({Key? key}) : super(key: key);
 
   @override
+  State<ProjectView> createState() => _ProjectViewState();
+}
+
+class _ProjectViewState extends State<ProjectView> {
+  @override
   Widget build(BuildContext context) {
+    var db = Mysql();
+    var mail = '';
+
+    Future<void> getCustomer() async {
+      debugPrint("gggggg");
+      await db.getConnection().then((conn) {
+        String sql = 'select * from company';
+        conn.query(sql).then((results) {
+          for (var row in results) {
+            debugPrint("fgfgffgfgf");
+            debugPrint(row[0]);
+            setState(() {
+              // mail = row;
+              debugPrint(row[0]);
+            });
+          }
+        });
+        conn.close();
+      });
+    }
+
+    Future<void> name() async {
+      final response =
+          await http.post(Uri.parse("http://192.168.3.53/index.php"));
+
+      var dataUser = await jsonDecode(response.body);
+
+      debugPrint("statement");
+      debugPrint(dataUser.toString());
+    }
+
     return Scaffold(
       body: Padding(
         padding: context.paddingLow,
@@ -18,7 +59,7 @@ class ProjectView extends StatelessWidget {
           children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: getCustomer,
                 child: Text(
                   "Proje Ekle",
                   style: context.textTheme.bodyText1!
@@ -80,11 +121,12 @@ class ProjectView extends StatelessWidget {
                         context.emptySizedHeightBoxLow3x,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // ignore: prefer_const_literals_to_create_immutables
                           children: [
-                            Text(
+                            const Text(
                               "Task complated: ",
                             ),
-                            Text(
+                            const Text(
                               "3/4",
                             ),
                           ],
@@ -92,7 +134,7 @@ class ProjectView extends StatelessWidget {
                         context.emptySizedHeightBoxLow,
                         Stack(
                           children: [
-                            Divider(
+                            const Divider(
                               thickness: 15,
                             ),
                             Divider(

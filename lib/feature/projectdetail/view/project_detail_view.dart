@@ -26,17 +26,6 @@ class ProjecetDetailView extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  "Yeni Görev Ekle",
-                  style: context.textTheme.bodyText1!
-                      .copyWith(color: context.colorScheme.onSurface),
-                ),
-              ),
-            ),
-            context.emptySizedHeightBoxLow,
-            Expanded(
               flex: 6,
               child: PageView(
                 scrollDirection: Axis.vertical,
@@ -136,7 +125,7 @@ class ProjecetDetailView extends StatelessWidget {
                               ],
                             ),
                             context.emptySizedHeightBoxLow,
-                            Text("Tamamlanan / Toplam Görev"),
+                            const Text("Tamamlanan / Toplam Görev"),
                             context.emptySizedHeightBoxLow,
                             Expanded(
                               child: ListView.builder(
@@ -144,7 +133,10 @@ class ProjecetDetailView extends StatelessWidget {
                                   children: [
                                     Container(
                                       alignment: Alignment.center,
-                                      child: Text("Proje 1 Görev ${index + 1}",style: context.textTheme.headline4,),
+                                      child: Text(
+                                        "Proje 1 Görev ${index + 1}",
+                                        style: context.textTheme.headline4,
+                                      ),
                                       decoration: BoxDecoration(
                                         border: Border.all(color: Colors.red),
                                       ),
@@ -168,6 +160,20 @@ class ProjecetDetailView extends StatelessWidget {
                   child: Text("Görevler",
                       style: context.textTheme.headline4!
                           .copyWith(fontWeight: FontWeight.bold))),
+            ),
+            context.emptySizedHeightBoxLow,
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Yeni Görev Ekle",
+                    style: context.textTheme.bodyText1!
+                        .copyWith(color: context.colorScheme.onSurface),
+                  ),
+                ),
+              ),
             ),
             context.emptySizedHeightBoxLow,
             Expanded(
