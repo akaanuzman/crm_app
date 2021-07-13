@@ -1,4 +1,5 @@
-import '../../divider/blue_divider.dart';
+
+import 'package:crm_app/product/widgets/divider/blue_divider.dart';
 import 'package:flutter/material.dart';
 
 class BlueBar extends StatelessWidget {

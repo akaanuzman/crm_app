@@ -1,3 +1,8 @@
+import 'package:boardview/board_item.dart';
+import 'package:boardview/board_list.dart';
+import 'package:boardview/boardview_controller.dart';
+import 'package:crm_app/product/model/kanban_model.dart';
+
 import '../../../core/components/row/row_circle_avatar.dart';
 import '../../../core/components/row/row_icon_text.dart';
 import '../../../core/components/row/row_space_between_text.dart';
@@ -19,49 +24,40 @@ class ProjectView extends StatelessWidget {
   //const ProjectView({Key? key}) : super(key: key);
 
   late final ProjectViewModel _viewModel;
+
+  final BoardViewController boardViewController = BoardViewController();
   // ignore: use_key_in_widget_constructors
   ProjectView() {
     _viewModel = ProjectViewModel();
     _viewModel.connectDataBase();
   }
 
-  void goToNextPage(BuildContext context, int index) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => ProjecetDetailView(
-          projectName: _viewModel.items[index].name,
-          projectDetail: _viewModel.items[index].detail,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        return Scaffold(
-          body: Padding(
-            padding: context.paddingLow,
-            child: _buildBody(context),
-          ),
+    return Scaffold(
+      body: Observer(builder: (_) {
+        return Padding(
+          padding: context.paddingLow,
+          child: _buildBody(context),
         );
-      },
+      }),
     );
   }
 
-  Column _buildBody(BuildContext context) => Column(
-        children: [
-          Expanded(
-            child: _buildAddProjectButton(context),
-          ),
-          context.emptySizedHeightBoxLow,
-          Expanded(
-            flex: 12,
-            child: _buildListViewBuilder,
-          )
-        ],
-      );
+  Column _buildBody(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: _buildAddProjectButton(context),
+        ),
+        context.emptySizedHeightBoxLow,
+        Expanded(
+          flex: 12,
+          child: _buildListViewBuilder,
+        )
+      ],
+    );
+  }
 
   ElevatedButton _buildAddProjectButton(BuildContext context) => ElevatedButton(
         onPressed: () {},
@@ -72,11 +68,9 @@ class ProjectView extends StatelessWidget {
       );
 
   ListView get _buildListViewBuilder => ListView.builder(
-        itemCount: _viewModel.items.length,
-        itemBuilder: (context, index) => Observer(
-          builder: (context) => _buildProjectCard(context, index),
-        ),
-      );
+      itemCount: _viewModel.items.length,
+      itemBuilder: (context, index) => _buildProjectCard(context, index),
+    );
 
   Card _buildProjectCard(BuildContext context, int index) => Card(
         child: ListTile(
@@ -129,4 +123,16 @@ class ProjectView extends StatelessWidget {
           context.emptySizedHeightBoxHigh
         ],
       );
+
+  void goToNextPage(BuildContext context, int index) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ProjectDetailView(
+          projectName: _viewModel.items[index].name,
+          projectDetail: _viewModel.items[index].detail,
+          projectId: _viewModel.items[index].id,
+        ),
+      ),
+    );
+  }
 }

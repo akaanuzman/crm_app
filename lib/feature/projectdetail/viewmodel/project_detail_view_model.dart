@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../model/project_detail_model.dart';
 import 'package:mobx/mobx.dart';
 import 'package:mysql1/mysql1.dart';
@@ -11,28 +13,23 @@ abstract class _ProjectDetailViewModelBase with Store {
   List<ProjectDetailModel> items = [];
 
   @action
-  Future<void> connectDataBase() async {
+  Future<void> connectDataBase(int projectId) async {
     var settings = ConnectionSettings(
-        host: '192.168.2.136',
-        port: 3306,
-        user: 'root',
-        //password: '',
-        db: 'sistem');
+        host: '192.168.2.136', port: 3306, user: 'root', db: 'sistem');
 
     var conn = await MySqlConnection.connect(settings);
 
-    fetchList(conn, settings, "Proje 1 Görev 1");
+    fetchList(conn, settings, projectId);
   }
 
   Future<void> fetchList(
-      MySqlConnection conn, ConnectionSettings settings, String name) async {
+      MySqlConnection conn, ConnectionSettings settings, int projectId) async {
     var result =
-        await conn.query('select * from tasks from where name = "$name"');
+        await conn.query('select * from tasks where project_id = $projectId');
 
     for (var row in result) {
       ProjectDetailModel model = ProjectDetailModel.fromJson(row.fields);
       items.add(model);
-      //debugPrint(items[0].sDate);
     }
   }
 }

@@ -1,8 +1,8 @@
 class ProjectDetailModel {
   int id;
   String name;
-  String sDate;
-  String fDate;
+  DateTime sDate;
+  DateTime fDate;
   String detail;
 
   ProjectDetailModel({

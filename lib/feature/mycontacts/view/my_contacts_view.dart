@@ -15,7 +15,22 @@ class MyContactsView extends StatelessWidget {
             Expanded(child: _buildTextField(context)),
             context.emptySizedHeightBoxLow,
             Expanded(
-              flex: 8,
+              child: SizedBox(
+                width: double.infinity,
+                child: Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "Kişi Ekle",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            context.emptySizedHeightBoxLow,
+            Expanded(
+              flex: 9,
               child: ListView.builder(
                 // ignore: prefer_const_constructors
                 itemBuilder: (context, index) => Card(
@@ -32,7 +47,7 @@ class MyContactsView extends StatelessWidget {
   }
 
   TextField _buildTextField(BuildContext context) => TextField(
-      decoration: InputDecoration(
+        decoration: InputDecoration(
           labelText: 'Arama',
           enabledBorder: OutlineInputBorder(
             borderSide:
@@ -43,5 +58,7 @@ class MyContactsView extends StatelessWidget {
             borderSide:
                 BorderSide(width: 2, color: context.colorScheme.surface),
             borderRadius: BorderRadius.circular(15),
-          )));
+          ),
+        ),
+      );
 }

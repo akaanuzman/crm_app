@@ -15,7 +15,7 @@ class SplashView extends StatelessWidget {
         "http://192.168.3.53/assets/images/logo-light.png",
       ),
       nextScreen: const BottomTabView(),
-      duration: 2000,
+      duration: 1000,
     );
   }
 }

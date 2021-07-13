@@ -28,8 +28,9 @@ mixin _$ProjectDetailViewModel on _ProjectDetailViewModelBase, Store {
       AsyncAction('_ProjectDetailViewModelBase.connectDataBase');
 
   @override
-  Future<void> connectDataBase() {
-    return _$connectDataBaseAsyncAction.run(() => super.connectDataBase());
+  Future<void> connectDataBase(int projectId) {
+    return _$connectDataBaseAsyncAction
+        .run(() => super.connectDataBase(projectId));
   }
 
   @override

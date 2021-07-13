@@ -7,27 +7,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
-class ProjecetDetailView extends StatelessWidget {
+class ProjectDetailView extends StatelessWidget {
   //const ProjecetDetailView({Key? key}) : super(key: key);
 
   final String projectName;
   final String projectDetail;
+  final int projectId;
   late final DateTime _now;
   late final DateTime _date;
   late final ProjectDetailViewModel _viewModel;
 
   // ignore: use_key_in_widget_constructors
-  ProjecetDetailView({required this.projectName, required this.projectDetail}) {
+  ProjectDetailView(
+      {required this.projectName,
+      required this.projectDetail,
+      required this.projectId}) {
+    _viewModel = ProjectDetailViewModel();
+    _viewModel.connectDataBase(projectId);
     _now = DateTime.now();
     _date = DateTime(_now.year, _now.month, _now.day);
-    _viewModel = ProjectDetailViewModel();
-    _viewModel.connectDataBase();
+    debugPrint("_viewModel.items[0].name");
   }
 
   @override
   Widget build(BuildContext context) {
-    //DateTime date =
-
     return Scaffold(
       appBar: AppBar(
         title: Image.network(
@@ -78,8 +81,12 @@ class ProjecetDetailView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             // ignore: prefer_const_literals_to_create_immutables
                             children: [
-                              const Text("_viewModel.items[0].sDate"),
-                              const Text("2021-07-06"),
+                              Text(_viewModel.items[0].sDate
+                                  .toString()
+                                  .substring(0, 10)),
+                              Text(_viewModel.items[0].fDate
+                                  .toString()
+                                  .substring(0, 10)),
                               const Text("\$15,800")
                             ],
                           ),
@@ -147,12 +154,13 @@ class ProjecetDetailView extends StatelessWidget {
                             context.emptySizedHeightBoxLow,
                             Expanded(
                               child: ListView.builder(
+                                itemCount: _viewModel.items.length,
                                 itemBuilder: (context, index) => Column(
                                   children: [
                                     Container(
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "Proje 1 Görev ${index + 1}",
+                                       _viewModel.items[index].name,
                                         style: context.textTheme.headline4,
                                       ),
                                       decoration: BoxDecoration(
@@ -199,10 +207,11 @@ class ProjecetDetailView extends StatelessWidget {
               child: PageView(
                 children: [
                   ListView.builder(
+                    itemCount: _viewModel.items.length,
                     itemBuilder: (context, index) => Card(
                       child: ListTile(
                         title: BodyText2Copy(
-                          data: "Proje 1 Görev ${index + 1}",
+                          data: _viewModel.items[index].name,
                         ),
                         trailing: SizedBox(
                           height: context.dynamicHeight(0.1),
