@@ -1,17 +1,19 @@
+
 import 'package:mysql1/mysql1.dart';
+import 'package:flutter/material.dart';
 
-class Mysql {
-  static String host = 'http://192.168.2.136',
-      user = 'admin',
-      password = '123',
-      db = 'sistem';
-  static int port = 3306;
+Future<void> name(args) async {
+  var settings =  ConnectionSettings(
+  host: 'localhost', 
+  port: 3306,
+  user: 'root',
+  password: '',
+  db: 'sistem'
+);
+var conn = await MySqlConnection.connect(settings);
 
-  Mysql();
-
-  Future<MySqlConnection> getConnection() async {
-    var settings = ConnectionSettings(
-        host: host, port: port, user: user, password: password, db: db);
-    return await MySqlConnection.connect(settings);
-  }
+var results = await conn.query('select id from company ');
+for (var row in results) {
+  debugPrint('id: ${row[0]}');
+}
 }

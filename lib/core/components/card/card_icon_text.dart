@@ -1,6 +1,7 @@
-import '../row/row_icon_text.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
+
+import '../row/row_icon_text.dart';
 
 class CardIconText extends StatelessWidget {
   const CardIconText({Key? key, required this.cardColor, required this.text, required this.icon}) : super(key: key);

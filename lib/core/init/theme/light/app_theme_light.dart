@@ -1,7 +1,7 @@
-import 'ilight_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../iapp_theme.dart';
+import 'ilight_theme.dart';
 
 class AppThemeLight extends IAppTheme with ILightTheme {
   static AppThemeLight? _instance;
@@ -27,7 +27,7 @@ class AppThemeLight extends IAppTheme with ILightTheme {
       ),
       tabBarTheme: TabBarTheme(
         labelColor: _colorScheme.surface,
-        unselectedLabelColor: colorSchemeLight.limedSpruce,
+        unselectedLabelColor: colorSchemeLight.white,
       ),
       appBarTheme: AppBarTheme(color: colorSchemeLight.limedSpruce),
       scaffoldBackgroundColor: colorSchemeLight.athensGray);
@@ -43,7 +43,7 @@ class AppThemeLight extends IAppTheme with ILightTheme {
       onPrimary: colorSchemeLight.shamrock,
       onSecondary: Colors.black, //x
       onSurface: Colors.white,
-      onBackground: Colors.black12,
+      onBackground: Colors.grey,
       onError: colorSchemeLight.sun, //xx
       brightness: Brightness.light);
 }

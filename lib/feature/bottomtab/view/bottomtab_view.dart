@@ -1,9 +1,12 @@
+import 'package:crm_app/feature/contact/view/contact_view.dart';
+
+import '../../project/viewmodel/project_view_model.dart';
+
 import '../../../core/components/card/card_icon_text.dart';
 import '../../../core/components/row/row_flag_text.dart';
 import '../../../core/components/row/row_icon_text.dart';
 import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/subtitle1_copy.dart';
-import '../../project/model/project_model.dart';
 import '../../../product/widgets/row/row_cavatar_text.dart';
 import '../../../product/widgets/switch_list_tile/switch_list_tile.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -21,25 +24,24 @@ class BottomTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<BottomTabModel> items = [
       BottomTabModel(
-          title: "Proje", icon: Icons.assignment, child: const ProjectView()),
+          title: "Proje", icon: Icons.assignment, child: ProjectView()),
       BottomTabModel(
-          title: "Rehber", icon: Icons.contacts_sharp, child: const Scaffold()),
+          title: "Rehber",
+          icon: Icons.contacts_sharp,
+          child: const ContactView()),
       BottomTabModel(
           title: "Email", icon: Icons.email, child: const Scaffold()),
     ];
 
     var scaffoldKey = GlobalKey<ScaffoldState>();
 
-    final ProjectModel _viewModel = ProjectModel();
+    final ProjectViewModel _viewModel = ProjectViewModel();
 
     return DefaultTabController(
       length: items.length,
       child: Scaffold(
         key: scaffoldKey,
-        appBar: _buildAppBar(context, scaffoldKey),
-        bottomNavigationBar: BottomAppBar(
-          child: _buildTabBar(items, context),
-        ),
+        appBar: _buildAppBar(context, scaffoldKey, items),
         body: _buildTabBarView(items),
         drawer: _buildDrawer(context),
         endDrawer: _buildEndDrawer(context, _viewModel),
@@ -47,16 +49,16 @@ class BottomTabView extends StatelessWidget {
     );
   }
 
-  AppBar _buildAppBar(
-          BuildContext context, GlobalKey<ScaffoldState> scaffoldKey) =>
+  AppBar _buildAppBar(BuildContext context,
+          GlobalKey<ScaffoldState> scaffoldKey, List<BottomTabModel> items) =>
       AppBar(
-        title: Image.network(
-          "http://192.168.3.53/assets/images/logo-light.png",
-          width: context.dynamicWidth(0.28),
-        ),
-        actions: [_buildSettingsButton(scaffoldKey)],
-        centerTitle: true,
-      );
+          title: Image.network(
+            "http://192.168.3.53/assets/images/logo-light.png",
+            width: context.dynamicWidth(0.28),
+          ),
+          actions: [_buildSettingsButton(scaffoldKey)],
+          centerTitle: true,
+          bottom: _buildTabBar(items, context));
 
   IconButton _buildSettingsButton(GlobalKey<ScaffoldState> scaffoldKey) =>
       IconButton(
@@ -217,7 +219,7 @@ class BottomTabView extends StatelessWidget {
         ],
       );
 
-  Drawer _buildEndDrawer(BuildContext context, ProjectModel _viewModel) =>
+  Drawer _buildEndDrawer(BuildContext context, ProjectViewModel _viewModel) =>
       Drawer(
         child: Padding(
           padding: context.paddingLow,
@@ -225,7 +227,8 @@ class BottomTabView extends StatelessWidget {
         ),
       );
 
-  Column _buildDrawerColumn(BuildContext context, ProjectModel _viewModel) =>
+  Column _buildDrawerColumn(
+          BuildContext context, ProjectViewModel _viewModel) =>
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,7 +242,7 @@ class BottomTabView extends StatelessWidget {
       );
 
   DefaultSwitchListTile _builSwitchListTile(
-          ProjectModel _viewModel, BuildContext context) =>
+          ProjectViewModel _viewModel, BuildContext context) =>
       DefaultSwitchListTile(
         value: _viewModel.isSwitchListTileOpen,
         child: Subtitle1Copy(

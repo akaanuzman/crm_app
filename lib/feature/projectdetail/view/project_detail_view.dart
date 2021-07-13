@@ -1,17 +1,32 @@
-import 'package:crm_app/core/components/text/body_text1_copy.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
+import '../viewmodel/project_detail_view_model.dart';
+
+import '../../../core/components/text/body_text1_copy.dart';
+import '../../../core/components/text/body_text2_copy.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
 class ProjecetDetailView extends StatelessWidget {
-  const ProjecetDetailView({Key? key}) : super(key: key);
+  //const ProjecetDetailView({Key? key}) : super(key: key);
+
+  final String projectName;
+  final String projectDetail;
+  late final DateTime _now;
+  late final DateTime _date;
+  late final ProjectDetailViewModel _viewModel;
+
+  // ignore: use_key_in_widget_constructors
+  ProjecetDetailView({required this.projectName, required this.projectDetail}) {
+    _now = DateTime.now();
+    _date = DateTime(_now.year, _now.month, _now.day);
+    _viewModel = ProjectDetailViewModel();
+    _viewModel.connectDataBase();
+  }
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    DateTime date = DateTime(now.year, now.month, now.day);
+    //DateTime date =
 
     return Scaffold(
       appBar: AppBar(
@@ -37,11 +52,14 @@ class ProjecetDetailView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           context.emptySizedHeightBoxLow,
-                          Text("Proje 1", style: context.textTheme.headline3),
+                          Text(projectName, style: context.textTheme.headline3),
                           context.emptySizedHeightBoxLow,
                           const BodyText1Copy(data: "Proje Hakkında: "),
                           context.emptySizedHeightBoxLow,
-                          const Text("2021-06-0300123"),
+                          Text(
+                            projectDetail,
+                            maxLines: 1,
+                          ),
                           context.emptySizedHeightBoxNormal,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,7 +78,7 @@ class ProjecetDetailView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             // ignore: prefer_const_literals_to_create_immutables
                             children: [
-                              const Text("2021-06-03"),
+                              const Text("_viewModel.items[0].sDate"),
                               const Text("2021-07-06"),
                               const Text("\$15,800")
                             ],
@@ -188,12 +206,12 @@ class ProjecetDetailView extends StatelessWidget {
                         ),
                         trailing: SizedBox(
                           height: context.dynamicHeight(0.1),
-                          width: context.dynamicWidth(0.225),
+                          width: context.dynamicWidth(0.25),
                           child: Row(
                             children: [
                               const Icon(Icons.calendar_today),
                               context.emptySizedWidthBoxLow,
-                              Text("${date.day}/${date.month}/${date.year}")
+                              Text("${_date.day}/${_date.month}/${_date.year}")
                             ],
                           ),
                         ),
