@@ -1,15 +1,10 @@
 import 'package:crm_app/feature/contact/view/contact_view.dart';
 
-import '../../project/viewmodel/project_view_model.dart';
-
 import '../../../core/components/card/card_icon_text.dart';
 import '../../../core/components/row/row_flag_text.dart';
 import '../../../core/components/row/row_icon_text.dart';
-import '../../../core/components/text/body_text1_copy.dart';
-import '../../../core/components/text/subtitle1_copy.dart';
+
 import '../../../product/widgets/row/row_cavatar_text.dart';
-import '../../../product/widgets/switch_list_tile/switch_list_tile.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../core/init/theme/light/color_scheme_light.dart';
 import '../model/bottomtab_model.dart';
@@ -33,39 +28,24 @@ class BottomTabView extends StatelessWidget {
           title: "Email", icon: Icons.email, child: const Scaffold()),
     ];
 
-    var scaffoldKey = GlobalKey<ScaffoldState>();
-
-    final ProjectViewModel _viewModel = ProjectViewModel();
-
     return DefaultTabController(
       length: items.length,
       child: Scaffold(
-        key: scaffoldKey,
-        appBar: _buildAppBar(context, scaffoldKey, items),
+        appBar: _buildAppBar(context, items),
         body: _buildTabBarView(items),
         drawer: _buildDrawer(context),
-        endDrawer: _buildEndDrawer(context, _viewModel),
       ),
     );
   }
 
-  AppBar _buildAppBar(BuildContext context,
-          GlobalKey<ScaffoldState> scaffoldKey, List<BottomTabModel> items) =>
+  AppBar _buildAppBar(BuildContext context, List<BottomTabModel> items) =>
       AppBar(
           title: Image.network(
             "http://192.168.3.53/assets/images/logo-light.png",
             width: context.dynamicWidth(0.28),
           ),
-          actions: [_buildSettingsButton(scaffoldKey)],
           centerTitle: true,
           bottom: _buildTabBar(items, context));
-
-  IconButton _buildSettingsButton(GlobalKey<ScaffoldState> scaffoldKey) =>
-      IconButton(
-          onPressed: () {
-            scaffoldKey.currentState!.openEndDrawer();
-          },
-          icon: const Icon(Icons.settings));
 
   Drawer _buildDrawer(BuildContext context) => Drawer(
         child: Column(
@@ -79,8 +59,7 @@ class BottomTabView extends StatelessWidget {
                 color: context.colorScheme.secondary,
                 child: Column(
                   children: [
-                    _buildFastMenuCard(context),
-                    _buildFlagsCard(context),
+                    _buildLanguageCard(context),
                   ],
                 ),
               ),
@@ -114,8 +93,8 @@ class BottomTabView extends StatelessWidget {
           Expanded(
             child: CardIconText(
               cardColor: context.colorScheme.secondaryVariant,
-              text: "Uygulama Ayarları",
-              icon: Icons.settings,
+              text: "Bildirimler",
+              icon: Icons.notifications,
             ),
           ),
           Expanded(
@@ -128,46 +107,7 @@ class BottomTabView extends StatelessWidget {
         ],
       );
 
-  Card _buildFastMenuCard(BuildContext context) => Card(
-        child: ExpansionTile(
-          title: const RowIconText(icon: Icons.home, text: "Hızlı Menü"),
-          children: [_buildFastMenuContainer(context)],
-        ),
-      );
-
-  SizedBox _buildFastMenuContainer(BuildContext context) => SizedBox(
-        height: context.dynamicHeight(0.25),
-        child: Padding(
-          padding: context.horizontalPaddingNormal,
-          child: _buildFastMenuColumn,
-        ),
-      );
-
-  Column get _buildFastMenuColumn => Column(
-        // ignore: prefer_const_literals_to_create_immutables
-        children: [
-          const Expanded(
-            child: RowIconText(icon: Icons.work, text: "Yeni Proje"),
-          ),
-          const Expanded(
-            child: RowIconText(icon: Icons.person_add, text: "Yeni Kişi"),
-          ),
-          const Expanded(
-            child: RowIconText(
-              icon: Icons.settings,
-              text: "Ayarlar",
-            ),
-          ),
-          const Expanded(
-            child: RowIconText(
-              icon: Icons.phone_rounded,
-              text: "Yardım ve Destek",
-            ),
-          ),
-        ],
-      );
-
-  Card _buildFlagsCard(BuildContext context) => Card(
+  Card _buildLanguageCard(BuildContext context) => Card(
         child: ExpansionTile(
           title: const RowFlagText(
             url: "http://192.168.3.53/assets/users_assets/images/flags/tr.png",
@@ -217,41 +157,6 @@ class BottomTabView extends StatelessWidget {
                 text: "Russian"),
           ),
         ],
-      );
-
-  Drawer _buildEndDrawer(BuildContext context, ProjectViewModel _viewModel) =>
-      Drawer(
-        child: Padding(
-          padding: context.paddingLow,
-          child: _buildDrawerColumn(context, _viewModel),
-        ),
-      );
-
-  Column _buildDrawerColumn(
-          BuildContext context, ProjectViewModel _viewModel) =>
-      Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          BodyText1Copy(
-            data: "Renk Modu",
-            color: context.colorScheme.onSecondary,
-          ),
-          Observer(builder: (_) => _builSwitchListTile(_viewModel, context))
-        ],
-      );
-
-  DefaultSwitchListTile _builSwitchListTile(
-          ProjectViewModel _viewModel, BuildContext context) =>
-      DefaultSwitchListTile(
-        value: _viewModel.isSwitchListTileOpen,
-        child: Subtitle1Copy(
-          data: "Karanlık Tema",
-          color: context.colorScheme.onSecondary,
-        ),
-        onChanged: (value) {
-          _viewModel.openCloseSwitchListTile(value);
-        },
       );
 
   TabBar _buildTabBar(List<BottomTabModel> items, BuildContext context) =>

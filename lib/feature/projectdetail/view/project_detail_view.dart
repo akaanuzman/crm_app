@@ -1,3 +1,5 @@
+import 'package:crm_app/product/widgets/fabbutton/add_fab_button.dart';
+
 import '../viewmodel/project_detail_view_model.dart';
 
 import '../../../core/components/text/body_text1_copy.dart';
@@ -7,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
-class ProjectDetailView extends StatelessWidget {
+class ProjectDetailView extends StatefulWidget {
   //const ProjecetDetailView({Key? key}) : super(key: key);
 
   final String projectName;
@@ -17,7 +19,6 @@ class ProjectDetailView extends StatelessWidget {
   late final DateTime _date;
   late final ProjectDetailViewModel _viewModel;
 
-  // ignore: use_key_in_widget_constructors
   ProjectDetailView(
       {required this.projectName,
       required this.projectDetail,
@@ -26,11 +27,19 @@ class ProjectDetailView extends StatelessWidget {
     _viewModel.connectDataBase(projectId);
     _now = DateTime.now();
     _date = DateTime(_now.year, _now.month, _now.day);
-    debugPrint("_viewModel.items[0].name");
   }
 
   @override
+  State<ProjectDetailView> createState() => _ProjectDetailViewState();
+}
+
+class _ProjectDetailViewState extends State<ProjectDetailView> {
+  List<String> menuItems = ["Liste", "Kanban"];
+  
+
+  @override
   Widget build(BuildContext context) {
+    String menuValue = menuItems.first;
     return Scaffold(
       appBar: AppBar(
         title: Image.network(
@@ -39,6 +48,7 @@ class ProjectDetailView extends StatelessWidget {
         ),
         centerTitle: true,
       ),
+      floatingActionButton: const AddFabButton(tooltip: "Yeni Görev Ekle"),
       body: Padding(
         padding: context.paddingLow,
         child: Column(
@@ -55,12 +65,13 @@ class ProjectDetailView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           context.emptySizedHeightBoxLow,
-                          Text(projectName, style: context.textTheme.headline3),
+                          Text(widget.projectName,
+                              style: context.textTheme.headline3),
                           context.emptySizedHeightBoxLow,
                           const BodyText1Copy(data: "Proje Hakkında: "),
                           context.emptySizedHeightBoxLow,
                           Text(
-                            projectDetail,
+                            widget.projectDetail,
                             maxLines: 1,
                           ),
                           context.emptySizedHeightBoxNormal,
@@ -81,10 +92,10 @@ class ProjectDetailView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             // ignore: prefer_const_literals_to_create_immutables
                             children: [
-                              Text(_viewModel.items[0].sDate
+                              Text(widget._viewModel.items[0].sDate
                                   .toString()
                                   .substring(0, 10)),
-                              Text(_viewModel.items[0].fDate
+                              Text(widget._viewModel.items[0].fDate
                                   .toString()
                                   .substring(0, 10)),
                               const Text("\$15,800")
@@ -154,13 +165,13 @@ class ProjectDetailView extends StatelessWidget {
                             context.emptySizedHeightBoxLow,
                             Expanded(
                               child: ListView.builder(
-                                itemCount: _viewModel.items.length,
+                                itemCount: widget._viewModel.items.length,
                                 itemBuilder: (context, index) => Column(
                                   children: [
                                     Container(
                                       alignment: Alignment.center,
                                       child: Text(
-                                       _viewModel.items[index].name,
+                                        widget._viewModel.items[index].name,
                                         style: context.textTheme.headline4,
                                       ),
                                       decoration: BoxDecoration(
@@ -182,56 +193,64 @@ class ProjectDetailView extends StatelessWidget {
             Padding(
               padding: context.horizontalPaddingLow,
               child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Görevler",
-                      style: context.textTheme.headline4!
-                          .copyWith(fontWeight: FontWeight.bold))),
-            ),
-            context.emptySizedHeightBoxLow,
-            Expanded(
-              child: Align(
                 alignment: Alignment.centerLeft,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Yeni Görev Ekle",
-                    style: context.textTheme.bodyText1!
-                        .copyWith(color: context.colorScheme.onSurface),
-                  ),
+                child: Text(
+                  "Görevler",
+                  style: context.textTheme.headline4!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
             ),
             context.emptySizedHeightBoxLow,
+            Row(
+              children: [
+                context.emptySizedWidthBoxLow3x,
+                const Icon(Icons.filter_alt),
+                context.emptySizedWidthBoxLow,
+                DropdownButton(
+                  hint: const Text("Görünüm"),
+                  value: menuValue,
+                  items: menuItems
+                      .map(
+                        (e) => DropdownMenuItem(
+                          child: Text(e),
+                          value: e,
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      menuValue = value.toString();
+                    });
+                  },
+                )
+              ],
+            ),
+            context.emptySizedHeightBoxLow,
             Expanded(
               flex: 6,
-              child: PageView(
-                children: [
-                  ListView.builder(
-                    itemCount: _viewModel.items.length,
-                    itemBuilder: (context, index) => Card(
-                      child: ListTile(
-                        title: BodyText2Copy(
-                          data: _viewModel.items[index].name,
-                        ),
-                        trailing: SizedBox(
-                          height: context.dynamicHeight(0.1),
-                          width: context.dynamicWidth(0.25),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.calendar_today),
-                              context.emptySizedWidthBoxLow,
-                              Text("${_date.day}/${_date.month}/${_date.year}")
-                            ],
-                          ),
-                        ),
-                        onTap: () {},
+              child: ListView.builder(
+                itemCount: widget._viewModel.items.length,
+                itemBuilder: (context, index) => Card(
+                  child: ListTile(
+                    title: BodyText2Copy(
+                      data: widget._viewModel.items[index].name,
+                    ),
+                    trailing: SizedBox(
+                      height: context.dynamicHeight(0.1),
+                      width: context.dynamicWidth(0.25),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.calendar_today),
+                          context.emptySizedWidthBoxLow,
+                          Text(
+                              "${widget._date.day}/${widget._date.month}/${widget._date.year}")
+                        ],
                       ),
                     ),
+                    onTap: () {},
                   ),
-                  Container(
-                    color: Colors.red,
-                  )
-                ],
+                ),
               ),
             )
           ],

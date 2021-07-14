@@ -8,15 +8,7 @@ class ProjectViewModel = _ProjectViewModelBase with _$ProjectViewModel;
 
 abstract class _ProjectViewModelBase with Store {
   @observable
-  bool isSwitchListTileOpen = false;
-
-  @observable
   List<ProjectModel> items = [];
-
-  @action
-  void openCloseSwitchListTile(bool value) {
-    isSwitchListTileOpen = value;
-  }
 
   @action
   Future<void> connectDataBase() async {
@@ -40,13 +32,6 @@ abstract class _ProjectViewModelBase with Store {
     fetchList(conn, settings, "OAWidhF2");
     fetchList(conn, settings, "aasdasda");
     fetchList(conn, settings, "MmRYUcZI");
-
-    // var nameResult =
-    //     await conn.query('select name from project where access = "11111111"');
-
-    // for (var row in nameResult) {
-    //   getProjectName(row);
-    // }
   }
 
   Future<void> fetchList(MySqlConnection conn, ConnectionSettings settings,

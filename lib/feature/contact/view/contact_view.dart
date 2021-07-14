@@ -1,4 +1,8 @@
-import 'package:crm_app/feature/mycontacts/view/my_contacts_view.dart';
+
+import 'package:crm_app/feature/contact/mycolleagues/view/my_colleagues_view.dart';
+import 'package:crm_app/feature/contact/mycontacts/view/my_contacts_view.dart';
+import 'package:crm_app/feature/contact/mycustomers/view/my_customers_view.dart';
+import 'package:crm_app/feature/contact/myfriends/view/my_friends_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../bottomtab/model/bottomtab_model.dart';
@@ -15,13 +19,13 @@ class ContactView extends StatelessWidget {
       BottomTabModel(
           title: "Arkadaşlarım",
           icon: Icons.emoji_people,
-          child: const Scaffold()),
+          child: const MyFriendsView()),
       BottomTabModel(
-          title: "Müşterilerim", icon: Icons.group, child: const Scaffold()),
+          title: "Müşterilerim", icon: Icons.group, child: const MyCustomersView()),
       BottomTabModel(
-          title: "Müşterilerim",
+          title: "İş Arkadaşlarım",
           icon: Icons.connect_without_contact,
-          child: const Scaffold()),
+          child: const MyColleaguesView()),
     ];
     return DefaultTabController(
       length: items.length,

@@ -2,6 +2,8 @@ import 'package:boardview/board_item.dart';
 import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:crm_app/product/model/kanban_model.dart';
+import 'package:crm_app/product/widgets/dismissible/delete_dismissible.dart';
+import 'package:crm_app/product/widgets/fabbutton/add_fab_button.dart';
 
 import '../../../core/components/row/row_circle_avatar.dart';
 import '../../../core/components/row/row_icon_text.dart';
@@ -38,47 +40,28 @@ class ProjectView extends StatelessWidget {
       body: Observer(builder: (_) {
         return Padding(
           padding: context.paddingLow,
-          child: _buildBody(context),
+          child: _buildListViewBuilder,
         );
       }),
+      floatingActionButton: const AddFabButton(tooltip: "Proje Ekle"),
     );
   }
-
-  Column _buildBody(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: _buildAddProjectButton(context),
-        ),
-        context.emptySizedHeightBoxLow,
-        Expanded(
-          flex: 12,
-          child: _buildListViewBuilder,
-        )
-      ],
-    );
-  }
-
-  ElevatedButton _buildAddProjectButton(BuildContext context) => ElevatedButton(
-        onPressed: () {},
-        child: BodyText1Copy(
-          data: "Proje Ekle",
-          color: context.colorScheme.onSurface,
-        ),
-      );
 
   ListView get _buildListViewBuilder => ListView.builder(
-      itemCount: _viewModel.items.length,
-      itemBuilder: (context, index) => _buildProjectCard(context, index),
-    );
+        itemCount: _viewModel.items.length,
+        itemBuilder: (context, index) => _buildProjectCard(context, index),
+      );
 
-  Card _buildProjectCard(BuildContext context, int index) => Card(
-        child: ListTile(
-          onTap: () {
-            goToNextPage(context, index);
-          },
-          title: BodyText1Copy(data: _viewModel.items[index].name),
-          subtitle: _buildSubtitle(context, index),
+  Widget _buildProjectCard(BuildContext context, int index) =>
+      DeleteDismissible(
+        child: Card(
+          child: ListTile(
+            onTap: () {
+              goToNextPage(context, index);
+            },
+            title: BodyText1Copy(data: _viewModel.items[index].name),
+            subtitle: _buildSubtitle(context, index),
+          ),
         ),
       );
 

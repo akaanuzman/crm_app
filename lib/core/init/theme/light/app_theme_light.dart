@@ -34,12 +34,12 @@ class AppThemeLight extends IAppTheme with ILightTheme {
 
   ColorScheme get _colorScheme => ColorScheme(
       primary: colorSchemeLight.black,
-      primaryVariant: colorSchemeLight.azure,
+      primaryVariant: colorSchemeLight.mandy,
       secondary: colorSchemeLight.athensGray,
       secondaryVariant: colorSchemeLight.limedSpruce,
       surface: colorSchemeLight.doggerBlue, //xx
       background: colorSchemeLight.blackSqueeze, //xx
-      error: Colors.red[900]!,
+      error: Colors.red,
       onPrimary: colorSchemeLight.shamrock,
       onSecondary: Colors.black, //x
       onSurface: Colors.white,
