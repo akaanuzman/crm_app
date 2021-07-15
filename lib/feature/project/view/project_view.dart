@@ -1,9 +1,11 @@
 import 'package:boardview/board_item.dart';
 import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview_controller.dart';
+import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/product/model/kanban_model.dart';
 import 'package:crm_app/product/widgets/dismissible/delete_dismissible.dart';
 import 'package:crm_app/product/widgets/fabbutton/add_fab_button.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../core/components/row/row_circle_avatar.dart';
 import '../../../core/components/row/row_icon_text.dart';
@@ -20,6 +22,7 @@ import '../../projectdetail/view/project_detail_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
+import 'package:popup_card/popup_card.dart';
 
 // ignore: must_be_immutable
 class ProjectView extends StatelessWidget {
@@ -37,23 +40,62 @@ class ProjectView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Observer(builder: (_) {
-        return Padding(
-          padding: context.paddingLow,
-          child: _buildListViewBuilder,
-        );
-      }),
-      floatingActionButton: const AddFabButton(tooltip: "Proje Ekle"),
+      body: Padding(
+        padding: context.paddingLow,
+        child: Column(
+          children: [
+            Expanded(child: _buildListViewBuilder),
+            const Text(
+                "Projeleri silmek için sola düzenlemek için sağa kaydırın.")
+          ],
+        ),
+      ),
+      floatingActionButton: PopupItemLauncher(
+        tag: 'Proje Ekle',
+        child: Material(
+          color: context.colorScheme.onPrimary,
+          elevation: 2,
+          shape: RoundedRectangleBorder(borderRadius: context.highBorderRadius),
+          child: Icon(
+            Icons.add_rounded,
+            size: 56,
+            color: context.colorScheme.onSurface,
+          ),
+        ),
+        popUp: PopUpItem(
+          padding: context.paddingNormal,
+          color: context.colorScheme.onSurface,
+          shape:
+              RoundedRectangleBorder(borderRadius: context.normalBorderRadius),
+          elevation: 2,
+          tag: 'Proje Ekle',
+          child: const PopUpItemBody(),
+        ),
+      ),
     );
   }
 
-  ListView get _buildListViewBuilder => ListView.builder(
+  Widget get _buildListViewBuilder => ListView.builder(
         itemCount: _viewModel.items.length,
         itemBuilder: (context, index) => _buildProjectCard(context, index),
       );
 
-  Widget _buildProjectCard(BuildContext context, int index) =>
-      DeleteDismissible(
+  Widget _buildProjectCard(BuildContext context, int index) => Slidable(
+        actionPane: const SlidableDrawerActionPane(),
+        actions: [
+          IconSlideAction(
+            color: context.colorScheme.primaryVariant,
+            caption: 'Sil',
+            icon: Icons.delete,
+            onTap: () {},
+          ),
+                    IconSlideAction(
+            color: context.colorScheme.onPrimary,
+            caption: 'Düzenle',
+            icon: Icons.more,
+            onTap: () {},
+          ),
+        ],
         child: Card(
           child: ListTile(
             onTap: () {
@@ -115,6 +157,52 @@ class ProjectView extends StatelessWidget {
           projectDetail: _viewModel.items[index].detail,
           projectId: _viewModel.items[index].id,
         ),
+      ),
+    );
+  }
+}
+
+class PopUpItemBody extends StatelessWidget {
+  const PopUpItemBody({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            decoration: const InputDecoration(
+              hintText: 'Proje adını giriniz.',
+              border: InputBorder.none,
+            ),
+            cursorColor: context.colorScheme.onSecondary,
+          ),
+          Divider(
+            color: context.colorScheme.secondaryVariant,
+            thickness: 0.4,
+          ),
+          TextField(
+            decoration: const InputDecoration(
+              hintText: 'Proje açıklamasını giriniz.',
+              border: InputBorder.none,
+            ),
+            cursorColor: context.colorScheme.onSecondary,
+            maxLines: 6,
+          ),
+          Divider(
+            color: context.colorScheme.secondaryVariant,
+            thickness: 0.4,
+          ),
+          TextButton(
+            onPressed: () {},
+            child: const BodyText2Copy(
+              data: "Ekle",
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,6 @@
+import 'package:crm_app/feature/contact/mycontacts/view/my_contacts_view.dart';
 import 'package:crm_app/product/widgets/fabbutton/add_fab_button.dart';
+import 'package:popup_card/popup_card.dart';
 
 import '../viewmodel/project_detail_view_model.dart';
 
@@ -34,12 +36,11 @@ class ProjectDetailView extends StatefulWidget {
 }
 
 class _ProjectDetailViewState extends State<ProjectDetailView> {
-  List<String> menuItems = ["Liste", "Kanban"];
-  
+  //List<String> menuItems = ["Liste", "Kanban"];
 
   @override
   Widget build(BuildContext context) {
-    String menuValue = menuItems.first;
+    //String menuValue = menuItems.first;
     return Scaffold(
       appBar: AppBar(
         title: Image.network(
@@ -48,7 +49,28 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
         ),
         centerTitle: true,
       ),
-      floatingActionButton: const AddFabButton(tooltip: "Yeni Görev Ekle"),
+      floatingActionButton: PopupItemLauncher(
+        tag: 'Proje Ekle',
+        child: Material(
+          color: context.colorScheme.onPrimary,
+          elevation: 2,
+          shape: RoundedRectangleBorder(borderRadius: context.highBorderRadius),
+          child: Icon(
+            Icons.add_rounded,
+            size: 56,
+            color: context.colorScheme.onSurface,
+          ),
+        ),
+        popUp: PopUpItem(
+          padding: context.paddingNormal,
+          color: context.colorScheme.onPrimary,
+          shape:
+              RoundedRectangleBorder(borderRadius: context.normalBorderRadius),
+          elevation: 2,
+          tag: 'Proje Ekle',
+          child: const PopUpItemBody(),
+        ),
+      ),
       body: Padding(
         padding: context.paddingLow,
         child: Column(
@@ -209,8 +231,8 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                 context.emptySizedWidthBoxLow,
                 DropdownButton(
                   hint: const Text("Görünüm"),
-                  value: menuValue,
-                  items: menuItems
+                  value: widget._viewModel.menuValue,
+                  items: widget._viewModel.menuItems
                       .map(
                         (e) => DropdownMenuItem(
                           child: Text(e),
@@ -220,7 +242,11 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                       .toList(),
                   onChanged: (value) {
                     setState(() {
-                      menuValue = value.toString();
+                      widget._viewModel.onChanged(value!);
+                      value == "Kanban"
+                          ? Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Scaffold()))
+                          : null;
                     });
                   },
                 )
@@ -255,6 +281,55 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PopUpItemBody extends StatelessWidget {
+  const PopUpItemBody({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            decoration: InputDecoration(
+              hintText: 'Görevin adını giriniz.',
+              hintStyle: TextStyle(color: context.colorScheme.onSurface),
+              border: InputBorder.none,
+            ),
+            cursorColor: context.colorScheme.onSecondary,
+          ),
+          Divider(
+            color: context.colorScheme.onSurface,
+            thickness: 1,
+          ),
+          TextField(
+            decoration: InputDecoration(
+              hintText: 'Görevin açıklamasını giriniz.',
+              hintStyle: TextStyle(color: context.colorScheme.onSurface),
+              labelStyle: TextStyle(color: context.colorScheme.onSurface),
+              border: InputBorder.none,
+            ),
+            cursorColor: context.colorScheme.onSecondary,
+            maxLines: 6,
+          ),
+          Divider(
+            color: context.colorScheme.onSurface,
+            thickness: 1,
+          ),
+          TextButton(
+              onPressed: () {},
+              child: BodyText2Copy(
+                data: "Ekle",
+                color: context.colorScheme.onSurface,
+              )),
+        ],
       ),
     );
   }

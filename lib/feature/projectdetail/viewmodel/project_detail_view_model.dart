@@ -12,6 +12,11 @@ abstract class _ProjectDetailViewModelBase with Store {
   @observable
   List<ProjectDetailModel> items = [];
 
+  @observable
+  late String menuValue = menuItems.first;
+
+  List<String> menuItems = ["Liste", "Kanban"];
+
   @action
   Future<void> connectDataBase(int projectId) async {
     var settings = ConnectionSettings(
@@ -31,5 +36,10 @@ abstract class _ProjectDetailViewModelBase with Store {
       ProjectDetailModel model = ProjectDetailModel.fromJson(row.fields);
       items.add(model);
     }
+  }
+
+  @action
+  void onChanged(Object value) {
+    menuValue = value.toString();
   }
 }
