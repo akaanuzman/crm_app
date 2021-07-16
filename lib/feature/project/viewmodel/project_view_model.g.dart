@@ -32,6 +32,20 @@ mixin _$ProjectViewModel on _ProjectViewModelBase, Store {
     return _$connectDataBaseAsyncAction.run(() => super.connectDataBase());
   }
 
+  final _$_ProjectViewModelBaseActionController =
+      ActionController(name: '_ProjectViewModelBase');
+
+  @override
+  void deleteItem(int index) {
+    final _$actionInfo = _$_ProjectViewModelBaseActionController.startAction(
+        name: '_ProjectViewModelBase.deleteItem');
+    try {
+      return super.deleteItem(index);
+    } finally {
+      _$_ProjectViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

@@ -1,7 +1,7 @@
-import 'package:crm_app/core/components/text/body_text1_copy.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
-import 'package:crm_app/core/components/textfield/search_text_field.dart';
-import 'package:crm_app/product/widgets/dismissible/delete_dismissible.dart';
+import '../../../../core/components/text/body_text1_copy.dart';
+import '../../../../core/components/text/body_text2_copy.dart';
+import '../../../../core/components/textfield/search_text_field.dart';
+import '../../../../product/widgets/dismissible/delete_dismissible.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
@@ -16,7 +16,7 @@ class MyFriendsView extends StatelessWidget {
           context.lowValue, context.lowValue),
       child: Column(
         children: [
-          Expanded(child: SearchTextField()),
+          const Expanded(child: SearchTextField()),
           context.emptySizedHeightBoxLow,
           Expanded(
             child: SizedBox(

@@ -1,8 +1,7 @@
-import 'package:crm_app/feature/contact/view/contact_view.dart';
+import '../../contact/view/contact_view.dart';
 
 import '../../../core/components/card/card_icon_text.dart';
 import '../../../core/components/row/row_flag_text.dart';
-import '../../../core/components/row/row_icon_text.dart';
 
 import '../../../product/widgets/row/row_cavatar_text.dart';
 

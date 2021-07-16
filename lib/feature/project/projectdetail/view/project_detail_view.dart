@@ -1,11 +1,9 @@
-import 'package:crm_app/feature/contact/mycontacts/view/my_contacts_view.dart';
-import 'package:crm_app/product/widgets/fabbutton/add_fab_button.dart';
+import 'package:crm_app/core/components/text/body_text1_copy.dart';
+import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:popup_card/popup_card.dart';
 
 import '../viewmodel/project_detail_view_model.dart';
 
-import '../../../core/components/text/body_text1_copy.dart';
-import '../../../core/components/text/body_text2_copy.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -21,6 +19,7 @@ class ProjectDetailView extends StatefulWidget {
   late final DateTime _date;
   late final ProjectDetailViewModel _viewModel;
 
+  // ignore: use_key_in_widget_constructors
   ProjectDetailView(
       {required this.projectName,
       required this.projectDetail,
@@ -245,7 +244,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                       widget._viewModel.onChanged(value!);
                       value == "Kanban"
                           ? Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Scaffold()))
+                              builder: (context) => const Scaffold()))
                           : null;
                     });
                   },

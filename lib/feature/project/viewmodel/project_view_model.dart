@@ -43,4 +43,9 @@ abstract class _ProjectViewModelBase with Store {
       items.add(model);
     }
   }
+
+  @action
+  void deleteItem(int index) {
+    items.removeAt(index);
+  }
 }

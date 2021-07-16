@@ -1,6 +1,5 @@
-import 'package:crm_app/feature/bottomtab/view/bottomtab_view.dart';
+import 'feature/bottomtab/view/bottomtab_view.dart';
 
-import 'feature/splash/view/splash_view.dart';
 
 import 'core/init/theme/light/app_theme_light.dart';
 import 'package:flutter/material.dart';

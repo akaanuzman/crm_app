@@ -1,10 +1,7 @@
-import 'package:boardview/board_item.dart';
-import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview_controller.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
-import 'package:crm_app/product/model/kanban_model.dart';
-import 'package:crm_app/product/widgets/dismissible/delete_dismissible.dart';
-import 'package:crm_app/product/widgets/fabbutton/add_fab_button.dart';
+import 'package:crm_app/feature/project/projectdetail/view/project_detail_view.dart';
+import '../../../core/components/text/body_text2_copy.dart';
+
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../core/components/row/row_circle_avatar.dart';
@@ -13,29 +10,33 @@ import '../../../core/components/row/row_space_between_text.dart';
 import '../../../product/widgets/stack/blue_bar.dart';
 
 import '../viewmodel/project_view_model.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/bold_text.dart';
 
-import '../../projectdetail/view/project_detail_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
 
 // ignore: must_be_immutable
-class ProjectView extends StatelessWidget {
+class ProjectView extends StatefulWidget {
   //const ProjectView({Key? key}) : super(key: key);
 
   late final ProjectViewModel _viewModel;
 
-  final BoardViewController boardViewController = BoardViewController();
   // ignore: use_key_in_widget_constructors
   ProjectView() {
     _viewModel = ProjectViewModel();
     _viewModel.connectDataBase();
   }
+
+  @override
+  State<ProjectView> createState() => _ProjectViewState();
+}
+
+class _ProjectViewState extends State<ProjectView> {
+  final BoardViewController boardViewController = BoardViewController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +46,7 @@ class ProjectView extends StatelessWidget {
         child: Column(
           children: [
             Expanded(child: _buildListViewBuilder),
-            const Text(
-                "Projeleri silmek için sola düzenlemek için sağa kaydırın.")
+            const Text("Projeleri silmek veya düzenlemek için sola kaydırın.")
           ],
         ),
       ),
@@ -76,7 +76,7 @@ class ProjectView extends StatelessWidget {
   }
 
   Widget get _buildListViewBuilder => ListView.builder(
-        itemCount: _viewModel.items.length,
+        itemCount: widget._viewModel.items.length,
         itemBuilder: (context, index) => _buildProjectCard(context, index),
       );
 
@@ -87,13 +87,30 @@ class ProjectView extends StatelessWidget {
             color: context.colorScheme.primaryVariant,
             caption: 'Sil',
             icon: Icons.delete,
-            onTap: () {},
+            onTap: () {
+              setState(() {
+                widget._viewModel.deleteItem(index);
+              });
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: context.colorScheme.secondaryVariant,
+                  duration: context.durationSlow,
+                  content: BodyText2Copy(
+                    data: "Proje başarıyla silindi !",
+                    color: context.colorScheme.onSurface,
+                  ),
+                ),
+              );
+            },
           ),
-                    IconSlideAction(
+          IconSlideAction(
             color: context.colorScheme.onPrimary,
+            foregroundColor: context.colorScheme.onSurface,
             caption: 'Düzenle',
-            icon: Icons.more,
-            onTap: () {},
+            icon: Icons.edit,
+            onTap: () {
+              _showModalBottomSheet(context);
+            },
           ),
         ],
         child: Card(
@@ -101,7 +118,7 @@ class ProjectView extends StatelessWidget {
             onTap: () {
               goToNextPage(context, index);
             },
-            title: BodyText1Copy(data: _viewModel.items[index].name),
+            title: BodyText1Copy(data: widget._viewModel.items[index].name),
             subtitle: _buildSubtitle(context, index),
           ),
         ),
@@ -114,7 +131,7 @@ class ProjectView extends StatelessWidget {
           _buildRowIconText,
           context.emptySizedHeightBoxLow3x,
           Text(
-            _viewModel.items[index].detail,
+            widget._viewModel.items[index].detail,
           ),
           _buildRowIconTextText(context),
           const RowCircleAvatar(firstText: "AA", secondText: "BB"),
@@ -153,12 +170,42 @@ class ProjectView extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ProjectDetailView(
-          projectName: _viewModel.items[index].name,
-          projectDetail: _viewModel.items[index].detail,
-          projectId: _viewModel.items[index].id,
+          projectName: widget._viewModel.items[index].name,
+          projectDetail: widget._viewModel.items[index].detail,
+          projectId: widget._viewModel.items[index].id,
         ),
       ),
     );
+  }
+
+  _showModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: context.dynamicHeight(0.4),
+            padding: context.paddingNormal,
+            decoration: BoxDecoration(
+              color: context.colorScheme.onSurface,
+              borderRadius: BorderRadius.only(
+                topLeft: context.highadius,
+                topRight: context.highadius,
+              ),
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                    child: Container(
+                  color: Colors.red,
+                )),
+                Expanded(
+                    child: Container(
+                  color: Colors.blue,
+                )),
+              ],
+            ),
+          );
+        });
   }
 }
 

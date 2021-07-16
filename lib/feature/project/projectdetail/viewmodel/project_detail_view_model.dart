@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 import '../model/project_detail_model.dart';
 import 'package:mobx/mobx.dart';

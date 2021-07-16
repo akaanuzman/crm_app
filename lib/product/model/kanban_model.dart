@@ -1,6 +1,6 @@
 class BoardListObject {
-   final String title;
-   List<BoardItemObject>? items;
+  final String title;
+  List<BoardItemObject>? items;
   BoardListObject({required this.title, this.items});
 }
 

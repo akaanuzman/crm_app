@@ -1,8 +1,8 @@
 
-import 'package:crm_app/feature/contact/mycolleagues/view/my_colleagues_view.dart';
-import 'package:crm_app/feature/contact/mycontacts/view/my_contacts_view.dart';
-import 'package:crm_app/feature/contact/mycustomers/view/my_customers_view.dart';
-import 'package:crm_app/feature/contact/myfriends/view/my_friends_view.dart';
+import '../mycolleagues/view/my_colleagues_view.dart';
+import '../mycontacts/view/my_contacts_view.dart';
+import '../mycustomers/view/my_customers_view.dart';
+import '../myfriends/view/my_friends_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../bottomtab/model/bottomtab_model.dart';
