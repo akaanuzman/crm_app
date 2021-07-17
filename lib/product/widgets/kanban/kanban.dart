@@ -86,7 +86,7 @@ class BoardViewExample extends StatelessWidget {
     List<BoardList> _lists = [];
 
     for (int i = 0; i < _listData.length; i++) {
-      _lists.add(_createBoardList(_listData[i]));
+      //_lists.add(_createBoardList(_listData[i]));
     }
 
     return Padding(
@@ -147,7 +147,7 @@ class BoardViewExample extends StatelessWidget {
   Widget _createBoardList(BoardListObject list) {
     List<BoardItem> items = [];
     for (int i = 0; i < list.items!.length; i++) {
-      items.insert(i, buildBoardItem(list.items![i]));
+      //items.insert(i, buildBoardItem(list.items![i]));
     }
 
     return BoardList(
