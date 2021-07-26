@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:boardview/boardview_controller.dart';
 import 'package:crm_app/feature/project/projectdetail/view/project_detail_view.dart';
 import '../../../core/components/text/body_text2_copy.dart';
@@ -37,6 +39,12 @@ class ProjectView extends StatefulWidget {
 
 class _ProjectViewState extends State<ProjectView> {
   final BoardViewController boardViewController = BoardViewController();
+  final _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final Random _rnd = Random();
+
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +54,7 @@ class _ProjectViewState extends State<ProjectView> {
         child: Column(
           children: [
             Expanded(child: _buildListViewBuilder),
-            const Text("Projeleri silmek veya düzenlemek için sola kaydırın.")
+            const Text("Projeleri silmek veya düzenlemek için sağa kaydırın.")
           ],
         ),
       ),
@@ -194,14 +202,67 @@ class _ProjectViewState extends State<ProjectView> {
             ),
             child: Column(
               children: [
-                Expanded(
-                    child: Container(
-                  color: Colors.red,
-                )),
-                Expanded(
-                    child: Container(
-                  color: Colors.blue,
-                )),
+                Padding(
+                  padding: context.paddingLow,
+                  child: const Text("Proje Adı"),
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Proje adı.',
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.onBackground),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.surface),
+                    ),
+                  ),
+                  cursorColor: context.colorScheme.onSecondary,
+                ),
+                context.emptySizedHeightBoxLow,
+                Padding(
+                  padding: context.paddingLow,
+                  child: const Text("Proje Detayları"),
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Proje detayları.',
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.onBackground),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.surface),
+                    ),
+                  ),
+                  cursorColor: context.colorScheme.onSecondary,
+                  maxLines: 2,
+                ),
+                context.emptySizedHeightBoxLow,
+                Divider(
+                  color: context.colorScheme.secondaryVariant,
+                  thickness: 0.4,
+                ),
+                Center(
+                  child: TextButton(
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.save),
+                          context.emptySizedWidthBoxLow,
+                          const BodyText2Copy(
+                            data: "Kaydet",
+                          ),
+                        ],
+                      )),
+                ),
               ],
             ),
           );
@@ -218,36 +279,90 @@ class PopUpItemBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Center(
+            child: Padding(
+                padding: context.paddingLow,
+                child: const BodyText1Copy(data: "Proje Ekle")),
+          ),
+          Padding(
+            padding: context.paddingLow,
+            child: const Text("Proje Adı"),
+          ),
           TextField(
-            decoration: const InputDecoration(
-              hintText: 'Proje adını giriniz.',
-              border: InputBorder.none,
+            decoration: InputDecoration(
+              hintText: 'Proje adı.',
+              enabledBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.onBackground),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.surface),
+              ),
             ),
             cursorColor: context.colorScheme.onSecondary,
           ),
-          Divider(
-            color: context.colorScheme.secondaryVariant,
-            thickness: 0.4,
+          context.emptySizedHeightBoxLow,
+          Padding(
+            padding: context.paddingLow,
+            child: const Text("Proje Detayları"),
           ),
           TextField(
-            decoration: const InputDecoration(
-              hintText: 'Proje açıklamasını giriniz.',
-              border: InputBorder.none,
+            decoration: InputDecoration(
+              hintText: 'Proje detayları.',
+              enabledBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.onBackground),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.surface),
+              ),
             ),
             cursorColor: context.colorScheme.onSecondary,
             maxLines: 6,
           ),
+          Padding(
+            padding: context.paddingLow,
+            child: const Text("Erişim Kodu"),
+          ),
+          TextField(
+            decoration: InputDecoration(
+              hintText: 'Erişim kodu oluştur.',
+              prefixIcon:
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.onBackground),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.surface),
+              ),
+            ),
+            cursorColor: context.colorScheme.onSecondary,
+          ),
+          context.emptySizedHeightBoxLow,
           Divider(
             color: context.colorScheme.secondaryVariant,
             thickness: 0.4,
           ),
-          TextButton(
-            onPressed: () {},
-            child: const BodyText2Copy(
-              data: "Ekle",
-            ),
+          Center(
+            child: TextButton(
+                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    const Icon(Icons.add),
+                    context.emptySizedWidthBoxLow,
+                    const BodyText2Copy(
+                      data: "Ekle",
+                    ),
+                  ],
+                )),
           ),
         ],
       ),

@@ -1,3 +1,5 @@
+import 'package:crm_app/feature/mail/view/mail_view.dart';
+
 import '../../contact/view/contact_view.dart';
 
 import '../../../core/components/card/card_icon_text.dart';
@@ -24,7 +26,7 @@ class BottomTabView extends StatelessWidget {
           icon: Icons.contacts_sharp,
           child: const ContactView()),
       BottomTabModel(
-          title: "Email", icon: Icons.email, child: const Scaffold()),
+          title: "Email", icon: Icons.email, child: const MailView()),
     ];
 
     return DefaultTabController(

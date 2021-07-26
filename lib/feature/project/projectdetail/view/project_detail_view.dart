@@ -35,11 +35,8 @@ class ProjectDetailView extends StatefulWidget {
 }
 
 class _ProjectDetailViewState extends State<ProjectDetailView> {
-  //List<String> menuItems = ["Liste", "Kanban"];
-
   @override
   Widget build(BuildContext context) {
-    //String menuValue = menuItems.first;
     return Scaffold(
       appBar: AppBar(
         title: Image.network(
@@ -62,12 +59,14 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
         ),
         popUp: PopUpItem(
           padding: context.paddingNormal,
-          color: context.colorScheme.onPrimary,
+          color: context.colorScheme.onSurface,
           shape:
               RoundedRectangleBorder(borderRadius: context.normalBorderRadius),
           elevation: 2,
           tag: 'Proje Ekle',
-          child: const PopUpItemBody(),
+          child: PopUpItemBody(
+            now: widget._now,
+          ),
         ),
       ),
       body: Padding(
@@ -75,7 +74,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
         child: Column(
           children: [
             Expanded(
-              flex: 6,
+              flex: 7,
               child: PageView(
                 scrollDirection: Axis.vertical,
                 children: [
@@ -286,48 +285,135 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
 }
 
 class PopUpItemBody extends StatelessWidget {
-  const PopUpItemBody({
-    Key? key,
-  }) : super(key: key);
+  final DateTime now;
+
+  const PopUpItemBody({Key? key, required this.now}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Center(
+            child: Padding(
+              padding: context.paddingLow,
+              child: const BodyText1Copy(data: "Görev Ekle"),
+            ),
+          ),
+          Padding(
+            padding: context.paddingLow,
+            child: const Text("İsim"),
+          ),
           TextField(
             decoration: InputDecoration(
-              hintText: 'Görevin adını giriniz.',
-              hintStyle: TextStyle(color: context.colorScheme.onSurface),
-              border: InputBorder.none,
+              hintText: 'Görev ismi.',
+              enabledBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.onBackground),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.surface),
+              ),
             ),
             cursorColor: context.colorScheme.onSecondary,
           ),
-          Divider(
-            color: context.colorScheme.onSurface,
-            thickness: 1,
+          context.emptySizedHeightBoxLow,
+          Padding(
+            padding: context.paddingLow,
+            child: const Text("Detaylar"),
           ),
           TextField(
             decoration: InputDecoration(
-              hintText: 'Görevin açıklamasını giriniz.',
-              hintStyle: TextStyle(color: context.colorScheme.onSurface),
-              labelStyle: TextStyle(color: context.colorScheme.onSurface),
-              border: InputBorder.none,
+              hintText: 'Görev detayları.',
+              enabledBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.onBackground),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.surface),
+              ),
             ),
             cursorColor: context.colorScheme.onSecondary,
-            maxLines: 6,
+            maxLines: 3,
           ),
+          Padding(
+            padding: context.paddingLow,
+            child: const Text("Başlama Tarihi"),
+          ),
+          TextField(
+            decoration: InputDecoration(
+              hintText: 'mm/dd/yy',
+              prefixIcon: IconButton(
+                  onPressed: () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: now,
+                      firstDate: DateTime(DateTime.now().year - 5),
+                      lastDate: DateTime(DateTime.now().year + 5),
+                    );
+                  },
+                  icon: const Icon(Icons.calendar_today)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.onBackground),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.surface),
+              ),
+            ),
+            cursorColor: context.colorScheme.onSecondary,
+          ),
+          Padding(
+            padding: context.paddingLow,
+            child: const Text("Bitiş Tarihi"),
+          ),
+          TextField(
+            decoration: InputDecoration(
+              hintText: 'mm/dd/yy',
+              prefixIcon: IconButton(
+                  onPressed: () {
+                    showDatePicker(
+                        context: context,
+                        initialDate: now,
+                        firstDate: DateTime(DateTime.now().year - 5),
+                        lastDate: DateTime(DateTime.now().year + 5));
+                  },
+                  icon: const Icon(Icons.calendar_today)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.onBackground),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: context.lowBorderRadius,
+                borderSide: BorderSide(color: context.colorScheme.surface),
+              ),
+            ),
+            cursorColor: context.colorScheme.onSecondary,
+          ),
+          context.emptySizedHeightBoxLow,
           Divider(
-            color: context.colorScheme.onSurface,
-            thickness: 1,
+            color: context.colorScheme.secondaryVariant,
+            thickness: 0.4,
           ),
-          TextButton(
-              onPressed: () {},
-              child: BodyText2Copy(
-                data: "Ekle",
-                color: context.colorScheme.onSurface,
-              )),
+          Center(
+            child: TextButton(
+                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    const Icon(Icons.add),
+                    context.emptySizedWidthBoxLow,
+                    const BodyText2Copy(
+                      data: "Ekle",
+                    ),
+                  ],
+                )),
+          ),
         ],
       ),
     );

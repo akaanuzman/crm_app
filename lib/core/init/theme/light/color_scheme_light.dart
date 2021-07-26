@@ -26,5 +26,6 @@ class ColorSchemeLight {
   final Color shamrock = const Color(0xff44CF9C);
   final Color doggerBlue = const Color(0xff3283F6);
   final Color mandy = const Color(0xffE95C5C);
+  final Color whisper = const Color(0xffF4F5F9);
 
 }
