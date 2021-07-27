@@ -1,4 +1,4 @@
-import 'package:crm_app/feature/mail/model/mail_model.dart';
+import '../../model/mail_model.dart';
 import 'package:flutter/material.dart';
 
 class IncomingView extends StatelessWidget {

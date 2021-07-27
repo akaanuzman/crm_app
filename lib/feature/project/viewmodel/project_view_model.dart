@@ -1,6 +1,7 @@
-import '../model/project_model.dart';
 import 'package:mobx/mobx.dart';
 import 'package:mysql1/mysql1.dart';
+
+import '../model/project_model.dart';
 
 part 'project_view_model.g.dart';
 

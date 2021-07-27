@@ -64,7 +64,7 @@ class TextThemeLight {
         ),
         bodyText1: TextStyle(
           color: Color(0xff3C4854),
-          fontSize: 18,
+          fontSize: 20,
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.normal,
         ),

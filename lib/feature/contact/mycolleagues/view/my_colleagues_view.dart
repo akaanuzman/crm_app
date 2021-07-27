@@ -1,4 +1,4 @@
-import 'package:crm_app/feature/contact/model/contact_model.dart';
+import '../../model/contact_model.dart';
 
 import 'package:flutter/material.dart';
 

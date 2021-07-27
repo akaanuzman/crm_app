@@ -1,8 +1,7 @@
-import 'feature/bottomtab/view/bottomtab_view.dart';
-
+import 'package:flutter/material.dart';
 
 import 'core/init/theme/light/app_theme_light.dart';
-import 'package:flutter/material.dart';
+import 'feature/bottomtab/view/bottomtab_view.dart';
 
 main(List<String> args) {
   runApp(const MyApp());

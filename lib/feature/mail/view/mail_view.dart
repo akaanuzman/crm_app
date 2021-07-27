@@ -1,12 +1,12 @@
-import 'package:crm_app/feature/bottomtab/model/bottomtab_model.dart';
-import 'package:crm_app/feature/mail/bin/view/bin_view.dart';
-import 'package:crm_app/feature/mail/draft/view/draft_view.dart';
-import 'package:crm_app/feature/mail/important/view/important_view.dart';
-import 'package:crm_app/feature/mail/incoming/view/incoming_view.dart';
-import 'package:crm_app/feature/mail/postponed/view/postponed_view.dart';
-import 'package:crm_app/feature/mail/send/view/send_view.dart';
-import 'package:crm_app/feature/mail/spam/view/spam_view.dart';
-import 'package:crm_app/feature/mail/star/view/star_view.dart';
+import '../../bottomtab/model/bottomtab_model.dart';
+import '../bin/view/bin_view.dart';
+import '../draft/view/draft_view.dart';
+import '../important/view/important_view.dart';
+import '../incoming/view/incoming_view.dart';
+import '../postponed/view/postponed_view.dart';
+import '../send/view/send_view.dart';
+import '../spam/view/spam_view.dart';
+import '../star/view/star_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:kartal/kartal.dart';
@@ -29,7 +29,7 @@ class MailView extends StatelessWidget {
           child: const PostponedView()),
       BottomTabModel(
           title: "Taslak",
-          icon: Icons.connect_without_contact,
+          icon: Icons.article_outlined,
           child: const DraftView()),
       BottomTabModel(
           title: "Gönderilenler",

@@ -1,6 +1,7 @@
 
-import '../divider/blue_divider.dart';
 import 'package:flutter/material.dart';
+
+import '../divider/blue_divider.dart';
 
 class BlueBar extends StatelessWidget {
   const BlueBar({Key? key}) : super(key: key);

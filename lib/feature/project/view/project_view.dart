@@ -1,25 +1,19 @@
-import 'dart:math';
-
 import 'package:boardview/boardview_controller.dart';
-import 'package:crm_app/feature/project/projectdetail/view/project_detail_view.dart';
-import '../../../core/components/text/body_text2_copy.dart';
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:kartal/kartal.dart';
+import 'package:popup_card/popup_card.dart';
 
 import '../../../core/components/row/row_circle_avatar.dart';
 import '../../../core/components/row/row_icon_text.dart';
 import '../../../core/components/row/row_space_between_text.dart';
-import '../../../product/widgets/stack/blue_bar.dart';
-
-import '../viewmodel/project_view_model.dart';
-
 import '../../../core/components/text/body_text1_copy.dart';
+import '../../../core/components/text/body_text2_copy.dart';
 import '../../../core/components/text/bold_text.dart';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:kartal/kartal.dart';
-import 'package:popup_card/popup_card.dart';
+import '../../../product/widgets/stack/blue_bar.dart';
+import '../projectdetail/view/project_detail_view.dart';
+import '../viewmodel/project_view_model.dart';
 
 // ignore: must_be_immutable
 class ProjectView extends StatefulWidget {
@@ -39,16 +33,18 @@ class ProjectView extends StatefulWidget {
 
 class _ProjectViewState extends State<ProjectView> {
   final BoardViewController boardViewController = BoardViewController();
-  final _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  final Random _rnd = Random();
-
-  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Projeler",
+          style: TextStyle(color: context.colorScheme.onSecondary),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Padding(
         padding: context.paddingLow,
         child: Column(
@@ -66,7 +62,7 @@ class _ProjectViewState extends State<ProjectView> {
           shape: RoundedRectangleBorder(borderRadius: context.highBorderRadius),
           child: Icon(
             Icons.add_rounded,
-            size: 56,
+            size: 48,
             color: context.colorScheme.onSurface,
           ),
         ),
@@ -88,49 +84,51 @@ class _ProjectViewState extends State<ProjectView> {
         itemBuilder: (context, index) => _buildProjectCard(context, index),
       );
 
-  Widget _buildProjectCard(BuildContext context, int index) => Slidable(
-        actionPane: const SlidableDrawerActionPane(),
-        actions: [
-          IconSlideAction(
-            color: context.colorScheme.primaryVariant,
-            caption: 'Sil',
-            icon: Icons.delete,
-            onTap: () {
-              setState(() {
-                widget._viewModel.deleteItem(index);
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: context.colorScheme.secondaryVariant,
-                  duration: context.durationSlow,
-                  content: BodyText2Copy(
-                    data: "Proje başarıyla silindi !",
-                    color: context.colorScheme.onSurface,
-                  ),
+  Widget _buildProjectCard(BuildContext context, int index) {
+    return Slidable(
+      actionPane: const SlidableDrawerActionPane(),
+      actions: [
+        IconSlideAction(
+          color: context.colorScheme.primaryVariant,
+          caption: 'Sil',
+          icon: Icons.delete,
+          onTap: () {
+            setState(() {
+              widget._viewModel.deleteItem(index);
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: context.colorScheme.secondaryVariant,
+                duration: context.durationSlow,
+                content: BodyText2Copy(
+                  data: "Proje başarıyla silindi !",
+                  color: context.colorScheme.onSurface,
                 ),
-              );
-            },
-          ),
-          IconSlideAction(
-            color: context.colorScheme.onPrimary,
-            foregroundColor: context.colorScheme.onSurface,
-            caption: 'Düzenle',
-            icon: Icons.edit,
-            onTap: () {
-              _showModalBottomSheet(context);
-            },
-          ),
-        ],
-        child: Card(
-          child: ListTile(
-            onTap: () {
-              goToNextPage(context, index);
-            },
-            title: BodyText1Copy(data: widget._viewModel.items[index].name),
-            subtitle: _buildSubtitle(context, index),
-          ),
+              ),
+            );
+          },
         ),
-      );
+        IconSlideAction(
+          color: context.colorScheme.onPrimary,
+          foregroundColor: context.colorScheme.onSurface,
+          caption: 'Düzenle',
+          icon: Icons.edit,
+          onTap: () {
+            _showModalBottomSheet(context);
+          },
+        ),
+      ],
+      child: Card(
+        child: ListTile(
+          onTap: () {
+            goToNextPage(context, index);
+          },
+          title: BodyText1Copy(data: widget._viewModel.items[index].name),
+          subtitle: _buildSubtitle(context, index),
+        ),
+      ),
+    );
+  }
 
   Column _buildSubtitle(BuildContext context, int index) => Column(
         mainAxisAlignment: MainAxisAlignment.start,

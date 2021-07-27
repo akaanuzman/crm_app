@@ -1,5 +1,5 @@
-import 'package:crm_app/core/components/text/body_text1_copy.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
+import '../../../../core/components/text/body_text1_copy.dart';
+import '../../../../core/components/text/body_text2_copy.dart';
 import 'package:popup_card/popup_card.dart';
 
 import '../viewmodel/project_detail_view_model.dart';
@@ -72,7 +72,18 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
       body: Padding(
         padding: context.paddingLow,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: context.paddingLow,
+              child: Text(
+                "Proje Detayları",
+                style: context.textTheme.headline4!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: context.colorScheme.onSecondary),
+              ),
+            ),
             Expanded(
               flex: 7,
               child: PageView(

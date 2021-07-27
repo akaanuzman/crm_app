@@ -1,4 +1,4 @@
-import 'package:crm_app/feature/mail/view/mail_view.dart';
+import '../../mail/view/mail_view.dart';
 
 import '../../contact/view/contact_view.dart';
 

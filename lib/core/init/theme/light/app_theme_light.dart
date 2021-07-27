@@ -39,11 +39,11 @@ class AppThemeLight extends IAppTheme with ILightTheme {
       secondaryVariant: colorSchemeLight.limedSpruce,
       surface: colorSchemeLight.doggerBlue, //xx
       background: colorSchemeLight.blackSqueeze, //xx
-      error: Colors.red,
+      error: colorSchemeLight.sun,
       onPrimary: colorSchemeLight.shamrock,
       onSecondary: Colors.black, //x
       onSurface: Colors.white,
       onBackground: Colors.grey,
-      onError: colorSchemeLight.sun, //xx
+      onError: colorSchemeLight.whisper, //xx
       brightness: Brightness.light);
 }
