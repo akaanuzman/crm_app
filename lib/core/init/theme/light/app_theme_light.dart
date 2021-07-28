@@ -44,6 +44,6 @@ class AppThemeLight extends IAppTheme with ILightTheme {
       onSecondary: Colors.black, //x
       onSurface: Colors.white,
       onBackground: Colors.grey,
-      onError: colorSchemeLight.whisper, //xx
+      onError: colorSchemeLight.royalBlue, //xx
       brightness: Brightness.light);
 }

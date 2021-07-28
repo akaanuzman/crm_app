@@ -125,6 +125,7 @@ class _ProjectViewState extends State<ProjectView> {
           },
           title: BodyText1Copy(data: widget._viewModel.items[index].name),
           subtitle: _buildSubtitle(context, index),
+          trailing: const Icon(Icons.keyboard_arrow_right),
         ),
       ),
     );
@@ -279,6 +280,21 @@ class PopUpItemBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: CircleAvatar(
+                backgroundColor: context.colorScheme.primaryVariant,
+                child: Icon(
+                  Icons.close,
+                  color: context.colorScheme.onSurface,
+                ),
+              ),
+            ),
+          ),
           Center(
             child: Padding(
                 padding: context.paddingLow,

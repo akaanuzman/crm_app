@@ -1,3 +1,5 @@
+import 'package:crm_app/feature/company/view/company_view.dart';
+
 import '../../mail/view/mail_view.dart';
 
 import '../../contact/view/contact_view.dart';
@@ -27,6 +29,8 @@ class BottomTabView extends StatelessWidget {
           child: const ContactView()),
       BottomTabModel(
           title: "Email", icon: Icons.email, child: const MailView()),
+      BottomTabModel(
+          title: "Şirket", icon: Icons.business, child: const CompanyView()),
     ];
 
     return DefaultTabController(

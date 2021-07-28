@@ -109,7 +109,7 @@ class ContactDetailView extends StatelessWidget {
                             width: double.infinity,
                             height: context.dynamicHeight(0.05),
                             padding: context.paddingLow,
-                            color: context.colorScheme.onError,
+                            color: context.colorScheme.onBackground,
                             child: Wrap(
                               // ignore: prefer_const_literals_to_create_immutables
                               crossAxisAlignment: WrapCrossAlignment.center,

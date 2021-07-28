@@ -53,7 +53,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
           shape: RoundedRectangleBorder(borderRadius: context.highBorderRadius),
           child: Icon(
             Icons.add_rounded,
-            size: 56,
+            size: 48,
             color: context.colorScheme.onSurface,
           ),
         ),
@@ -306,6 +306,21 @@ class PopUpItemBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: CircleAvatar(
+                backgroundColor: context.colorScheme.primaryVariant,
+                child: Icon(
+                  Icons.close,
+                  color: context.colorScheme.onSurface,
+                ),
+              ),
+            ),
+          ),
           Center(
             child: Padding(
               padding: context.paddingLow,

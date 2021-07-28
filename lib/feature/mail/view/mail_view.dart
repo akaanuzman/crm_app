@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:kartal/kartal.dart';
+
 import '../../bottomtab/model/bottomtab_model.dart';
 import '../bin/view/bin_view.dart';
 import '../draft/view/draft_view.dart';
@@ -7,9 +10,6 @@ import '../postponed/view/postponed_view.dart';
 import '../send/view/send_view.dart';
 import '../spam/view/spam_view.dart';
 import '../star/view/star_view.dart';
-import 'package:flutter/material.dart';
-
-import 'package:kartal/kartal.dart';
 
 class MailView extends StatelessWidget {
   const MailView({Key? key}) : super(key: key);

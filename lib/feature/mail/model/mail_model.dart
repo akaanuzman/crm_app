@@ -1,4 +1,4 @@
-import 'package:crm_app/core/components/text/body_text1_copy.dart';
+import '../../../core/components/text/body_text1_copy.dart';
 
 import '../../../core/components/text/body_text2_copy.dart';
 import 'package:flutter/material.dart';
@@ -179,12 +179,14 @@ class MailModel extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {},
-                        child: BodyText2Copy(data: "Yanıtla"),
+                        child: const BodyText2Copy(data: "Yanıtla"),
                       ),
                       context.emptySizedWidthBoxLow,
                       ElevatedButton(
-                        onPressed: () {},
-                        child: BodyText2Copy(data: "Vazgeç"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const BodyText2Copy(data: "Vazgeç"),
                         style: ElevatedButton.styleFrom(
                             primary: context.colorScheme.surface),
                       ),

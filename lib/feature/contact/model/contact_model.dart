@@ -213,6 +213,21 @@ class PopUpItemBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: CircleAvatar(
+                  backgroundColor: context.colorScheme.primaryVariant,
+                  child: Icon(
+                    Icons.close,
+                    color: context.colorScheme.onSurface,
+                  ),
+                ),
+              ),
+            ),
             Center(
               child: Padding(
                   padding: context.paddingLow,
@@ -297,7 +312,7 @@ class PopUpItemBody extends StatelessWidget {
               cursorColor: context.colorScheme.onSecondary,
               maxLines: 2,
             ),
-                        Padding(
+            Padding(
               padding: context.paddingLow,
               child: const Text("Meslek"),
             ),
