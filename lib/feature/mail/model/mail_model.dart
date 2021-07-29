@@ -1,3 +1,6 @@
+import '../viewmodel/mail_view_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 import '../../../core/components/text/body_text1_copy.dart';
 
 import '../../../core/components/text/body_text2_copy.dart';
@@ -7,8 +10,9 @@ import 'package:kartal/kartal.dart';
 
 class MailModel extends StatelessWidget {
   final String content;
+  final MailViewModel _viewModel = MailViewModel();
 
-  const MailModel({Key? key, required this.content}) : super(key: key);
+  MailModel({Key? key, required this.content}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,94 +112,168 @@ class MailModel extends StatelessWidget {
 
   _showModalBottomSheet(context) {
     showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SizedBox(
-            height: context.dynamicHeight(0.4),
-            child: Column(
-              children: [
-                context.emptySizedHeightBoxLow3x,
-                Divider(
-                  color: context.colorScheme.onBackground,
-                  indent: 20,
-                  endIndent: 20,
-                ),
-                Expanded(
-                    child: Padding(
-                  padding: context.paddingNormal,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        // ignore: prefer_const_literals_to_create_immutables
-                        children: [
+      context: context,
+      builder: (BuildContext context) {
+        return Observer(
+          builder: (_) {
+            return AnimatedContainer(
+              duration: context.durationSlow,
+              height: _viewModel.isContainerHeightChange
+                  ? context.dynamicHeight(0.3)
+                  : context.dynamicHeight(0.6),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  context.emptySizedHeightBoxLow,
+                  Divider(
+                    color: context.colorScheme.onBackground,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        // ignore: prefer_const_constructors
+                        CircleAvatar(
                           // ignore: prefer_const_constructors
-                          CircleAvatar(
-                            // ignore: prefer_const_constructors
-                            backgroundImage: NetworkImage(
-                                "http://192.168.3.53/assets/images/users/user0.jpg"),
-                            radius: 30,
+                          backgroundImage: NetworkImage(
+                              "http://192.168.3.53/assets/images/users/user0.jpg"),
+                          radius: 30,
+                        ),
+                        context.emptySizedWidthBoxLow,
+                        // ignore: prefer_const_constructors
+                        Expanded(
+                          // ignore: prefer_const_constructors
+                          child: ListTile(
+                            title: const BodyText1Copy(data: "Deneme Mail"),
+                            subtitle: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                BodyText2Copy(
+                                    data: "Kimden Geldi: ",
+                                    color: context.colorScheme.onBackground),
+                                BodyText2Copy(
+                                    data: "test@hotmail.com",
+                                    color: context.colorScheme.onBackground),
+                                context.emptySizedHeightBoxLow,
+                              ],
+                            ),
+                            trailing: const Text("2021-07-14 08:19:36"),
                           ),
-                          context.emptySizedWidthBoxLow,
-                          // ignore: prefer_const_constructors
-                          Expanded(
-                            // ignore: prefer_const_constructors
-                            child: ListTile(
-                              title: const BodyText1Copy(data: "Deneme Mail"),
-                              subtitle: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  BodyText2Copy(
-                                      data: "Kimden Geldi: ",
-                                      color: context.colorScheme.onBackground),
-                                  BodyText2Copy(
-                                      data: "test@hotmail.com",
-                                      color: context.colorScheme.onBackground),
-                                  context.emptySizedHeightBoxLow,
-                                ],
-                              ),
-                              trailing: const Text("2021-07-14 08:19:36"),
+                        ),
+                      ],
+                    ),
+                  ),
+                  context.emptySizedHeightBoxLow,
+                  Padding(
+                    padding: context.horizontalPaddingNormal,
+                    child: const Text("mesaj içeriği"),
+                  ),
+                  context.emptySizedHeightBoxLow,
+                  Divider(
+                    color: context.colorScheme.onBackground,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  _viewModel.isContainerHeightChange
+                      ? context.emptySizedWidthBoxLow
+                      : Expanded(
+                          child: Padding(
+                            padding: context.paddingLow,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: context.paddingLow,
+                                  child: const Text("Başlık"),
+                                ),
+                                TextField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Epostanızın başlığını giriniz.',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color:
+                                              context.colorScheme.onBackground),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color: context.colorScheme.surface),
+                                    ),
+                                  ),
+                                  cursorColor: context.colorScheme.onSecondary,
+                                ),
+                                context.emptySizedHeightBoxLow,
+                                Padding(
+                                  padding: context.paddingLow,
+                                  child: const Text("İçerik"),
+                                ),
+                                TextField(
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color:
+                                              context.colorScheme.onBackground),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color: context.colorScheme.surface),
+                                    ),
+                                  ),
+                                  cursorColor: context.colorScheme.onSecondary,
+                                  maxLines: 2,
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                      context.emptySizedHeightBoxLow3x,
-                      const Text("mesaj içeriği"),
-                      context.emptySizedHeightBoxLow3x,
-                      Divider(
-                        color: context.colorScheme.onBackground,
-                        endIndent: 2,
-                      ),
-                    ],
+                        ),
+                  Padding(
+                    padding: context.horizontalPaddingLow,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        _viewModel.isContainerHeightChange
+                            ? context.emptySizedHeightBoxLow
+                            : ElevatedButton(
+                                onPressed: () {},
+                                child: const BodyText2Copy(data: "Kaydet"),
+                                style: ElevatedButton.styleFrom(
+                                    primary:
+                                        context.colorScheme.primaryVariant),
+                              ),
+                        context.emptySizedWidthBoxLow,
+                        ElevatedButton(
+                          onPressed: () {
+                            _viewModel.changeContainerHeight();
+                          },
+                          child: const BodyText2Copy(data: "Yanıtla"),
+                        ),
+                        context.emptySizedWidthBoxLow,
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const BodyText2Copy(data: "Vazgeç"),
+                          style: ElevatedButton.styleFrom(
+                              primary: context.colorScheme.surface),
+                        ),
+                      ],
+                    ),
                   ),
-                )),
-                Padding(
-                  padding: context.paddingLow,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const BodyText2Copy(data: "Yanıtla"),
-                      ),
-                      context.emptySizedWidthBoxLow,
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const BodyText2Copy(data: "Vazgeç"),
-                        style: ElevatedButton.styleFrom(
-                            primary: context.colorScheme.surface),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

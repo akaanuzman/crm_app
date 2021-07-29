@@ -6,6 +6,6 @@ class ImportantView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MailModel(content: "önemli mail");
+    return MailModel(content: "önemli mail");
   }
 }

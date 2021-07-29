@@ -1,4 +1,6 @@
-import 'package:crm_app/feature/company/view/company_view.dart';
+import '../../profile/view/profile_view.dart';
+
+import '../../company/view/company_view.dart';
 
 import '../../mail/view/mail_view.dart';
 
@@ -89,10 +91,15 @@ class BottomTabView extends StatelessWidget {
           ),
           context.emptySizedHeightBoxLow,
           Expanded(
-            child: CardIconText(
-              cardColor: ColorSchemeLight.instance.limedSpruce,
-              text: "Profilim",
-              icon: Icons.account_circle,
+            child: InkWell(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const ProfileView()));
+              },
+              child: CardIconText(
+                cardColor: ColorSchemeLight.instance.limedSpruce,
+                text: "Profilim",
+                icon: Icons.account_circle,
+              ),
             ),
           ),
           Expanded(

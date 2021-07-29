@@ -6,6 +6,6 @@ class StarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MailModel(content: "yıldızlı mail");
+    return MailModel(content: "yıldızlı mail");
   }
 }

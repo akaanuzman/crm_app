@@ -7,6 +7,6 @@ class BinView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MailModel(content: "çöp mail");
+    return MailModel(content: "çöp mail");
   }
 }

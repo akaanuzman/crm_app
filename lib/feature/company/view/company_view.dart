@@ -1,6 +1,6 @@
-import 'package:crm_app/core/components/text/body_text1_copy.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
-import 'package:crm_app/feature/company/company_detail/view/company_detail_view.dart';
+import '../../../core/components/text/body_text1_copy.dart';
+import '../../../core/components/text/body_text2_copy.dart';
+import '../company_detail/view/company_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
@@ -47,15 +47,16 @@ class CompanyView extends StatelessWidget {
         itemBuilder: (context, index) => Card(
           // ignore: prefer_const_constructors
           child: InkWell(
-            onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CompanyDetailView()));
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const CompanyDetailView()));
             },
             child: ExpansionTile(
               // ignore: prefer_const_constructors
               title: BodyText2Copy(data: "Kuvarssoft"),
               leading: const CircleAvatar(
-                backgroundImage:
-                    NetworkImage("http://192.168.3.53/assets/images/logo-sm.png"),
+                backgroundImage: NetworkImage(
+                    "http://192.168.3.53/assets/images/logo-sm.png"),
               ),
               expandedAlignment: Alignment.centerLeft,
               children: [
@@ -66,7 +67,8 @@ class CompanyView extends StatelessWidget {
                     children: [
                       Text(
                         "Email",
-                        style: TextStyle(color: context.colorScheme.onBackground),
+                        style:
+                            TextStyle(color: context.colorScheme.onBackground),
                       ),
                       context.emptySizedWidthBoxLow3x,
                       const Text("test@gmail.com"),
@@ -84,7 +86,8 @@ class CompanyView extends StatelessWidget {
                     children: [
                       Text(
                         "Telefon",
-                        style: TextStyle(color: context.colorScheme.onBackground),
+                        style:
+                            TextStyle(color: context.colorScheme.onBackground),
                       ),
                       context.emptySizedWidthBoxLow3x,
                       const Text("555 555 55 55"),
@@ -102,7 +105,8 @@ class CompanyView extends StatelessWidget {
                     children: [
                       Text(
                         "Vergi Dairesi",
-                        style: TextStyle(color: context.colorScheme.onBackground),
+                        style:
+                            TextStyle(color: context.colorScheme.onBackground),
                       ),
                       context.emptySizedWidthBoxLow3x,
                       const Text("Kütahya Vergi Dairesi"),
@@ -120,7 +124,8 @@ class CompanyView extends StatelessWidget {
                     children: [
                       Text(
                         "Vergi Numarası",
-                        style: TextStyle(color: context.colorScheme.onBackground),
+                        style:
+                            TextStyle(color: context.colorScheme.onBackground),
                       ),
                       context.emptySizedWidthBoxLow3x,
                       const Text("123456"),
@@ -138,7 +143,8 @@ class CompanyView extends StatelessWidget {
                     children: [
                       Text(
                         "Konum",
-                        style: TextStyle(color: context.colorScheme.onBackground),
+                        style:
+                            TextStyle(color: context.colorScheme.onBackground),
                       ),
                       context.emptySizedWidthBoxLow3x,
                       const Text("Kütahya/Türkiye"),
@@ -293,20 +299,31 @@ class PopUpItemBody extends StatelessWidget {
               color: context.colorScheme.secondaryVariant,
               thickness: 0.4,
             ),
-            Center(
-              child: TextButton(
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      const Icon(Icons.add),
-                      context.emptySizedWidthBoxLow,
-                      const BodyText2Copy(
-                        data: "Ekle",
-                      ),
-                    ],
-                  )),
+            Padding(
+              padding: context.paddingLow,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: BodyText2Copy(
+                        data: "Vazgeç", color: context.colorScheme.onSurface),
+                    style: ElevatedButton.styleFrom(
+                        primary: context.colorScheme.secondaryVariant),
+                  ),
+                  context.emptySizedWidthBoxLow,
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: BodyText2Copy(
+                        data: "Kaydet", color: context.colorScheme.onSurface),
+                    style: ElevatedButton.styleFrom(
+                        primary: context.colorScheme.surface),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -1,12 +1,12 @@
 
+import 'package:flutter/material.dart';
+import 'package:kartal/kartal.dart';
+
+import '../../bottomtab/model/bottomtab_model.dart';
 import '../mycolleagues/view/my_colleagues_view.dart';
 import '../mycontacts/view/my_contacts_view.dart';
 import '../mycustomers/view/my_customers_view.dart';
 import '../myfriends/view/my_friends_view.dart';
-import 'package:flutter/material.dart';
-
-import '../../bottomtab/model/bottomtab_model.dart';
-import 'package:kartal/kartal.dart';
 
 class ContactView extends StatelessWidget {
   const ContactView({Key? key}) : super(key: key);

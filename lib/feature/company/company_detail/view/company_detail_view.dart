@@ -1,5 +1,5 @@
-import 'package:crm_app/core/components/text/body_text1_copy.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
+import '../../../../core/components/text/body_text1_copy.dart';
+import '../../../../core/components/text/body_text2_copy.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
@@ -56,192 +56,221 @@ class CompanyDetailView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                  // ignore: prefer_const_constructors
-                  child: Column(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: context.paddingLow,
-                      child: Card(
-                        child: Padding(
-                          padding: context.paddingNormal,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                radius: 40,
-                                child: Icon(
-                                  Icons.person,
-                                  size: context.dynamicWidth(0.1),
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  BodyText1Copy(
-                                    data: "15",
-                                    color: context.colorScheme.onSecondary,
-                                  ),
-                                  context.emptySizedHeightBoxLow,
-                                  const BodyText2Copy(data: "Çalışan Sayısı"),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-              Expanded(
-                  // ignore: prefer_const_constructors
-                  child: Column(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: context.paddingLow,
-                      child: Card(
-                        child: Padding(
-                          padding: context.paddingNormal,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                radius: 40,
-                                child: Icon(
-                                  Icons.call,
-                                  size: context.dynamicWidth(0.1),
-                                ),
-                                backgroundColor: context.colorScheme.error,
-                                foregroundColor: context.colorScheme.onSurface,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  BodyText1Copy(
-                                    data: "555 555 55 55",
-                                    color: context.colorScheme.onSecondary,
-                                  ),
-                                  context.emptySizedHeightBoxLow,
-                                  const BodyText2Copy(data: "Telefon"),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-              Expanded(
-                  // ignore: prefer_const_constructors
-                  child: Column(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: context.paddingLow,
-                      child: Card(
-                        child: Padding(
-                          padding: context.paddingNormal,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                radius: 40,
-                                child: Icon(
-                                  Icons.event,
-                                  size: context.dynamicWidth(0.1),
-                                ),
-                                backgroundColor: context.colorScheme.onPrimary,
-                                foregroundColor: context.colorScheme.onSurface,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  BodyText1Copy(
-                                    data: "bişeyler.com",
-                                    color: context.colorScheme.onSecondary,
-                                  ),
-                                  context.emptySizedHeightBoxLow,
-                                  const BodyText2Copy(data: "Web Site"),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-              Expanded(
-                  // ignore: prefer_const_constructors
-                  child: Column(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: context.paddingLow,
-                      child: Card(
-                        child: Padding(
-                          padding: context.paddingNormal,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CircleAvatar(
-                                radius: 40,
-                                child: Icon(
-                                  Icons.email,
-                                  size: context.dynamicWidth(0.1),
-                                ),
-                                backgroundColor:
-                                    context.colorScheme.primaryVariant,
-                                foregroundColor: context.colorScheme.onSurface,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  BodyText1Copy(
-                                    data: "falan@gmail.com",
-                                    color: context.colorScheme.onSecondary,
-                                  ),
-                                  context.emptySizedHeightBoxLow,
-                                  const BodyText2Copy(data: "Eposta:"),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-              context.emptySizedHeightBoxLow3x,
-              Expanded(
-                  flex: 4,
-                  child: Padding(
-                    padding: context.paddingLow,
-                    child: Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
+                // ignore: prefer_const_constructors
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: context.paddingLow,
+                        child: Card(
+                          child: Padding(
                             padding: context.paddingNormal,
-                            child: Text(
-                              "Çalışanlar",
-                              style: context.textTheme.headline4!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: context.colorScheme.onSecondary),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CircleAvatar(
+                                  radius: 40,
+                                  child: Icon(
+                                    Icons.person,
+                                    size: context.dynamicWidth(0.1),
+                                  ),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    BodyText1Copy(
+                                      data: "15",
+                                      color: context.colorScheme.onSecondary,
+                                    ),
+                                    context.emptySizedHeightBoxLow,
+                                    const BodyText2Copy(data: "Çalışan Sayısı"),
+                                  ],
+                                )
+                              ],
                             ),
                           ),
-                          Expanded(
-                              child: ListView.builder(
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                // ignore: prefer_const_constructors
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: context.paddingLow,
+                        child: Card(
+                          child: Padding(
+                            padding: context.paddingNormal,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CircleAvatar(
+                                  radius: 40,
+                                  child: Icon(
+                                    Icons.call,
+                                    size: context.dynamicWidth(0.1),
+                                  ),
+                                  backgroundColor: context.colorScheme.error,
+                                  foregroundColor:
+                                      context.colorScheme.onSurface,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    BodyText1Copy(
+                                      data: "555 555 55 55",
+                                      color: context.colorScheme.onSecondary,
+                                    ),
+                                    context.emptySizedHeightBoxLow,
+                                    const BodyText2Copy(data: "Telefon"),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                // ignore: prefer_const_constructors
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: context.paddingLow,
+                        child: Card(
+                          child: Padding(
+                            padding: context.paddingNormal,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CircleAvatar(
+                                  radius: 40,
+                                  child: Icon(
+                                    Icons.event,
+                                    size: context.dynamicWidth(0.1),
+                                  ),
+                                  backgroundColor:
+                                      context.colorScheme.onPrimary,
+                                  foregroundColor:
+                                      context.colorScheme.onSurface,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    BodyText1Copy(
+                                      data: "bişeyler.com",
+                                      color: context.colorScheme.onSecondary,
+                                    ),
+                                    context.emptySizedHeightBoxLow,
+                                    const BodyText2Copy(data: "Web Site"),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                // ignore: prefer_const_constructors
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: context.paddingLow,
+                        child: Card(
+                          child: Padding(
+                            padding: context.paddingNormal,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CircleAvatar(
+                                  radius: 40,
+                                  child: Icon(
+                                    Icons.email,
+                                    size: context.dynamicWidth(0.1),
+                                  ),
+                                  backgroundColor:
+                                      context.colorScheme.primaryVariant,
+                                  foregroundColor:
+                                      context.colorScheme.onSurface,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    BodyText1Copy(
+                                      data: "falan@gmail.com",
+                                      color: context.colorScheme.onSecondary,
+                                    ),
+                                    context.emptySizedHeightBoxLow,
+                                    const BodyText2Copy(data: "Eposta:"),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              context.emptySizedHeightBoxLow3x,
+              Expanded(
+                flex: 4,
+                child: Padding(
+                  padding: context.paddingLow,
+                  child: Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: context.paddingNormal,
+                              child: Text(
+                                "Çalışanlar",
+                                style: context.textTheme.headline4!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: context.colorScheme.onSecondary),
+                              ),
+                            ),
+                            Padding(
+                              padding: context.horizontalPaddingNormal,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  _showModalBottomSheet(context);
+                                },
+                                child: Text(
+                                  "Çalışan Ekle",
+                                  style: TextStyle(
+                                      color: context.colorScheme.onSurface),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary: context.colorScheme.onError,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Expanded(
+                          child: ListView.builder(
                             itemCount: 10,
                             itemBuilder: (context, index) => ExpansionTile(
                               // ignore: prefer_const_constructors
@@ -268,8 +297,8 @@ class CompanyDetailView extends StatelessWidget {
                                       Text(
                                         "Konum",
                                         style: TextStyle(
-                                            color:
-                                                context.colorScheme.onBackground),
+                                            color: context
+                                                .colorScheme.onBackground),
                                       ),
                                       context.emptySizedWidthBoxLow3x,
                                       const Text("Kütahya"),
@@ -288,8 +317,8 @@ class CompanyDetailView extends StatelessWidget {
                                       Text(
                                         "Doğum Tarihi",
                                         style: TextStyle(
-                                            color:
-                                                context.colorScheme.onBackground),
+                                            color: context
+                                                .colorScheme.onBackground),
                                       ),
                                       context.emptySizedWidthBoxLow3x,
                                       const Text("2001-12-25"),
@@ -303,11 +332,13 @@ class CompanyDetailView extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ))
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
-                  )),
+                  ),
+                ),
+              ),
               context.emptySizedHeightBoxLow3x,
               Expanded(
                 flex: 4,
@@ -441,6 +472,92 @@ class CompanyDetailView extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  _showModalBottomSheet(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: context.dynamicHeight(0.6),
+          padding: context.paddingNormal,
+          decoration: BoxDecoration(
+            color: context.colorScheme.onSurface,
+            borderRadius: BorderRadius.only(
+              topLeft: context.highadius,
+              topRight: context.highadius,
+            ),
+          ),
+          child: Column(
+            children: [
+              Row(
+                // ignore: prefer_const_literals_to_create_immutables
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const BodyText1Copy(data: "Çalışan Ekle"),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: context.colorScheme.primaryVariant,
+                      child: Icon(
+                        Icons.close,
+                        color: context.colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              context.emptySizedHeightBoxLow3x,
+              Expanded(
+                child: Container(
+                  padding: context.paddingNormal,
+                  decoration: BoxDecoration(
+                    border:
+                        Border.all(color: context.colorScheme.secondaryVariant),
+                  ),
+                  child: ListView.builder(
+                    itemBuilder: (context, index) => const Card(
+                      elevation: 4,
+                      child: ListTile(
+                        title: BodyText2Copy(data: "çalisan ismi"),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: context.paddingLow,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: BodyText2Copy(
+                          data: "Vazgeç", color: context.colorScheme.onSurface),
+                      style: ElevatedButton.styleFrom(
+                          primary: context.colorScheme.secondaryVariant),
+                    ),
+                    context.emptySizedWidthBoxLow,
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: BodyText2Copy(
+                          data: "Ekle", color: context.colorScheme.onSurface),
+                      style: ElevatedButton.styleFrom(
+                          primary: context.colorScheme.surface),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -663,20 +780,31 @@ class PopUpItemBody extends StatelessWidget {
               color: context.colorScheme.secondaryVariant,
               thickness: 0.4,
             ),
-            Center(
-              child: TextButton(
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      const Icon(Icons.add),
-                      context.emptySizedWidthBoxLow,
-                      const BodyText2Copy(
-                        data: "Ekle",
-                      ),
-                    ],
-                  )),
+            Padding(
+              padding: context.paddingLow,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: BodyText2Copy(
+                        data: "Vazgeç", color: context.colorScheme.onSurface),
+                    style: ElevatedButton.styleFrom(
+                        primary: context.colorScheme.secondaryVariant),
+                  ),
+                  context.emptySizedWidthBoxLow,
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: BodyText2Copy(
+                        data: "Kaydet", color: context.colorScheme.onSurface),
+                    style: ElevatedButton.styleFrom(
+                        primary: context.colorScheme.surface),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

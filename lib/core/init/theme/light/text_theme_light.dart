@@ -82,7 +82,7 @@ class TextThemeLight {
         ),
         button: TextStyle(
           color: Color(0xff3C4854),
-          fontSize: 14,
+          fontSize: 16,
           fontWeight: FontWeight.w400,
           fontStyle: FontStyle.normal,
         ),

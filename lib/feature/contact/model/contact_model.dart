@@ -121,7 +121,7 @@ class ContactModel extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: context.dynamicHeight(0.4),
+            height: context.dynamicHeight(0.41),
             padding: context.paddingNormal,
             decoration: BoxDecoration(
               color: context.colorScheme.onSurface,
@@ -178,20 +178,33 @@ class ContactModel extends StatelessWidget {
                   color: context.colorScheme.secondaryVariant,
                   thickness: 0.4,
                 ),
-                Center(
-                  child: TextButton(
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        // ignore: prefer_const_literals_to_create_immutables
-                        children: [
-                          const Icon(Icons.save),
-                          context.emptySizedWidthBoxLow,
-                          const BodyText2Copy(
+                Padding(
+                  padding: context.paddingLow,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: BodyText2Copy(
+                            data: "Vazgeç",
+                            color: context.colorScheme.onSurface),
+                        style: ElevatedButton.styleFrom(
+                            primary: context.colorScheme.secondaryVariant),
+                      ),
+                      context.emptySizedWidthBoxLow,
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: BodyText2Copy(
                             data: "Kaydet",
-                          ),
-                        ],
-                      )),
+                            color: context.colorScheme.onSurface),
+                        style: ElevatedButton.styleFrom(
+                            primary: context.colorScheme.surface),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -337,20 +350,31 @@ class PopUpItemBody extends StatelessWidget {
               color: context.colorScheme.secondaryVariant,
               thickness: 0.4,
             ),
-            Center(
-              child: TextButton(
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      const Icon(Icons.add),
-                      context.emptySizedWidthBoxLow,
-                      const BodyText2Copy(
-                        data: "Ekle",
-                      ),
-                    ],
-                  )),
+            Padding(
+              padding: context.paddingLow,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: BodyText2Copy(
+                        data: "Vazgeç", color: context.colorScheme.onSurface),
+                    style: ElevatedButton.styleFrom(
+                        primary: context.colorScheme.secondaryVariant),
+                  ),
+                  context.emptySizedWidthBoxLow,
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: BodyText2Copy(
+                        data: "Ekle", color: context.colorScheme.onSurface),
+                    style: ElevatedButton.styleFrom(
+                        primary: context.colorScheme.surface),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
