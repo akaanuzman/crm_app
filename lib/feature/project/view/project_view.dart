@@ -90,6 +90,11 @@ class _ProjectViewState extends State<ProjectView> {
       );
 
   Widget _buildProjectCard(BuildContext context, int index) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+
+    double height = mediaQuery.size.height;
+
+    double radius = height * 0.02;
     return Slidable(
       actionPane: const SlidableDrawerActionPane(),
       actions: [
@@ -98,19 +103,7 @@ class _ProjectViewState extends State<ProjectView> {
           caption: 'Sil',
           icon: Icons.delete,
           onTap: () {
-            setState(() {
-              widget._viewModel.deleteItem(index);
-            });
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: context.colorScheme.secondaryVariant,
-                duration: context.durationSlow,
-                content: BodyText2Copy(
-                  data: "Proje başarıyla silindi !",
-                  color: context.colorScheme.onSurface,
-                ),
-              ),
-            );
+            _showDialog(context, index,radius);
           },
         ),
         IconSlideAction(
@@ -119,7 +112,7 @@ class _ProjectViewState extends State<ProjectView> {
           caption: 'Düzenle',
           icon: Icons.edit,
           onTap: () {
-            _showModalBottomSheet(context);
+            _showModalBottomSheet(context,radius);
           },
         ),
       ],
@@ -190,12 +183,15 @@ class _ProjectViewState extends State<ProjectView> {
     );
   }
 
-  _showModalBottomSheet(context) {
+  _showModalBottomSheet(context,double radius) {
     showModalBottomSheet(
         context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(radius),
+        ),
         builder: (BuildContext context) {
           return Container(
-            height: context.dynamicHeight(0.41),
+            height: context.dynamicHeight(0.48),
             padding: context.paddingNormal,
             decoration: BoxDecoration(
               color: context.colorScheme.onSurface,
@@ -206,6 +202,16 @@ class _ProjectViewState extends State<ProjectView> {
             ),
             child: Column(
               children: [
+                Center(
+                  child: Container(
+                    height: context.dynamicWidth(0.03),
+                    width: context.dynamicWidth(0.2),
+                    decoration: BoxDecoration(
+                        borderRadius: context.lowBorderRadius,
+                        color: context.colorScheme.background),
+                  ),
+                ),
+                context.emptySizedHeightBoxLow3x,
                 Padding(
                   padding: context.paddingLow,
                   child: const Text("Proje Adı"),
@@ -248,7 +254,7 @@ class _ProjectViewState extends State<ProjectView> {
                   cursorColor: context.colorScheme.onSecondary,
                   maxLines: 2,
                 ),
-                context.emptySizedHeightBoxLow,
+                context.emptySizedHeightBoxLow3x,
                 Divider(
                   color: context.colorScheme.secondaryVariant,
                   thickness: 0.4,
@@ -285,6 +291,55 @@ class _ProjectViewState extends State<ProjectView> {
             ),
           );
         });
+  }
+
+  _showDialog(BuildContext context, int index, double radius) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius),
+              ),
+              title: const BodyText1Copy(
+                  data: "Projenizi silmek istediğinizden emin misiniz ?"),
+              content: const BodyText2Copy(
+                  data: "Proje kalıcı olarak silinecektir."),
+              actions: [
+                ElevatedButton(
+                  child: Text("Evet",
+                      style: TextStyle(color: context.colorScheme.onSurface)),
+                  style: ElevatedButton.styleFrom(
+                      primary: context.colorScheme.primaryVariant),
+                  onPressed: () {
+                    setState(() {
+                      widget._viewModel.deleteItem(index);
+                    });
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: context.colorScheme.secondaryVariant,
+                        duration: context.durationSlow,
+                        content: BodyText2Copy(
+                          data: "Proje başarıyla silindi !",
+                          color: context.colorScheme.onSurface,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: context.colorScheme.secondaryVariant),
+                  child: Text(
+                    "Hayır",
+                    style: TextStyle(color: context.colorScheme.onSurface),
+                  ),
+                )
+              ],
+            ));
   }
 }
 

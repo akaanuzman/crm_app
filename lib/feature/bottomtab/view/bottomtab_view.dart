@@ -1,4 +1,4 @@
-import '../../profile/view/profile_view.dart';
+import '../../profile/view/profile_tabbar_view.dart';
 
 import '../../company/view/company_view.dart';
 
@@ -92,8 +92,9 @@ class BottomTabView extends StatelessWidget {
           context.emptySizedHeightBoxLow,
           Expanded(
             child: InkWell(
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const ProfileView()));
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ProfileTabbarView()));
               },
               child: CardIconText(
                 cardColor: ColorSchemeLight.instance.limedSpruce,

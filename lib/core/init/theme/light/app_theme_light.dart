@@ -38,7 +38,7 @@ class AppThemeLight extends IAppTheme with ILightTheme {
       secondary: colorSchemeLight.athensGray,
       secondaryVariant: colorSchemeLight.limedSpruce,
       surface: colorSchemeLight.doggerBlue, //xx
-      background: colorSchemeLight.blackSqueeze, //xx
+      background: Colors.grey.shade300, //xx
       error: colorSchemeLight.sun,
       onPrimary: colorSchemeLight.shamrock,
       onSecondary: Colors.black, //x

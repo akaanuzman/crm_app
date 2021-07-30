@@ -18,7 +18,15 @@ class MailModel extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateTime time = DateTime.now();
     final DateTime today = DateTime(time.year, time.month, time.day);
+
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+
+    double height = mediaQuery.size.height;
+
+    double radius = height * 0.02;
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           "Gelen Kutusu",
@@ -43,20 +51,7 @@ class MailModel extends StatelessWidget {
                         caption: 'Sil',
                         icon: Icons.delete,
                         onTap: () {
-                          // setState(() {
-                          //   widget._viewModel.deleteItem(index);
-                          // });
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor:
-                                  context.colorScheme.secondaryVariant,
-                              duration: context.durationSlow,
-                              content: BodyText2Copy(
-                                data: "Mail başarıyla silindi !",
-                                color: context.colorScheme.onSurface,
-                              ),
-                            ),
-                          );
+                          _showDialog(context, radius);
                         },
                       ),
                       IconSlideAction(
@@ -88,7 +83,7 @@ class MailModel extends StatelessWidget {
                         title: Text(content),
                         trailing: Text(today.toString().substring(0, 10)),
                         onTap: () {
-                          _showModalBottomSheet(context);
+                          _showModalBottomSheet(context,radius);
                         },
                       ),
                     ),
@@ -110,28 +105,43 @@ class MailModel extends StatelessWidget {
     );
   }
 
-  _showModalBottomSheet(context) {
+  _showModalBottomSheet(context, double radius) {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(radius),
+      ),
       builder: (BuildContext context) {
         return Observer(
           builder: (_) {
             return AnimatedContainer(
-              duration: context.durationSlow,
+              duration: context.durationNormal,
+              padding: context.paddingNormal,
               height: _viewModel.isContainerHeightChange
-                  ? context.dynamicHeight(0.3)
-                  : context.dynamicHeight(0.6),
+                  ? context.dynamicHeight(0.4)
+                  : context.dynamicHeight(0.82),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   context.emptySizedHeightBoxLow,
+                  Center(
+                    child: Container(
+                      height: context.dynamicWidth(0.03),
+                      width: context.dynamicWidth(0.2),
+                      decoration: BoxDecoration(
+                          borderRadius: context.lowBorderRadius,
+                          color: context.colorScheme.background),
+                    ),
+                  ),
+                  context.emptySizedHeightBoxLow3x,
                   Divider(
                     color: context.colorScheme.onBackground,
                     indent: 20,
                     endIndent: 20,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: context.paddingLow,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       // ignore: prefer_const_literals_to_create_immutables
@@ -215,6 +225,7 @@ class MailModel extends StatelessWidget {
                                 ),
                                 TextField(
                                   decoration: InputDecoration(
+                                    hintText: "Eposta içeriğini giriniz.",
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: context.lowBorderRadius,
                                       borderSide: BorderSide(
@@ -228,14 +239,14 @@ class MailModel extends StatelessWidget {
                                     ),
                                   ),
                                   cursorColor: context.colorScheme.onSecondary,
-                                  maxLines: 2,
+                                  maxLines: 8,
                                 ),
                               ],
                             ),
                           ),
                         ),
                   Padding(
-                    padding: context.horizontalPaddingLow,
+                    padding: context.paddingLow,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -275,5 +286,54 @@ class MailModel extends StatelessWidget {
         );
       },
     );
+  }
+
+  _showDialog(BuildContext context, double radius) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius),
+              ),
+              title: const BodyText1Copy(
+                  data: "Kişiyi silmek istediğinizden emin misiniz ?"),
+              content:
+                  const BodyText2Copy(data: "Kişi kalıcı olarak silinecektir."),
+              actions: [
+                ElevatedButton(
+                  child: Text("Evet",
+                      style: TextStyle(color: context.colorScheme.onSurface)),
+                  style: ElevatedButton.styleFrom(
+                      primary: context.colorScheme.surface),
+                  onPressed: () {
+                    // setState(() {
+                    //   widget._viewModel.deleteItem(index);
+                    // });
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: context.colorScheme.secondaryVariant,
+                        duration: context.durationSlow,
+                        content: BodyText2Copy(
+                          data: "Eposta başarıyla silindi !",
+                          color: context.colorScheme.onSurface,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: context.colorScheme.secondaryVariant),
+                  child: Text(
+                    "Hayır",
+                    style: TextStyle(color: context.colorScheme.onSurface),
+                  ),
+                )
+              ],
+            ));
   }
 }
