@@ -1,3 +1,5 @@
+import 'package:crm_app/feature/profile/profile_edit/view/profile_edit_view.dart';
+
 import '../../bottomtab/model/bottomtab_model.dart';
 import 'profile_view.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,7 @@ class ProfileTabbarView extends StatelessWidget {
       BottomTabModel(
           title: "Düzenle",
           icon: Icons.edit,
-          child: const Scaffold()),
+          child: const ProfileEditView()),
     ];
     return DefaultTabController(
       length: items.length,
