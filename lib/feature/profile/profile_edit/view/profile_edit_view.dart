@@ -1,5 +1,5 @@
-import 'package:crm_app/core/components/text/body_text1_copy.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
+import '../../../../core/components/text/body_text1_copy.dart';
+import '../../../../core/components/text/body_text2_copy.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:geira_icons/geira_icons.dart';
