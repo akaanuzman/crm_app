@@ -1,4 +1,5 @@
-import '../../model/mail_model.dart';
+import '../../view/mail_view.dart';
+
 import 'package:flutter/material.dart';
 
 class SendView extends StatelessWidget {
@@ -6,6 +7,6 @@ class SendView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MailModel(content: "gönderilen mail");
+    return MailView(content: "gönderilen mail");
   }
 }

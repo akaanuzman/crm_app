@@ -9,6 +9,11 @@ class CompanyDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+
+    double height = mediaQuery.size.height;
+
+    double radius = height * 0.02;
     return Scaffold(
       appBar: AppBar(
         title: Image.network(
@@ -255,7 +260,7 @@ class CompanyDetailView extends StatelessWidget {
                               padding: context.horizontalPaddingNormal,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  _showModalBottomSheet(context);
+                                  _showModalBottomSheet(context, radius);
                                 },
                                 child: Text(
                                   "Çalışan Ekle",
@@ -475,12 +480,16 @@ class CompanyDetailView extends StatelessWidget {
     );
   }
 
-  _showModalBottomSheet(context) {
+  _showModalBottomSheet(context, double radius) {
     showModalBottomSheet(
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(radius),
+      ),
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: context.dynamicHeight(0.6),
+          height: context.dynamicHeight(0.7),
           padding: context.paddingNormal,
           decoration: BoxDecoration(
             color: context.colorScheme.onSurface,
@@ -491,6 +500,17 @@ class CompanyDetailView extends StatelessWidget {
           ),
           child: Column(
             children: [
+              context.emptySizedHeightBoxLow,
+              Center(
+                child: Container(
+                  height: context.dynamicWidth(0.03),
+                  width: context.dynamicWidth(0.2),
+                  decoration: BoxDecoration(
+                      borderRadius: context.lowBorderRadius,
+                      color: context.colorScheme.background),
+                ),
+              ),
+              context.emptySizedHeightBoxLow3x,
               Row(
                 // ignore: prefer_const_literals_to_create_immutables
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

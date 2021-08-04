@@ -1,81 +1,353 @@
+import '../viewmodel/mail_view_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
+import '../../../core/components/text/body_text1_copy.dart';
+
+import '../../../core/components/text/body_text2_copy.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kartal/kartal.dart';
 
-import '../../bottomtab/model/bottomtab_model.dart';
-import '../bin/view/bin_view.dart';
-import '../draft/view/draft_view.dart';
-import '../important/view/important_view.dart';
-import '../incoming/view/incoming_view.dart';
-import '../postponed/view/postponed_view.dart';
-import '../send/view/send_view.dart';
-import '../spam/view/spam_view.dart';
-import '../star/view/star_view.dart';
-
 class MailView extends StatelessWidget {
-  const MailView({Key? key}) : super(key: key);
+  final String content;
+  final MailViewModel _viewModel = MailViewModel();
+
+  MailView({Key? key, required this.content}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<BottomTabModel> items = [
-      BottomTabModel(
-          title: "Gelen", icon: Icons.people, child: const IncomingView()),
-      BottomTabModel(
-          title: "Yıldızlı",
-          icon: Icons.star_border_outlined,
-          child: const StarView()),
-      BottomTabModel(
-          title: "Ertelendi",
-          icon: Icons.schedule_outlined,
-          child: const PostponedView()),
-      BottomTabModel(
-          title: "Taslak",
-          icon: Icons.article_outlined,
-          child: const DraftView()),
-      BottomTabModel(
-          title: "Gönderilenler",
-          icon: Icons.send_outlined,
-          child: const SendView()),
-      BottomTabModel(
-          title: "Çöp Kutusu",
-          icon: Icons.delete_forever_outlined,
-          child: const BinView()),
-      BottomTabModel(
-          title: "Önemli",
-          icon: Icons.label_important_outline,
-          child: const ImportantView()),
-      BottomTabModel(
-          title: "Spam",
-          icon: Icons.warning_amber_outlined,
-          child: const SpamView()),
-    ];
-    return DefaultTabController(
-      length: items.length,
-      child: Scaffold(
-        bottomNavigationBar: BottomAppBar(
-          child: _buildTabBar(items, context),
+    final DateTime time = DateTime.now();
+    final DateTime today = DateTime(time.year, time.month, time.day);
+
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+
+    double height = mediaQuery.size.height;
+
+    double radius = height * 0.02;
+
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Text(
+          "Gelen Kutusu",
+          style: TextStyle(color: context.colorScheme.onSecondary),
         ),
-        body: _buildTabBarView(items),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Column(
+        children: [
+          context.emptySizedHeightBoxLow,
+          Expanded(
+            flex: 7,
+            child: ListView.builder(
+              itemBuilder: (context, index) => Column(
+                children: [
+                  Slidable(
+                    actionPane: const SlidableDrawerActionPane(),
+                    actions: [
+                      IconSlideAction(
+                        color: context.colorScheme.primaryVariant,
+                        caption: 'Sil',
+                        icon: Icons.delete,
+                        onTap: () {
+                          _showDialog(context, radius);
+                        },
+                      ),
+                      IconSlideAction(
+                          color: context.colorScheme.error,
+                          foregroundColor: context.colorScheme.onSurface,
+                          caption: 'Ertele',
+                          icon: Icons.alarm,
+                          onTap: () {}),
+                    ],
+                    secondaryActions: [
+                      IconSlideAction(
+                        color: context.colorScheme.surface,
+                        foregroundColor: context.colorScheme.onSurface,
+                        caption: 'Okundu',
+                        icon: Icons.mark_email_read,
+                        onTap: () {},
+                      ),
+                      IconSlideAction(
+                        color: context.colorScheme.secondaryVariant,
+                        foregroundColor: context.colorScheme.onSurface,
+                        caption: 'Okunmadı',
+                        icon: Icons.mark_email_unread,
+                        onTap: () {},
+                      ),
+                    ],
+                    child: Card(
+                      child: ListTile(
+                        leading: const Icon(Icons.star_border_outlined),
+                        title: Text(content),
+                        trailing: Text(today.toString().substring(0, 10)),
+                        onTap: () {
+                          _showModalBottomSheet(context, radius);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          context.emptySizedHeightBoxLow,
+          Padding(
+            padding: context.paddingNormal,
+            child: const Text(
+              "Projeleri silmek veya düzenlemek için sağa okundu veya okunmadı olarak işaretlemek için sola kaydırın.",
+              maxLines: 2,
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: context.paddingLow,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  "Email Gönder",
+                  style: TextStyle(color: context.colorScheme.onSurface),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
 
-  TabBar _buildTabBar(List<BottomTabModel> items, BuildContext context) =>
-      TabBar(
-        unselectedLabelColor: context.colorScheme.secondaryVariant,
-        tabs: _buildTabs(items),
-        indicatorColor: context.colorScheme.surface,
-        isScrollable: true,
-      );
+  _showModalBottomSheet(context, double radius) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(radius),
+      ),
+      builder: (BuildContext context) {
+        return Observer(
+          builder: (_) {
+            return AnimatedContainer(
+              duration: context.durationNormal,
+              padding: context.paddingNormal,
+              height: _viewModel.isContainerHeightChange
+                  ? context.dynamicHeight(0.4)
+                  : context.dynamicHeight(0.82),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  context.emptySizedHeightBoxLow,
+                  Center(
+                    child: Container(
+                      height: context.dynamicWidth(0.03),
+                      width: context.dynamicWidth(0.2),
+                      decoration: BoxDecoration(
+                          borderRadius: context.lowBorderRadius,
+                          color: context.colorScheme.background),
+                    ),
+                  ),
+                  context.emptySizedHeightBoxLow3x,
+                  Divider(
+                    color: context.colorScheme.onBackground,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  Padding(
+                    padding: context.paddingLow,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        // ignore: prefer_const_constructors
+                        CircleAvatar(
+                          // ignore: prefer_const_constructors
+                          backgroundImage: NetworkImage(
+                              "http://192.168.3.53/assets/images/users/user0.jpg"),
+                          radius: 30,
+                        ),
+                        context.emptySizedWidthBoxLow,
+                        // ignore: prefer_const_constructors
+                        Expanded(
+                          // ignore: prefer_const_constructors
+                          child: ListTile(
+                            title: const BodyText1Copy(data: "Deneme Mail"),
+                            subtitle: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                BodyText2Copy(
+                                    data: "Kimden Geldi: ",
+                                    color: context.colorScheme.onBackground),
+                                BodyText2Copy(
+                                    data: "test@hotmail.com",
+                                    color: context.colorScheme.onBackground),
+                                context.emptySizedHeightBoxLow,
+                              ],
+                            ),
+                            trailing: const Text("2021-07-14 08:19:36"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  context.emptySizedHeightBoxLow,
+                  Padding(
+                    padding: context.horizontalPaddingNormal,
+                    child: const Text("mesaj içeriği"),
+                  ),
+                  context.emptySizedHeightBoxLow,
+                  Divider(
+                    color: context.colorScheme.onBackground,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  _viewModel.isContainerHeightChange
+                      ? context.emptySizedWidthBoxLow
+                      : Expanded(
+                          child: Padding(
+                            padding: context.paddingLow,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: context.paddingLow,
+                                  child: const Text("Başlık"),
+                                ),
+                                TextField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Epostanızın başlığını giriniz.',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color:
+                                              context.colorScheme.onBackground),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color: context.colorScheme.surface),
+                                    ),
+                                  ),
+                                  cursorColor: context.colorScheme.onSecondary,
+                                ),
+                                context.emptySizedHeightBoxLow,
+                                Padding(
+                                  padding: context.paddingLow,
+                                  child: const Text("İçerik"),
+                                ),
+                                TextField(
+                                  decoration: InputDecoration(
+                                    hintText: "Eposta içeriğini giriniz.",
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color:
+                                              context.colorScheme.onBackground),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color: context.colorScheme.surface),
+                                    ),
+                                  ),
+                                  cursorColor: context.colorScheme.onSecondary,
+                                  maxLines: 8,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                  Padding(
+                    padding: context.paddingLow,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        _viewModel.isContainerHeightChange
+                            ? context.emptySizedHeightBoxLow
+                            : ElevatedButton(
+                                onPressed: () {},
+                                child: const BodyText2Copy(data: "Kaydet"),
+                                style: ElevatedButton.styleFrom(
+                                    primary:
+                                        context.colorScheme.primaryVariant),
+                              ),
+                        context.emptySizedWidthBoxLow,
+                        ElevatedButton(
+                          onPressed: () {
+                            _viewModel.changeContainerHeight();
+                          },
+                          child: const BodyText2Copy(data: "Yanıtla"),
+                        ),
+                        context.emptySizedWidthBoxLow,
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const BodyText2Copy(data: "Vazgeç"),
+                          style: ElevatedButton.styleFrom(
+                              primary: context.colorScheme.surface),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
-  List<Widget> _buildTabs(List<BottomTabModel> items) => List.generate(
-        items.length,
-        (index) => Tab(
-          text: items[index].title,
-          icon: Icon(items[index].icon),
-        ),
-      );
-
-  TabBarView _buildTabBarView(List<BottomTabModel> items) => TabBarView(
-        children: items.map((e) => e.child).toList(),
-      );
+  _showDialog(BuildContext context, double radius) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius),
+              ),
+              title: const BodyText1Copy(
+                  data: "Kişiyi silmek istediğinizden emin misiniz ?"),
+              content:
+                  const BodyText2Copy(data: "Kişi kalıcı olarak silinecektir."),
+              actions: [
+                ElevatedButton(
+                  child: Text("Evet",
+                      style: TextStyle(color: context.colorScheme.onSurface)),
+                  style: ElevatedButton.styleFrom(
+                      primary: context.colorScheme.surface),
+                  onPressed: () {
+                    // setState(() {
+                    //   widget._viewModel.deleteItem(index);
+                    // });
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: context.colorScheme.secondaryVariant,
+                        duration: context.durationSlow,
+                        content: BodyText2Copy(
+                          data: "Eposta başarıyla silindi !",
+                          color: context.colorScheme.onSurface,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: context.colorScheme.secondaryVariant),
+                  child: Text(
+                    "Hayır",
+                    style: TextStyle(color: context.colorScheme.onSurface),
+                  ),
+                )
+              ],
+            ));
+  }
 }
+

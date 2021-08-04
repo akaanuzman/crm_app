@@ -1,4 +1,5 @@
-import '../../model/mail_model.dart';
+import '../../view/mail_view.dart';
+
 import 'package:flutter/material.dart';
 
 class StarView extends StatelessWidget {
@@ -6,6 +7,6 @@ class StarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MailModel(content: "yıldızlı mail");
+    return MailView(content: "yıldızlı mail");
   }
 }

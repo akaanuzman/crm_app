@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+
 part 'mail_view_model.g.dart';
 
 class MailViewModel = _MailViewModelBase with _$MailViewModel;

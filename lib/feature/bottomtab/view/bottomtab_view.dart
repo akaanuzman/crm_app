@@ -1,8 +1,8 @@
+import '../../mail/view/mail_tab_view.dart';
+
 import '../../profile/view/profile_tabbar_view.dart';
 
 import '../../company/view/company_view.dart';
-
-import '../../mail/view/mail_view.dart';
 
 import '../../contact/view/contact_view.dart';
 
@@ -30,7 +30,7 @@ class BottomTabView extends StatelessWidget {
           icon: Icons.contacts_sharp,
           child: const ContactView()),
       BottomTabModel(
-          title: "Email", icon: Icons.email, child: const MailView()),
+          title: "Email", icon: Icons.email, child: const MailTabView()),
       BottomTabModel(
           title: "Şirket", icon: Icons.business, child: const CompanyView()),
     ];

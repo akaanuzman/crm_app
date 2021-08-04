@@ -1,4 +1,5 @@
-import '../../model/mail_model.dart';
+import '../../view/mail_view.dart';
+
 import 'package:flutter/material.dart';
 
 class DraftView extends StatelessWidget {
@@ -6,6 +7,6 @@ class DraftView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MailModel(content: "taslak mail");
+    return MailView(content: "taslak mail");
   }
 }
