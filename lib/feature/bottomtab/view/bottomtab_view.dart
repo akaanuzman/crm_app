@@ -1,3 +1,5 @@
+import '../../../core/components/text/body_text1_copy.dart';
+
 import '../../mail/view/mail_tab_view.dart';
 
 import '../../profile/view/profile_tabbar_view.dart';
@@ -35,12 +37,18 @@ class BottomTabView extends StatelessWidget {
           title: "Şirket", icon: Icons.business, child: const CompanyView()),
     ];
 
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+
+    double height = mediaQuery.size.height;
+
+    double radius = height * 0.02;
+
     return DefaultTabController(
       length: items.length,
       child: Scaffold(
         appBar: _buildAppBar(context, items),
         body: _buildTabBarView(items),
-        drawer: _buildDrawer(context),
+        drawer: _buildDrawer(context, radius),
       ),
     );
   }
@@ -54,11 +62,11 @@ class BottomTabView extends StatelessWidget {
           centerTitle: true,
           bottom: _buildTabBar(items, context));
 
-  Drawer _buildDrawer(BuildContext context) => Drawer(
+  Drawer _buildDrawer(BuildContext context, double radius) => Drawer(
         child: Column(
           children: [
             Expanded(
-              child: _buildProfileContainer(context),
+              child: _buildProfileContainer(context, radius),
             ),
             Expanded(
               flex: 2,
@@ -75,15 +83,16 @@ class BottomTabView extends StatelessWidget {
         ),
       );
 
-  Container _buildProfileContainer(BuildContext context) => Container(
+  Container _buildProfileContainer(BuildContext context, double radius) =>
+      Container(
         color: ColorSchemeLight.instance.limedSpruce,
         child: Padding(
           padding: context.paddingLow,
-          child: _buildProfileColumn(context),
+          child: _buildProfileColumn(context, radius),
         ),
       );
 
-  Column _buildProfileColumn(BuildContext context) => Column(
+  Column _buildProfileColumn(BuildContext context, double radius) => Column(
         children: [
           Padding(
             padding: context.paddingLow,
@@ -104,10 +113,15 @@ class BottomTabView extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: CardIconText(
-              cardColor: context.colorScheme.secondaryVariant,
-              text: "Bildirimler",
-              icon: Icons.notifications,
+            child: InkWell(
+              onTap: () {
+                _showModalBottomSheet(context, radius);
+              },
+              child: CardIconText(
+                cardColor: context.colorScheme.secondaryVariant,
+                text: "Bildirimler",
+                icon: Icons.notifications,
+              ),
             ),
           ),
           Expanded(
@@ -189,4 +203,76 @@ class BottomTabView extends StatelessWidget {
   TabBarView _buildTabBarView(List<BottomTabModel> items) => TabBarView(
         children: items.map((e) => e.child).toList(),
       );
+
+  _showModalBottomSheet(context, double radius) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(radius),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          height: context.dynamicHeight(0.6),
+          padding: context.paddingNormal,
+          decoration: BoxDecoration(
+            color: context.colorScheme.onSurface,
+            borderRadius: BorderRadius.only(
+              topLeft: context.highadius,
+              topRight: context.highadius,
+            ),
+          ),
+          child: Column(
+            children: [
+              Center(
+                child: Container(
+                  height: context.dynamicWidth(0.03),
+                  width: context.dynamicWidth(0.2),
+                  decoration: BoxDecoration(
+                      borderRadius: context.lowBorderRadius,
+                      color: context.colorScheme.background),
+                ),
+              ),
+              context.emptySizedHeightBoxLow3x,
+              Padding(
+                padding: context.paddingLow,
+                child: const BodyText1Copy(data: "Bildirimler"),
+              ),
+              context.emptySizedHeightBoxLow3x,
+              Expanded(
+                child: GridView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: 6,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, childAspectRatio: 0.8),
+                  itemBuilder: (context, index) => Padding(
+                    padding: context.paddingLow,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: context.lowBorderRadius),
+                      color: context.colorScheme.secondary,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          // ignore: prefer_const_constructors
+                          ListTile(
+                            leading: const Icon(Icons.notifications),
+                            title: const Text("Bildirim"),
+                          ),
+                          Padding(
+                            padding: context.paddingNormal,
+                            child: const Text("Bildirim içeriği"),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 }

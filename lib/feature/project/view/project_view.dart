@@ -1,6 +1,7 @@
 import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
@@ -86,6 +87,7 @@ class _ProjectViewState extends State<ProjectView> {
 
   Widget get _buildListViewBuilder => ListView.builder(
         itemCount: widget._viewModel.items.length,
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) => _buildProjectCard(context, index),
       );
 
@@ -95,35 +97,44 @@ class _ProjectViewState extends State<ProjectView> {
     double height = mediaQuery.size.height;
 
     double radius = height * 0.02;
-    return Slidable(
-      actionPane: const SlidableDrawerActionPane(),
-      actions: [
-        IconSlideAction(
-          color: context.colorScheme.primaryVariant,
-          caption: 'Sil',
-          icon: Icons.delete,
-          onTap: () {
-            _showDialog(context, index,radius);
-          },
-        ),
-        IconSlideAction(
-          color: context.colorScheme.onPrimary,
-          foregroundColor: context.colorScheme.onSurface,
-          caption: 'Düzenle',
-          icon: Icons.edit,
-          onTap: () {
-            _showModalBottomSheet(context,radius);
-          },
-        ),
-      ],
-      child: Card(
-        child: ListTile(
-          onTap: () {
-            goToNextPage(context, index);
-          },
-          title: BodyText1Copy(data: widget._viewModel.items[index].name),
-          subtitle: _buildSubtitle(context, index),
-          trailing: const Icon(Icons.keyboard_arrow_right),
+    return Padding(
+      padding: context.paddingLow,
+      child: Slidable(
+        actionPane: const SlidableDrawerActionPane(),
+        actions: [
+          IconSlideAction(
+            color: context.colorScheme.primaryVariant,
+            caption: 'Sil',
+            icon: Icons.delete,
+            onTap: () {
+              _showDialog(context, index, radius);
+            },
+          ),
+          IconSlideAction(
+            color: context.colorScheme.onPrimary,
+            foregroundColor: context.colorScheme.onSurface,
+            caption: 'Düzenle',
+            icon: Icons.edit,
+            onTap: () {
+              _showModalBottomSheet(context, radius);
+            },
+          ),
+        ],
+        child: Card(
+          elevation: 5,
+          shape:
+              RoundedRectangleBorder(borderRadius: context.normalBorderRadius),
+          child: ListTile(
+            onTap: () {
+              goToNextPage(context, index);
+            },
+            title: Padding(
+              padding: context.verticalPaddingLow,
+              child: BodyText1Copy(data: widget._viewModel.items[index].name),
+            ),
+            subtitle: _buildSubtitle(context, index),
+            trailing: const Icon(Icons.keyboard_arrow_right),
+          ),
         ),
       ),
     );
@@ -174,16 +185,18 @@ class _ProjectViewState extends State<ProjectView> {
   void goToNextPage(BuildContext context, int index) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ProjectDetailView(
-          projectName: widget._viewModel.items[index].name,
-          projectDetail: widget._viewModel.items[index].detail,
-          projectId: widget._viewModel.items[index].id,
+        builder: (context) => Observer(
+          builder: (context) =>  ProjectDetailView(
+            projectName: widget._viewModel.items[index].name,
+            projectDetail: widget._viewModel.items[index].detail,
+            projectId: widget._viewModel.items[index].id,
+          ),
         ),
       ),
     );
   }
 
-  _showModalBottomSheet(context,double radius) {
+  _showModalBottomSheet(context, double radius) {
     showModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../divider/blue_divider.dart';

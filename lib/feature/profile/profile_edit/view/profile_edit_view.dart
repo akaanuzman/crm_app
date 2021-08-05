@@ -212,7 +212,7 @@ class ProfileEditView extends StatelessWidget {
                         Expanded(
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: 'Telefon numarası giriniz.',
+                              hintText: 'Kuvarssoft',
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: context.lowBorderRadius,
                                 borderSide: BorderSide(
@@ -231,7 +231,7 @@ class ProfileEditView extends StatelessWidget {
                         Expanded(
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: 'Telefon numarası giriniz.',
+                              hintText: 'ceng',
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: context.lowBorderRadius,
                                 borderSide: BorderSide(

@@ -9,7 +9,7 @@ class BlueDivider extends StatelessWidget {
     return Divider(
       thickness: 15,
       color: context.colorScheme.surface,
-      endIndent: context.dynamicWidth(0.2),
+      endIndent: context.dynamicWidth(0.1),
     );
   }
 }

@@ -46,6 +46,7 @@ class CompanyDetailView extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: SizedBox(
           height: context.dynamicHeight(1.85),
           child: Column(
@@ -242,115 +243,6 @@ class CompanyDetailView extends StatelessWidget {
                   padding: context.paddingLow,
                   child: Card(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: context.paddingNormal,
-                              child: Text(
-                                "Çalışanlar",
-                                style: context.textTheme.headline4!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: context.colorScheme.onSecondary),
-                              ),
-                            ),
-                            Padding(
-                              padding: context.horizontalPaddingNormal,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  _showModalBottomSheet(context, radius);
-                                },
-                                child: Text(
-                                  "Çalışan Ekle",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onSurface),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  primary: context.colorScheme.onError,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: 10,
-                            itemBuilder: (context, index) => ExpansionTile(
-                              // ignore: prefer_const_constructors
-                              title: BodyText1Copy(data: "Ahmet Kaan Uzman"),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text("uzmanakan@gmail.com"),
-                                  context.emptySizedWidthBoxLow3x,
-                                  const Text("555 555 55 55"),
-                                ],
-                              ),
-                              leading: const CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    "http://192.168.3.53/assets/images/users/user0.jpg"),
-                              ),
-                              expandedAlignment: Alignment.centerLeft,
-                              children: [
-                                context.emptySizedHeightBoxLow3x,
-                                Padding(
-                                  padding: context.horizontalPaddingNormal,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Konum",
-                                        style: TextStyle(
-                                            color: context
-                                                .colorScheme.onBackground),
-                                      ),
-                                      context.emptySizedWidthBoxLow3x,
-                                      const Text("Kütahya"),
-                                    ],
-                                  ),
-                                ),
-                                const Divider(
-                                  thickness: 2,
-                                  indent: 15,
-                                  endIndent: 15,
-                                ),
-                                Padding(
-                                  padding: context.horizontalPaddingNormal,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "Doğum Tarihi",
-                                        style: TextStyle(
-                                            color: context
-                                                .colorScheme.onBackground),
-                                      ),
-                                      context.emptySizedWidthBoxLow3x,
-                                      const Text("2001-12-25"),
-                                    ],
-                                  ),
-                                ),
-                                const Divider(
-                                  thickness: 2,
-                                  indent: 15,
-                                  endIndent: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              context.emptySizedHeightBoxLow3x,
-              Expanded(
-                flex: 4,
-                child: Padding(
-                  padding: context.paddingLow,
-                  child: Card(
-                    child: Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -473,6 +365,141 @@ class CompanyDetailView extends StatelessWidget {
                   ),
                 ),
               ),
+              context.emptySizedHeightBoxLow3x,
+              Expanded(
+                flex: 4,
+                child: Padding(
+                  padding: context.paddingLow,
+                  child: Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: context.verticalPaddingLow,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: context.paddingNormal,
+                                child: Text(
+                                  "Çalışanlar",
+                                  style: context.textTheme.headline4!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: context.colorScheme.onSecondary),
+                                ),
+                              ),
+                              Padding(
+                                padding: context.horizontalPaddingNormal,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    _showModalBottomSheet(context, radius);
+                                  },
+                                  child: Text(
+                                    "Çalışan Ekle",
+                                    style: TextStyle(
+                                        color: context.colorScheme.onSurface),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: context.colorScheme.onError,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        context.emptySizedHeightBoxLow,
+                        Expanded(
+                          child: Padding(
+                            padding: context.paddingLow,
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: 10,
+                              itemBuilder: (context, index) => Column(
+                                children: [
+                                  Padding(
+                                    padding: context.paddingLow,
+                                    child: ExpansionTile(
+                                      // ignore: prefer_const_constructors
+                                      title: const BodyText1Copy(
+                                          data: "Ahmet Kaan Uzman"),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text("uzmanakan@gmail.com"),
+                                          context.emptySizedWidthBoxLow3x,
+                                          const Text("555 555 55 55"),
+                                        ],
+                                      ),
+                                      leading: const CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                            "http://192.168.3.53/assets/images/users/user0.jpg"),
+                                      ),
+                                      expandedAlignment: Alignment.centerLeft,
+                                      children: [
+                                        context.emptySizedHeightBoxLow3x,
+                                        Padding(
+                                          padding:
+                                              context.horizontalPaddingNormal,
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Konum",
+                                                style: TextStyle(
+                                                    color: context.colorScheme
+                                                        .onBackground),
+                                              ),
+                                              context.emptySizedWidthBoxLow3x,
+                                              const Text("Kütahya"),
+                                            ],
+                                          ),
+                                        ),
+                                        const Divider(
+                                          thickness: 2,
+                                          indent: 15,
+                                          endIndent: 15,
+                                        ),
+                                        context.emptySizedHeightBoxLow,
+                                        Padding(
+                                          padding:
+                                              context.horizontalPaddingNormal,
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "Doğum Tarihi",
+                                                style: TextStyle(
+                                                    color: context.colorScheme
+                                                        .onBackground),
+                                              ),
+                                              context.emptySizedWidthBoxLow3x,
+                                              const Text("2001-12-25"),
+                                            ],
+                                          ),
+                                        ),
+                                        const Divider(
+                                          thickness: 2,
+                                          indent: 15,
+                                          endIndent: 15,
+                                        ),
+                                        context.emptySizedHeightBoxLow3x,
+                                      ],
+                                    ),
+                                  ),
+                                  const Divider(
+                                    thickness: 2,
+                                    height: 25,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              context.emptySizedHeightBoxLow3x,
             ],
           ),
         ),
@@ -539,10 +566,18 @@ class CompanyDetailView extends StatelessWidget {
                         Border.all(color: context.colorScheme.secondaryVariant),
                   ),
                   child: ListView.builder(
-                    itemBuilder: (context, index) => const Card(
-                      elevation: 4,
-                      child: ListTile(
-                        title: BodyText2Copy(data: "çalisan ismi"),
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: 10,
+                    itemBuilder: (context, index) => Padding(
+                      padding: context.paddingLow,
+                      child: Card(
+                        color: context.colorScheme.secondary,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: context.lowBorderRadius),
+                        elevation: 5,
+                        child: const ListTile(
+                          title: BodyText2Copy(data: "çalisan ismi"),
+                        ),
                       ),
                     ),
                   ),

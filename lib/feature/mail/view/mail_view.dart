@@ -1,3 +1,7 @@
+import 'package:crm_app/feature/mail/send_mail/view/send_mail_view.dart';
+
+import '../send_mail/view/send_mail_view.dart';
+
 import '../viewmodel/mail_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -37,58 +41,69 @@ class MailView extends StatelessWidget {
       ),
       body: Column(
         children: [
-          context.emptySizedHeightBoxLow,
           Expanded(
             flex: 7,
-            child: ListView.builder(
-              itemBuilder: (context, index) => Column(
-                children: [
-                  Slidable(
-                    actionPane: const SlidableDrawerActionPane(),
-                    actions: [
-                      IconSlideAction(
-                        color: context.colorScheme.primaryVariant,
-                        caption: 'Sil',
-                        icon: Icons.delete,
-                        onTap: () {
-                          _showDialog(context, radius);
-                        },
-                      ),
-                      IconSlideAction(
-                          color: context.colorScheme.error,
+            child: Padding(
+              padding: context.paddingLow,
+              child: ListView.builder(
+                itemCount: 15,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) => Column(
+                  children: [
+                    Slidable(
+                      actionPane: const SlidableDrawerActionPane(),
+                      actions: [
+                        IconSlideAction(
+                          color: context.colorScheme.primaryVariant,
+                          caption: 'Sil',
+                          icon: Icons.delete,
+                          onTap: () {
+                            _showDialog(context, radius);
+                          },
+                        ),
+                        IconSlideAction(
+                            color: context.colorScheme.error,
+                            foregroundColor: context.colorScheme.onSurface,
+                            caption: 'Ertele',
+                            icon: Icons.alarm,
+                            onTap: () {}),
+                      ],
+                      secondaryActions: [
+                        IconSlideAction(
+                          color: context.colorScheme.surface,
                           foregroundColor: context.colorScheme.onSurface,
-                          caption: 'Ertele',
-                          icon: Icons.alarm,
-                          onTap: () {}),
-                    ],
-                    secondaryActions: [
-                      IconSlideAction(
-                        color: context.colorScheme.surface,
-                        foregroundColor: context.colorScheme.onSurface,
-                        caption: 'Okundu',
-                        icon: Icons.mark_email_read,
-                        onTap: () {},
-                      ),
-                      IconSlideAction(
-                        color: context.colorScheme.secondaryVariant,
-                        foregroundColor: context.colorScheme.onSurface,
-                        caption: 'Okunmadı',
-                        icon: Icons.mark_email_unread,
-                        onTap: () {},
-                      ),
-                    ],
-                    child: Card(
-                      child: ListTile(
-                        leading: const Icon(Icons.star_border_outlined),
-                        title: Text(content),
-                        trailing: Text(today.toString().substring(0, 10)),
-                        onTap: () {
-                          _showModalBottomSheet(context, radius);
-                        },
+                          caption: 'Okundu',
+                          icon: Icons.mark_email_read,
+                          onTap: () {},
+                        ),
+                        IconSlideAction(
+                          color: context.colorScheme.secondaryVariant,
+                          foregroundColor: context.colorScheme.onSurface,
+                          caption: 'Okunmadı',
+                          icon: Icons.mark_email_unread,
+                          onTap: () {},
+                        ),
+                      ],
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: context.lowBorderRadius),
+                        elevation: 5,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.star_border_outlined,
+                            color: context.colorScheme.primaryVariant,
+                          ),
+                          title: Text(content),
+                          trailing: Text(today.toString().substring(0, 10)),
+                          onTap: () {
+                            _showModalBottomSheet(context, radius);
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    context.emptySizedHeightBoxLow,
+                  ],
+                ),
               ),
             ),
           ),
@@ -105,7 +120,10 @@ class MailView extends StatelessWidget {
             child: Padding(
               padding: context.paddingLow,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SendMailView()));
+                },
                 child: Text(
                   "Email Gönder",
                   style: TextStyle(color: context.colorScheme.onSurface),
@@ -350,4 +368,3 @@ class MailView extends StatelessWidget {
             ));
   }
 }
-
