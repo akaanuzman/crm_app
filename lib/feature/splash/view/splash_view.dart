@@ -12,7 +12,7 @@ class SplashView extends StatelessWidget {
     return AnimatedSplashScreen(
       backgroundColor: context.colorScheme.secondaryVariant,
       splash: Image.network(
-        "http://192.168.3.53/assets/images/logo-light.png",
+        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.logo.com.tr%2F&psig=AOvVaw0kZuXlQCwqIQ_n65KyIQ-O&ust=1628293175166000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCJiy2_OGm_ICFQAAAAAdAAAAABAJ",
       ),
       nextScreen: const BottomTabView(),
       duration: 1000,
