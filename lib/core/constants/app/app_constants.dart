@@ -12,4 +12,5 @@ class ApplicationConstants {
   ApplicationConstants.init();
 
   final String baseUrl = "http://192.168.3.53/api/";
+  String token = "";
 }

@@ -12,13 +12,13 @@ mixin _$LoginViewModel on _LoginViewModelBase, Store {
   final _$itemAtom = Atom(name: '_LoginViewModelBase.item');
 
   @override
-  String? get item {
+  List<String>? get item {
     _$itemAtom.reportRead();
     return super.item;
   }
 
   @override
-  set item(String? value) {
+  set item(List<String>? value) {
     _$itemAtom.reportWrite(value, super.item, () {
       super.item = value;
     });

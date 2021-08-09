@@ -24,26 +24,12 @@ mixin _$ProjectViewModel on _ProjectViewModelBase, Store {
     });
   }
 
-  final _$connectDataBaseAsyncAction =
-      AsyncAction('_ProjectViewModelBase.connectDataBase');
+  final _$fetchItemsAsyncAction =
+      AsyncAction('_ProjectViewModelBase.fetchItems');
 
   @override
-  Future<void> connectDataBase() {
-    return _$connectDataBaseAsyncAction.run(() => super.connectDataBase());
-  }
-
-  final _$_ProjectViewModelBaseActionController =
-      ActionController(name: '_ProjectViewModelBase');
-
-  @override
-  void deleteItem(int index) {
-    final _$actionInfo = _$_ProjectViewModelBaseActionController.startAction(
-        name: '_ProjectViewModelBase.deleteItem');
-    try {
-      return super.deleteItem(index);
-    } finally {
-      _$_ProjectViewModelBaseActionController.endAction(_$actionInfo);
-    }
+  Future<void> fetchItems(String token) {
+    return _$fetchItemsAsyncAction.run(() => super.fetchItems(token));
   }
 
   @override

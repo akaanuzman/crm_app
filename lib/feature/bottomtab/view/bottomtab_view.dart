@@ -22,6 +22,7 @@ import 'package:kartal/kartal.dart';
 class BottomTabView extends StatelessWidget {
   const BottomTabView({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     final List<BottomTabModel> items = [

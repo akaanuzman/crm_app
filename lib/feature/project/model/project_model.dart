@@ -1,32 +1,46 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'project_model.g.dart';
+
+@JsonSerializable()
 class ProjectModel {
-  int id;
-  String name;
-  int usersId;
-  String document;
-  String detail;
-  String link;
-  String access;
-  int isActive;
+  String? id;
+  List<String>? gorev;
+  String? name;
+  String? usersId;
+  String? document;
+  String? detail;
+  String? link;
+  String? access;
+  String? isActive;
+  List<Users>? users;
 
   ProjectModel(
-      {required this.id,
-      required this.name,
-      required this.usersId,
-      required this.document,
-      required this.detail,
-      required this.link,
-      required this.access,
-      required this.isActive});
+      {this.id,
+      this.gorev,
+      this.name,
+      this.usersId,
+      this.document,
+      this.detail,
+      this.link,
+      this.access,
+      this.isActive,
+      this.users});
 
-  factory ProjectModel.fromJson(Map<String, dynamic> json) {
-    return ProjectModel(
-        id: json['id'],
-        name: json['name'],
-        usersId: json['users_id'],
-        document: json['document'],
-        detail: json['detail'],
-        link: json['link'],
-        access: json['access'],
-        isActive: int.parse(json['is_active']));
-  }
+  factory ProjectModel.fromJson(Map<String, dynamic> json) =>
+      _$ProjectModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProjectModelToJson(this);
+}
+
+@JsonSerializable()
+class Users {
+  String? fullName;
+  String? photo;
+
+  Users({this.fullName, this.photo});
+
+  factory Users.fromJson(Map<String, dynamic> json) => _$UsersFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UsersToJson(this);
 }

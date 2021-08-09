@@ -5,5 +5,5 @@ abstract class ILoginService {
 
   ILoginService(this.dio);
 
-  Future<String> fetchAllTask(String email,String password);
+  Future<List<String>> fetchAllTask(String email,String password);
 }

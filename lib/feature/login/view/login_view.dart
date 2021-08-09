@@ -1,3 +1,4 @@
+import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/feature/bottomtab/view/bottomtab_view.dart';
 import 'package:crm_app/feature/login/viewmodel/login_view_model.dart';
@@ -74,11 +75,10 @@ class _LoginViewState extends State<LoginView> {
               onPressed: () {
                 _viewModel.fetchItems(
                     emailController.text, passController.text);
-                debugPrint(_viewModel.item);
-
-                if (_viewModel.item == 'success') {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const BottomTabView()));
+                //debugPrint(_viewModel.item![0]);
+                if (_viewModel.item![1] == 'success') {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => BottomTabView()));
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       backgroundColor: context.colorScheme.secondaryVariant,
@@ -89,6 +89,12 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   );
+                } else if (_viewModel.item![1] == 'error') {
+                  _showDialog(context, context.lowValue,
+                      "Yanlış kullanıcı adı veya şifre.");
+                } else if (_viewModel.item![1] == 'null error') {
+                  _showDialog(context, context.lowValue,
+                      "Girilmeyen kullanıcı adı veya şifre");
                 }
               },
               child: BodyText2Copy(
@@ -100,5 +106,29 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+
+  _showDialog(BuildContext context, double radius, String title) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius),
+              ),
+              title: BodyText1Copy(data: title),
+              content: const BodyText2Copy(
+                  data: "Lütfen tekrar giriş yapmayı deneyiniz."),
+              actions: [
+                ElevatedButton(
+                  child: Text("Tamam",
+                      style: TextStyle(color: context.colorScheme.onSurface)),
+                  style: ElevatedButton.styleFrom(
+                      primary: context.colorScheme.primaryVariant),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ));
   }
 }

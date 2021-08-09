@@ -1,52 +1,31 @@
+import 'package:crm_app/core/init/network/network_manager.dart';
+import 'package:crm_app/feature/project/model/project_model.dart';
+import 'package:crm_app/feature/project/service/i_project_service.dart';
+import 'package:crm_app/feature/project/service/project_service.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:mysql1/mysql1.dart';
-
-import '../model/project_model.dart';
 
 part 'project_view_model.g.dart';
 
 class ProjectViewModel = _ProjectViewModelBase with _$ProjectViewModel;
 
 abstract class _ProjectViewModelBase with Store {
+  BuildContext? context;
+  late IProjectService projectService;
+
   @observable
   List<ProjectModel> items = [];
 
-  @action
-  Future<void> connectDataBase() async {
-    var settings = ConnectionSettings(
-        host: '192.168.2.136', port: 3306, user: 'root', db: 'sistem');
-
-    var conn = await MySqlConnection.connect(settings);
-
-    fetchList(conn, settings, "11111111");
-    fetchList(conn, settings, "Erdocrm0");
-    fetchList(conn, settings, "12345678");
-    fetchList(conn, settings, "unHUYUzg");
-    fetchList(conn, settings, "UlIWoKvj");
-    fetchList(conn, settings, "ECjTkJMl");
-    fetchList(conn, settings, "fUfq5ci8");
-    fetchList(conn, settings, "12312312");
-    fetchList(conn, settings, "11112111");
-    fetchList(conn, settings, "e9ULUtL7");
-    fetchList(conn, settings, "23132321");
-    fetchList(conn, settings, "ED8ccpSl");
-    fetchList(conn, settings, "OAWidhF2");
-    fetchList(conn, settings, "aasdasda");
-    fetchList(conn, settings, "MmRYUcZI");
+  _ProjectViewModelBase() {
+    projectService = ProjectService(NetworkManager.instance!.dio);
   }
 
-  Future<void> fetchList(MySqlConnection conn, ConnectionSettings settings,
-      String accessCode) async {
-    var result =
-        await conn.query('select * from project where access = "$accessCode"');
-    for (var row in result) {
-      ProjectModel model = ProjectModel.fromJson(row.fields);
-      items.add(model);
-    }
+  void setContext(BuildContext context) {
+    this.context = context;
   }
 
   @action
-  void deleteItem(int index) {
-    items.removeAt(index);
+  Future<void> fetchItems(String token) async {
+    items = await projectService.fetchAllTask(token);
   }
 }

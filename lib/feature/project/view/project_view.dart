@@ -1,7 +1,7 @@
 import 'package:boardview/boardview_controller.dart';
+import 'package:crm_app/core/constants/app/app_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
@@ -13,14 +13,13 @@ import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/body_text2_copy.dart';
 import '../../../core/components/text/bold_text.dart';
 import '../../../product/widgets/stack/blue_bar.dart';
-import '../projectdetail/view/project_detail_view.dart';
 import '../viewmodel/project_view_model.dart';
 
 // ignore: must_be_immutable
 class ProjectView extends StatefulWidget {
   ProjectView({Key? key}) : super(key: key);
 
-  final ProjectViewModel _viewModel = ProjectViewModel();
+  late final ProjectViewModel _viewModel;
 
   // ignore: use_key_in_widget_constructors
   // ProjectView() {
@@ -36,8 +35,12 @@ class _ProjectViewState extends State<ProjectView> {
 
   @override
   void initState() {
-    widget._viewModel.connectDataBase();
     super.initState();
+    widget._viewModel = ProjectViewModel();
+    widget._viewModel.fetchItems(ApplicationConstants.instance!.token);
+    setState(() {
+      
+    });
   }
 
   @override
@@ -86,7 +89,7 @@ class _ProjectViewState extends State<ProjectView> {
   }
 
   Widget get _buildListViewBuilder => ListView.builder(
-        itemCount: widget._viewModel.items.length,
+        //itemCount: widget._viewModel.items.length,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) => _buildProjectCard(context, index),
       );
@@ -130,7 +133,7 @@ class _ProjectViewState extends State<ProjectView> {
             },
             title: Padding(
               padding: context.verticalPaddingLow,
-              child: BodyText1Copy(data: widget._viewModel.items[index].name),
+              //child: BodyText1Copy(data: widget._viewModel.items[index].name),
             ),
             subtitle: _buildSubtitle(context, index),
             trailing: const Icon(Icons.keyboard_arrow_right),
@@ -146,9 +149,9 @@ class _ProjectViewState extends State<ProjectView> {
         children: [
           _buildRowIconText,
           context.emptySizedHeightBoxLow3x,
-          Text(
-            widget._viewModel.items[index].detail,
-          ),
+          const Text(
+              //widget._viewModel.items[index].detail,
+              ""),
           _buildRowIconTextText(context),
           const RowCircleAvatar(firstText: "AA", secondText: "BB"),
           context.emptySizedHeightBoxLow3x,
@@ -183,17 +186,17 @@ class _ProjectViewState extends State<ProjectView> {
       );
 
   void goToNextPage(BuildContext context, int index) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => Observer(
-          builder: (context) =>  ProjectDetailView(
-            projectName: widget._viewModel.items[index].name,
-            projectDetail: widget._viewModel.items[index].detail,
-            projectId: widget._viewModel.items[index].id,
-          ),
-        ),
-      ),
-    );
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (context) => Observer(
+    //       builder: (context) =>  ProjectDetailView(
+    //       projectName: widget._viewModel.items[index].name,
+    //          projectDetail: widget._viewModel.items[index].detail,
+    //          projectId: widget._viewModel.items[index].id,
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   _showModalBottomSheet(context, double radius) {
@@ -325,7 +328,7 @@ class _ProjectViewState extends State<ProjectView> {
                       primary: context.colorScheme.primaryVariant),
                   onPressed: () {
                     setState(() {
-                      widget._viewModel.deleteItem(index);
+                      // widget._viewModel.deleteItem(index);
                     });
                     Navigator.of(context).pop();
                     ScaffoldMessenger.of(context).showSnackBar(
