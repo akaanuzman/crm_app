@@ -1,4 +1,5 @@
 import 'package:boardview/boardview_controller.dart';
+import 'package:crm_app/core/constants/app/app_constants.dart';
 import '../projectdetail/view/project_detail_view.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/cupertino.dart';
@@ -140,6 +141,7 @@ class _ProjectViewState extends State<ProjectView> {
 
   Widget _buildSubtitle(BuildContext context, int index) {
     int indexV2 = 0;
+    ApplicationConstants.instance!.projectId = viewModel.items[index].id ?? "";
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,9 +159,9 @@ class _ProjectViewState extends State<ProjectView> {
             (indexV2) {
               indexV2++;
               return CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "http://192.168.3.53/assets/images/users/${viewModel.items[index].users?[index].photo}"),
-              );
+                  // backgroundImage: NetworkImage(
+                  //     "http://192.168.3.53/assets/images/users/${viewModel.items[index].users?[index].photo}"),
+                  );
             },
           ),
         ),
@@ -195,13 +197,13 @@ class _ProjectViewState extends State<ProjectView> {
   }
 
   Widget _buildRowIconText(int index) => RowIconText(
-      icon: Icons.account_circle_rounded,
-      text: viewModel.items[index].userName ?? "",
-      sizedBox: const SizedBox(
-        height: 0,
-        width: 2,
-      ),
-    );
+        icon: Icons.account_circle_rounded,
+        text: viewModel.items[index].userName ?? "",
+        sizedBox: const SizedBox(
+          height: 0,
+          width: 2,
+        ),
+      );
 
   Row _buildRowIconTextText(BuildContext context, int index) => Row(
         children: [
@@ -219,7 +221,11 @@ class _ProjectViewState extends State<ProjectView> {
   void goToNextPage(BuildContext context, int index) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => ProjectDetailView(allTask: viewModel.items[index].allgorev ?? 0,),
+        builder: (context) => ProjectDetailView(
+          allTask: viewModel.items[index].allgorev ?? 0,
+          okTask: viewModel.items[index].okgorev ?? 0,
+          projectId: viewModel.items[index].id ?? "0",
+        ),
       ),
     );
   }

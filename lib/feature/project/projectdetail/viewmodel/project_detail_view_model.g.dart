@@ -24,6 +24,30 @@ mixin _$ProjectDetailViewModel on _ProjectDetailViewModelBase, Store {
     });
   }
 
+  final _$itemsAtom = Atom(name: '_ProjectDetailViewModelBase.items');
+
+  @override
+  ProjectDetailModel get items {
+    _$itemsAtom.reportRead();
+    return super.items;
+  }
+
+  @override
+  set items(ProjectDetailModel value) {
+    _$itemsAtom.reportWrite(value, super.items, () {
+      super.items = value;
+    });
+  }
+
+  final _$fetchItemsAsyncAction =
+      AsyncAction('_ProjectDetailViewModelBase.fetchItems');
+
+  @override
+  Future<void> fetchItems(String token, String projectId) {
+    return _$fetchItemsAsyncAction
+        .run(() => super.fetchItems(token, projectId));
+  }
+
   final _$_ProjectDetailViewModelBaseActionController =
       ActionController(name: '_ProjectDetailViewModelBase');
 
@@ -41,7 +65,8 @@ mixin _$ProjectDetailViewModel on _ProjectDetailViewModelBase, Store {
   @override
   String toString() {
     return '''
-menuValue: ${menuValue}
+menuValue: ${menuValue},
+items: ${items}
     ''';
   }
 }
