@@ -1,4 +1,4 @@
-import 'package:crm_app/core/constants/app/app_constants.dart';
+import '../../constants/app/app_constants.dart';
 import 'package:dio/dio.dart';
 
 

@@ -1,4 +1,4 @@
-import 'package:crm_app/feature/project/model/project_model.dart';
+import '../model/project_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class IProjectService {

@@ -4,9 +4,10 @@ class RowSpaceBetweenText extends StatelessWidget {
   //const RowSpaceBetweenText({Key? key}) : super(key: key);
   final String firstText;
   final String secondText;
+  final String thirthText;
 
   const RowSpaceBetweenText(
-      {Key? key, required this.firstText, required this.secondText})
+      {Key? key, required this.firstText, required this.secondText,required this.thirthText})
       : super(key: key);
 
   @override
@@ -19,7 +20,7 @@ class RowSpaceBetweenText extends StatelessWidget {
           firstText,
         ),
         Text(
-          secondText,
+          "$secondText/$thirthText",
         ),
       ],
     );

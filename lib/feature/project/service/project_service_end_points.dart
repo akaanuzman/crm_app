@@ -1,9 +1,9 @@
-enum ProjectServiceEndPoints { PROJECT }
+enum ProjectServiceEndPoints { project }
 
 extension ProjectServiceExtension on ProjectServiceEndPoints {
   String  rawValue(String token) {
     switch (this) {
-      case ProjectServiceEndPoints.PROJECT:
+      case ProjectServiceEndPoints.project:
         return 'Projects/get_projects?token=$token';
     }
   }

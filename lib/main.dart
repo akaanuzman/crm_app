@@ -1,4 +1,5 @@
-import 'package:crm_app/feature/login/view/login_view.dart';
+
+import 'feature/login/view/login_view.dart';
 import 'package:flutter/material.dart';
 
 import 'core/init/theme/light/app_theme_light.dart';
@@ -15,6 +16,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppThemeLight.instance.themeDataLight,
-        home: LoginView());
+        home: const LoginView());
   }
 }

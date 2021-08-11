@@ -1,11 +1,15 @@
-import 'package:crm_app/core/components/text/body_text1_copy.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
-import 'package:crm_app/feature/bottomtab/view/bottomtab_view.dart';
-import 'package:crm_app/feature/login/viewmodel/login_view_model.dart';
+import 'package:flutter/cupertino.dart';
+
+import '../../../core/components/text/body_text1_copy.dart';
+import '../../../core/components/text/body_text2_copy.dart';
+import '../../bottomtab/view/bottomtab_view.dart';
+import '../viewmodel/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
 class LoginView extends StatefulWidget {
+  const LoginView({Key? key}) : super(key: key);
+
   @override
   State<LoginView> createState() => _LoginViewState();
 }
@@ -23,20 +27,28 @@ class _LoginViewState extends State<LoginView> {
       _viewModel.setContext(context);
     }
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: context.paddingNormal,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Image.network("http://192.168.3.53/assets/images/logo-dark.png"),
+            context.emptySizedHeightBoxNormal,
             Padding(
               padding: context.paddingLow,
               child: const Text("Email"),
             ),
             TextField(
+              keyboardType: TextInputType.emailAddress,
               controller: emailController,
+              
               decoration: InputDecoration(
+                filled: true,
+                prefixIcon: const Icon(Icons.email),
                 hintText: 'Emaili giriniz.',
+                labelText: "Email",
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
                   borderSide:
@@ -55,9 +67,13 @@ class _LoginViewState extends State<LoginView> {
               child: const Text("Şifre"),
             ),
             TextField(
+              obscureText: true,
               controller: passController,
               decoration: InputDecoration(
+                filled: true,
+                prefixIcon: const Icon(Icons.lock),
                 hintText: 'Şifreyi giriniz.',
+                labelText: "Şifre",
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
                   borderSide:
@@ -70,37 +86,81 @@ class _LoginViewState extends State<LoginView> {
               ),
               cursorColor: context.colorScheme.onSecondary,
             ),
+            context.emptySizedHeightBoxLow,
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: context.paddingLow,
+                  child: Text(
+                    "Şifrenizi mi unuttunuz ?",
+                    style: TextStyle(
+                        color: context.colorScheme.surface,
+                        fontWeight: FontWeight.bold),
+                  ),
+                )),
             context.emptySizedHeightBoxLow3x,
-            ElevatedButton(
-              onPressed: () {
-                _viewModel.fetchItems(
-                    emailController.text, passController.text);
-                //debugPrint(_viewModel.item![0]);
-                if (_viewModel.item![1] == 'success') {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => BottomTabView()));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor: context.colorScheme.secondaryVariant,
-                      duration: context.durationSlow,
-                      content: BodyText2Copy(
-                        data: "Giriş başarılı !",
-                        color: context.colorScheme.onSurface,
-                      ),
-                    ),
-                  );
-                } else if (_viewModel.item![1] == 'error') {
-                  _showDialog(context, context.lowValue,
-                      "Yanlış kullanıcı adı veya şifre.");
-                } else if (_viewModel.item![1] == 'null error') {
-                  _showDialog(context, context.lowValue,
-                      "Girilmeyen kullanıcı adı veya şifre");
-                }
-              },
-              child: BodyText2Copy(
-                  data: "Giriş Yap", color: context.colorScheme.onSurface),
-              style: ElevatedButton.styleFrom(
-                  primary: context.colorScheme.surface),
+            SizedBox(
+              width: double.infinity,
+              height: context.dynamicHeight(0.065),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: context.highBorderRadius)),
+                onPressed: () {
+                  if (_viewModel.item?[1] != null) {
+                    if (_viewModel.item![1] == 'success') {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const BottomTabView()));
+                      _showDialog(
+                          context,
+                          context.lowValue,
+                          "Doğru kullanıcı adı ve şifre !",
+                          "Sisteme başarıyla giriş yapıldı.");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: context.colorScheme.secondaryVariant,
+                          duration: context.durationSlow,
+                          content: BodyText2Copy(
+                            data: "Giriş başarılı !",
+                            color: context.colorScheme.onSurface,
+                          ),
+                        ),
+                      );
+                    } else if (_viewModel.item![1] == 'error') {
+                      _showDialog(
+                          context,
+                          context.lowValue,
+                          "Yanlış kullanıcı adı veya şifre.",
+                          "Lütfen tekrar giriş yapmayı deneyiniz.");
+                    } else if (_viewModel.item![1] == 'null error') {
+                      _showDialog(
+                          context,
+                          context.lowValue,
+                          "Girilmeyen kullanıcı adı veya şifre",
+                          "Lütfen tekrar giriş yapmayı deneyiniz.");
+                    }
+                  } else {
+                    _viewModel.fetchItems(
+                        emailController.text, passController.text);
+                  }
+                },
+                child: BodyText2Copy(
+                    data: "Giriş", color: context.colorScheme.onSurface),
+              ),
+            ),
+            context.emptySizedHeightBoxLow3x,
+            SizedBox(
+              width: double.infinity,
+              height: context.dynamicHeight(0.065),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: context.highBorderRadius),
+                    primary: context.colorScheme.onError),
+                onPressed: () {},
+                child: BodyText2Copy(
+                    data: "Kayıt Ol", color: context.colorScheme.onSurface),
+              ),
             )
           ],
         ),
@@ -108,7 +168,8 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  _showDialog(BuildContext context, double radius, String title) {
+  _showDialog(
+      BuildContext context, double radius, String title, String content) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -116,8 +177,7 @@ class _LoginViewState extends State<LoginView> {
                 borderRadius: BorderRadius.circular(radius),
               ),
               title: BodyText1Copy(data: title),
-              content: const BodyText2Copy(
-                  data: "Lütfen tekrar giriş yapmayı deneyiniz."),
+              content: BodyText2Copy(data: content),
               actions: [
                 ElevatedButton(
                   child: Text("Tamam",

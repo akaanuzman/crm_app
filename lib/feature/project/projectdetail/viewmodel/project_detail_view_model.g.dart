@@ -9,21 +9,6 @@ part of 'project_detail_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ProjectDetailViewModel on _ProjectDetailViewModelBase, Store {
-  final _$itemsAtom = Atom(name: '_ProjectDetailViewModelBase.items');
-
-  @override
-  List<ProjectDetailModel> get items {
-    _$itemsAtom.reportRead();
-    return super.items;
-  }
-
-  @override
-  set items(List<ProjectDetailModel> value) {
-    _$itemsAtom.reportWrite(value, super.items, () {
-      super.items = value;
-    });
-  }
-
   final _$menuValueAtom = Atom(name: '_ProjectDetailViewModelBase.menuValue');
 
   @override
@@ -37,15 +22,6 @@ mixin _$ProjectDetailViewModel on _ProjectDetailViewModelBase, Store {
     _$menuValueAtom.reportWrite(value, super.menuValue, () {
       super.menuValue = value;
     });
-  }
-
-  final _$connectDataBaseAsyncAction =
-      AsyncAction('_ProjectDetailViewModelBase.connectDataBase');
-
-  @override
-  Future<void> connectDataBase(int projectId) {
-    return _$connectDataBaseAsyncAction
-        .run(() => super.connectDataBase(projectId));
   }
 
   final _$_ProjectDetailViewModelBaseActionController =
@@ -65,7 +41,6 @@ mixin _$ProjectDetailViewModel on _ProjectDetailViewModelBase, Store {
   @override
   String toString() {
     return '''
-items: ${items},
 menuValue: ${menuValue}
     ''';
   }

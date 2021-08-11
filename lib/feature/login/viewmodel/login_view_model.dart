@@ -1,6 +1,6 @@
-import 'package:crm_app/core/init/network/network_manager.dart';
-import 'package:crm_app/feature/login/service/i_login_service.dart';
-import 'package:crm_app/feature/login/service/login_service.dart';
+import '../../../core/init/network/network_manager.dart';
+import '../service/i_login_service.dart';
+import '../service/login_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';

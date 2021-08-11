@@ -12,20 +12,14 @@ import 'package:kartal/kartal.dart';
 class ProjectDetailView extends StatefulWidget {
   //const ProjecetDetailView({Key? key}) : super(key: key);
 
-  final String projectName;
-  final String projectDetail;
-  final int projectId;
   late final DateTime _now;
   late final DateTime _date;
   late final ProjectDetailViewModel _viewModel;
+  final int allTask;
 
   // ignore: use_key_in_widget_constructors
-  ProjectDetailView(
-      {required this.projectName,
-      required this.projectDetail,
-      required this.projectId}) {
+  ProjectDetailView({Key? key,required this.allTask}) {
     _viewModel = ProjectDetailViewModel();
-    _viewModel.connectDataBase(projectId);
     _now = DateTime.now();
     _date = DateTime(_now.year, _now.month, _now.day);
   }
@@ -111,13 +105,14 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                       size: context.dynamicWidth(0.1),
                                       color: context.colorScheme.surface,
                                     ),
-                                    backgroundColor: context.colorScheme.secondary,
+                                    backgroundColor:
+                                        context.colorScheme.secondary,
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       BodyText1Copy(
-                                        data: "7",
+                                        data: widget.allTask.toString(),
                                         color: context.colorScheme.onSecondary,
                                       ),
                                       context.emptySizedHeightBoxLow,
@@ -149,14 +144,14 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   CircleAvatar(
-                                    radius: 40,
-                                    child: Icon(
-                                      Icons.task_alt,
-                                      size: context.dynamicWidth(0.1),
-                                      color: context.colorScheme.onPrimary,
-                                    ),
-                                    backgroundColor: context.colorScheme.secondary
-                                  ),
+                                      radius: 40,
+                                      child: Icon(
+                                        Icons.task_alt,
+                                        size: context.dynamicWidth(0.1),
+                                        color: context.colorScheme.onPrimary,
+                                      ),
+                                      backgroundColor:
+                                          context.colorScheme.secondary),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
@@ -194,12 +189,11 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                 children: [
                                   CircleAvatar(
                                     radius: 40,
-                                    child: Icon(
-                                      Icons.group,
-                                      size: context.dynamicWidth(0.1),
-                                      color: context.colorScheme.onError
-                                    ),
-                                    backgroundColor: context.colorScheme.secondary,
+                                    child: Icon(Icons.group,
+                                        size: context.dynamicWidth(0.1),
+                                        color: context.colorScheme.onError),
+                                    backgroundColor:
+                                        context.colorScheme.secondary,
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -209,7 +203,8 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                         color: context.colorScheme.onSecondary,
                                       ),
                                       context.emptySizedHeightBoxLow,
-                                      const BodyText2Copy(data: "Erişim Sahipleri"),
+                                      const BodyText2Copy(
+                                          data: "Erişim Sahipleri"),
                                     ],
                                   )
                                 ],
@@ -238,12 +233,11 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                 children: [
                                   CircleAvatar(
                                     radius: 40,
-                                    child: Icon(
-                                      Icons.list_rounded,
-                                      size: context.dynamicWidth(0.1),
-                                      color: context.colorScheme.error
-                                    ),
-                                    backgroundColor: context.colorScheme.secondary,
+                                    child: Icon(Icons.list_rounded,
+                                        size: context.dynamicWidth(0.1),
+                                        color: context.colorScheme.error),
+                                    backgroundColor:
+                                        context.colorScheme.secondary,
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -277,7 +271,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                 Expanded(
                   flex: 3,
                   child: PageView(
-                    scrollDirection: Axis.vertical,
+                    //scrollDirection: Axis.vertical,
                     children: [
                       Card(
                         elevation: 5,
@@ -287,13 +281,13 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               context.emptySizedHeightBoxLow,
-                              Text(widget.projectName,
+                              Text("",
                                   style: context.textTheme.headline3),
                               context.emptySizedHeightBoxLow,
                               const BodyText1Copy(data: "Proje Hakkında: "),
                               context.emptySizedHeightBoxLow,
-                              Text(
-                                widget.projectDetail,
+                              const Text(
+                                "widget.projectDetail",
                                 maxLines: 1,
                               ),
                               context.emptySizedHeightBoxNormal,
@@ -317,10 +311,8 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                     MainAxisAlignment.spaceBetween,
                                 // ignore: prefer_const_literals_to_create_immutables
                                 children: [
-                                  Text(widget._viewModel.items[0].sDate
-                                      .toString()
-                                      .substring(0, 10)),
-                                  Text(widget._viewModel.items[0].fDate
+                                  const Text(""),
+                                  Text("widget._viewModel.items[0].fDate"
                                       .toString()
                                       .substring(0, 10)),
                                   const Text("\$15,800")
@@ -407,7 +399,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                 context.emptySizedHeightBoxLow,
                                 Expanded(
                                   child: ListView.builder(
-                                    itemCount: widget._viewModel.items.length,
+                                    //itemCount: widget._viewModel.items.length,
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: (context, index) => Column(
                                       children: [
@@ -415,7 +407,8 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                           padding: context.paddingLow,
                                           alignment: Alignment.center,
                                           child: Text(
-                                            widget._viewModel.items[index].name,
+                                            //widget._viewModel.items[index].name,
+                                            "",
                                             style: context.textTheme.headline4,
                                           ),
                                           decoration: BoxDecoration(
@@ -477,10 +470,10 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                 ),
                 context.emptySizedHeightBoxLow,
                 Expanded(
-                  flex:2,
+                  flex: 2,
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    itemCount: widget._viewModel.items.length,
+                    //itemCount: widget._viewModel.items.length,
                     itemBuilder: (context, index) => Padding(
                       padding: context.paddingLow,
                       child: Card(
@@ -489,8 +482,9 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                           borderRadius: BorderRadius.circular(radius),
                         ),
                         child: ListTile(
-                          title: BodyText2Copy(
-                            data: widget._viewModel.items[index].name,
+                          title: const BodyText2Copy(
+                            //data: widget._viewModel.items[index].name,
+                            data: "",
                           ),
                           trailing: SizedBox(
                             height: context.dynamicHeight(0.1),
@@ -578,7 +572,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                   ),
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    itemCount: 10,
+                    //itemCount: 10,
                     itemBuilder: (context, index) => Padding(
                       padding: context.paddingLow,
                       child: Container(

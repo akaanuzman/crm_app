@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'project_model.dart';
+part of 'project_detail_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProjectModel _$ProjectModelFromJson(Map<String, dynamic> json) {
-  return ProjectModel(
+ProjectDetailModel _$ProjectDetailModelFromJson(Map<String, dynamic> json) {
+  return ProjectDetailModel(
     id: json['id'] as String?,
     okgorev: json['okgorev'] as int?,
     allgorev: json['allgorev'] as int?,
     name: json['name'] as String?,
-    userName: json['user_name'] as String?,
+    userName: json['userName'] as String?,
     document: json['document'] as String?,
     detail: json['detail'] as String?,
     link: json['link'] as String?,
@@ -24,7 +24,7 @@ ProjectModel _$ProjectModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ProjectModelToJson(ProjectModel instance) =>
+Map<String, dynamic> _$ProjectDetailModelToJson(ProjectDetailModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'okgorev': instance.okgorev,

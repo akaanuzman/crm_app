@@ -1,9 +1,9 @@
-enum LoginServiceEndPoints { ENDPOINTS }
+enum LoginServiceEndPoints { endpoints }
 
 extension LoginServiceExtension on LoginServiceEndPoints {
   String  rawValue(String email,String password) {
     switch (this) {
-      case LoginServiceEndPoints.ENDPOINTS:
+      case LoginServiceEndPoints.endpoints:
         return 'Foreign/user_login?email=$email&password=$password';
     }
   }

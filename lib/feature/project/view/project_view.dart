@@ -1,12 +1,12 @@
 import 'package:boardview/boardview_controller.dart';
-import 'package:crm_app/core/constants/app/app_constants.dart';
+import '../projectdetail/view/project_detail_view.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
 
-import '../../../core/components/row/row_circle_avatar.dart';
 import '../../../core/components/row/row_icon_text.dart';
 import '../../../core/components/row/row_space_between_text.dart';
 import '../../../core/components/text/body_text1_copy.dart';
@@ -19,12 +19,7 @@ import '../viewmodel/project_view_model.dart';
 class ProjectView extends StatefulWidget {
   ProjectView({Key? key}) : super(key: key);
 
-  late final ProjectViewModel _viewModel;
-
-  // ignore: use_key_in_widget_constructors
-  // ProjectView() {
-  //   _viewModel.connectDataBase();
-  // }
+  final ProjectViewModel _viewModel = ProjectViewModel();
 
   @override
   State<ProjectView> createState() => _ProjectViewState();
@@ -32,15 +27,13 @@ class ProjectView extends StatefulWidget {
 
 class _ProjectViewState extends State<ProjectView> {
   final BoardViewController boardViewController = BoardViewController();
+  late final ProjectViewModel viewModel;
 
   @override
   void initState() {
     super.initState();
-    widget._viewModel = ProjectViewModel();
-    widget._viewModel.fetchItems(ApplicationConstants.instance!.token);
-    setState(() {
-      
-    });
+    viewModel = widget._viewModel;
+    setState(() {});
   }
 
   @override
@@ -88,11 +81,12 @@ class _ProjectViewState extends State<ProjectView> {
     );
   }
 
-  Widget get _buildListViewBuilder => ListView.builder(
-        //itemCount: widget._viewModel.items.length,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) => _buildProjectCard(context, index),
-      );
+  Widget get _buildListViewBuilder => Observer(
+      builder: (BuildContext context) => ListView.builder(
+            itemCount: viewModel.items.length,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) => _buildProjectCard(context, index),
+          ));
 
   Widget _buildProjectCard(BuildContext context, int index) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -100,6 +94,7 @@ class _ProjectViewState extends State<ProjectView> {
     double height = mediaQuery.size.height;
 
     double radius = height * 0.02;
+
     return Padding(
       padding: context.paddingLow,
       child: Slidable(
@@ -133,7 +128,7 @@ class _ProjectViewState extends State<ProjectView> {
             },
             title: Padding(
               padding: context.verticalPaddingLow,
-              //child: BodyText1Copy(data: widget._viewModel.items[index].name),
+              child: BodyText1Copy(data: viewModel.items[index].name ?? ""),
             ),
             subtitle: _buildSubtitle(context, index),
             trailing: const Icon(Icons.keyboard_arrow_right),
@@ -143,40 +138,76 @@ class _ProjectViewState extends State<ProjectView> {
     );
   }
 
-  Column _buildSubtitle(BuildContext context, int index) => Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildRowIconText,
-          context.emptySizedHeightBoxLow3x,
-          const Text(
-              //widget._viewModel.items[index].detail,
-              ""),
-          _buildRowIconTextText(context),
-          const RowCircleAvatar(firstText: "AA", secondText: "BB"),
-          context.emptySizedHeightBoxLow3x,
-          const RowSpaceBetweenText(
-              firstText: "Task complated: ", secondText: "3/4"),
-          context.emptySizedHeightBoxLow,
-          const BlueBar(),
-          context.emptySizedHeightBoxLow3x
-        ],
-      );
-
-  RowIconText get _buildRowIconText => const RowIconText(
-        icon: Icons.account_circle_rounded,
-        text: "Ahmet Kaan Uzman",
-        sizedBox: SizedBox(
-          height: 0,
-          width: 2,
+  Widget _buildSubtitle(BuildContext context, int index) {
+    int indexV2 = 0;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildRowIconText(index),
+        context.emptySizedHeightBoxLow3x,
+        Text(viewModel.items[index].detail ?? "Proje icerigi"),
+        _buildRowIconTextText(context, index),
+        Wrap(
+          spacing: 5,
+          children: List.generate(
+            viewModel.items[index].users?.length == null
+                ? 0
+                : viewModel.items[index].users!.length,
+            (indexV2) {
+              indexV2++;
+              return CircleAvatar(
+                backgroundImage: NetworkImage(
+                    "http://192.168.3.53/assets/images/users/${viewModel.items[index].users?[index].photo}"),
+              );
+            },
+          ),
         ),
-      );
+        context.emptySizedHeightBoxLow3x,
+        RowSpaceBetweenText(
+          firstText: "Task complated: ",
+          secondText: viewModel.items[index].okgorev.toString(),
+          thirthText: viewModel.items[index].allgorev.toString(),
+        ),
+        context.emptySizedHeightBoxLow,
+        BlueBar(
+          width: viewModel.items[index].okgorev! /
+                      viewModel.items[index].allgorev! ==
+                  1
+              ? 0
+              : viewModel.items[index].okgorev! /
+                          viewModel.items[index].allgorev! ==
+                      0.75
+                  ? 0.2
+                  : viewModel.items[index].okgorev! /
+                              viewModel.items[index].allgorev! ==
+                          0.5
+                      ? 0.345
+                      : viewModel.items[index].okgorev! /
+                                  viewModel.items[index].allgorev! ==
+                              0.25
+                          ? 0.5
+                          : 0,
+        ),
+        context.emptySizedHeightBoxLow3x
+      ],
+    );
+  }
 
-  Row _buildRowIconTextText(BuildContext context) => Row(
+  Widget _buildRowIconText(int index) => RowIconText(
+      icon: Icons.account_circle_rounded,
+      text: viewModel.items[index].userName ?? "",
+      sizedBox: const SizedBox(
+        height: 0,
+        width: 2,
+      ),
+    );
+
+  Row _buildRowIconTextText(BuildContext context, int index) => Row(
         children: [
           const Icon(Icons.list),
           context.emptySizedWidthBoxLow,
-          const BoldText(data: "0"),
+          BoldText(data: viewModel.items[index].allgorev.toString()),
           context.emptySizedWidthBoxLow,
           const Text(
             "Görev",
@@ -186,17 +217,11 @@ class _ProjectViewState extends State<ProjectView> {
       );
 
   void goToNextPage(BuildContext context, int index) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (context) => Observer(
-    //       builder: (context) =>  ProjectDetailView(
-    //       projectName: widget._viewModel.items[index].name,
-    //          projectDetail: widget._viewModel.items[index].detail,
-    //          projectId: widget._viewModel.items[index].id,
-    //       ),
-    //     ),
-    //   ),
-    // );
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ProjectDetailView(allTask: viewModel.items[index].allgorev ?? 0,),
+      ),
+    );
   }
 
   _showModalBottomSheet(context, double radius) {

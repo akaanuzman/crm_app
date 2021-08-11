@@ -1,5 +1,3 @@
-import 'package:crm_app/feature/mail/send_mail/view/send_mail_view.dart';
-
 import '../send_mail/view/send_mail_view.dart';
 
 import '../viewmodel/mail_view_model.dart';
