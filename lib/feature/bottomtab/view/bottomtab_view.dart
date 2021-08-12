@@ -22,20 +22,17 @@ import 'package:kartal/kartal.dart';
 class BottomTabView extends StatelessWidget {
   const BottomTabView({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     final List<BottomTabModel> items = [
       BottomTabModel(
           title: "Proje", icon: Icons.assignment, child: ProjectView()),
       BottomTabModel(
-          title: "Rehber",
-          icon: Icons.contacts_sharp,
-          child: const ContactView()),
+          title: "Rehber", icon: Icons.contacts_sharp, child: ContactView()),
       BottomTabModel(
           title: "Email", icon: Icons.email, child: const MailTabView()),
       BottomTabModel(
-          title: "Şirket", icon: Icons.business, child: const CompanyView()),
+          title: "Şirket", icon: Icons.business, child: CompanyView()),
     ];
 
     MediaQueryData mediaQuery = MediaQuery.of(context);

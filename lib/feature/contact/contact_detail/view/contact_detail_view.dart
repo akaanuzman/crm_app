@@ -1,3 +1,4 @@
+import '../../model/contact_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
@@ -6,7 +7,8 @@ import '../../../../core/components/text/body_text1_copy.dart';
 import '../../../../core/components/text/body_text2_copy.dart';
 
 class ContactDetailView extends StatelessWidget {
-  const ContactDetailView({Key? key}) : super(key: key);
+  final Users? user;
+  const ContactDetailView({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,10 @@ class ContactDetailView extends StatelessWidget {
       body: Padding(
         padding: context.paddingNormal,
         child: SizedBox(
-          height: context.dynamicHeight(0.6),
+          height: context.dynamicHeight(0.65),
           child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: context.normalBorderRadius),
+            shape: RoundedRectangleBorder(
+                borderRadius: context.normalBorderRadius),
             elevation: 5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +42,7 @@ class ContactDetailView extends StatelessWidget {
                         CircleAvatar(
                           // ignore: prefer_const_constructors
                           backgroundImage: NetworkImage(
-                              "http://192.168.3.53/assets/images/users/user0.jpg"),
+                              "http://192.168.3.53/assets/images/users/${user?.photo}"),
                           radius: 30,
                         ),
                         context.emptySizedWidthBoxLow,
@@ -48,7 +50,7 @@ class ContactDetailView extends StatelessWidget {
                         Expanded(
                           // ignore: prefer_const_constructors
                           child: ListTile(
-                            title: const BodyText1Copy(data: "Deneme"),
+                            title: BodyText1Copy(data: user?.fullName ?? ""),
                             subtitle: Column(
                               children: [
                                 Row(
@@ -58,7 +60,7 @@ class ContactDetailView extends StatelessWidget {
                                             context.colorScheme.onBackground),
                                     context.emptySizedWidthBoxLow,
                                     Text(
-                                      "Firma 1",
+                                      user?.company ?? "",
                                       style: context.textTheme.caption!
                                           .copyWith(
                                               color: context
@@ -138,7 +140,7 @@ class ContactDetailView extends StatelessWidget {
                               data: "HAKKIMDA : ",
                               color: context.colorScheme.onBackground,
                             ),
-                            const Text("data"),
+                            Text(user?.detail ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,
@@ -148,7 +150,7 @@ class ContactDetailView extends StatelessWidget {
                               data: "DOĞUM TARİHİ : ",
                               color: context.colorScheme.onBackground,
                             ),
-                            const Text("data"),
+                            Text(user?.birthday ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,
@@ -158,7 +160,17 @@ class ContactDetailView extends StatelessWidget {
                               data: "FİRMA : ",
                               color: context.colorScheme.onBackground,
                             ),
-                            const Text("data"),
+                            Text(user?.company ?? ""),
+                          ],
+                        ),
+                        context.emptySizedHeightBoxLow3x,
+                        Row(
+                          children: [
+                            BodyText2Copy(
+                              data: "MESLEK : ",
+                              color: context.colorScheme.onBackground,
+                            ),
+                            Text(user?.job ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,
@@ -168,7 +180,7 @@ class ContactDetailView extends StatelessWidget {
                               data: "EPOSTA : ",
                               color: context.colorScheme.onBackground,
                             ),
-                            const Text("data"),
+                            Text(user?.email ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,
@@ -178,7 +190,7 @@ class ContactDetailView extends StatelessWidget {
                               data: "TELEFON : ",
                               color: context.colorScheme.onBackground,
                             ),
-                            const Text("data"),
+                             Text(user?.telephone ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,

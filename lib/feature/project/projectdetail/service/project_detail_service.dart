@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:crm_app/feature/project/projectdetail/model/project_detail_model.dart';
+import '../model/project_detail_model.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-
 import 'i_project_detail_service.dart';
 import 'project_detail_service_end_points.dart';
 

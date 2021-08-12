@@ -1,3 +1,6 @@
+import '../../../core/constants/app/app_constants.dart';
+import '../viewmodel/contact_view_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:popup_card/popup_card.dart';
 
 import '../contact_detail/view/contact_detail_view.dart';
@@ -10,7 +13,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kartal/kartal.dart';
 
 class ContactView extends StatelessWidget {
-  const ContactView({Key? key}) : super(key: key);
+  final ContactViewModel _viewModel = ContactViewModel();
+  ContactView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -18,6 +22,8 @@ class ContactView extends StatelessWidget {
     double height = mediaQuery.size.height;
 
     double radius = height * 0.02;
+
+    _viewModel.fetchItems(ApplicationConstants.instance!.token);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -50,69 +56,79 @@ class ContactView extends StatelessWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
-      body: Padding(
-        padding: context.paddingLow,
-        child: Column(
-          children: [
-            const Expanded(flex: 2, child: SearchTextField()),
-            context.emptySizedHeightBoxLow,
-            Expanded(
-              flex: 10,
-              child: ListView.builder(
-                itemCount: 10,
-                physics: const BouncingScrollPhysics(),
-                // ignore: prefer_const_constructors
-                itemBuilder: (context, index) => Slidable(
-                  actionPane: const SlidableDrawerActionPane(),
-                  actions: [
-                    IconSlideAction(
-                      color: context.colorScheme.primaryVariant,
-                      caption: 'Sil',
-                      icon: Icons.delete,
-                      onTap: () {
-                        _showDialog(context, radius);
-                      },
-                    ),
-                    IconSlideAction(
-                      color: context.colorScheme.onPrimary,
-                      foregroundColor: context.colorScheme.onSurface,
-                      caption: 'Düzenle',
-                      icon: Icons.edit,
-                      onTap: () {
-                        _showModalBottomSheet(context, radius);
-                      },
-                    ),
-                  ],
-                  child: Padding(
-                    padding: context.paddingLow,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: context.lowBorderRadius),
-                      elevation: 5,
-                      child: ListTile(
+      body: Observer(
+        builder: (context) => Padding(
+          padding: context.paddingLow,
+          child: Column(
+            children: [
+              const Expanded(flex: 2, child: SearchTextField()),
+              context.emptySizedHeightBoxLow,
+              Expanded(
+                flex: 10,
+                child: ListView.builder(
+                  itemCount: _viewModel.items.users?.length ?? 0,
+                  physics: const BouncingScrollPhysics(),
+                  // ignore: prefer_const_constructors
+                  itemBuilder: (context, index) => Slidable(
+                    actionPane: const SlidableDrawerActionPane(),
+                    actions: [
+                      IconSlideAction(
+                        color: context.colorScheme.primaryVariant,
+                        caption: 'Sil',
+                        icon: Icons.delete,
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const ContactDetailView()));
+                          _showDialog(context, radius);
                         },
-                        title: const BodyText2Copy(data: "test isim"),
-                        subtitle: Text(
-                          "test_email@gmail.com",
-                          style: context.textTheme.button,
+                      ),
+                      IconSlideAction(
+                        color: context.colorScheme.onPrimary,
+                        foregroundColor: context.colorScheme.onSurface,
+                        caption: 'Düzenle',
+                        icon: Icons.edit,
+                        onTap: () {
+                          _showModalBottomSheet(context, radius);
+                          debugPrint(_viewModel.items.message);
+                        },
+                      ),
+                    ],
+                    child: Padding(
+                      padding: context.paddingLow,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: context.lowBorderRadius),
+                        elevation: 5,
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ContactDetailView(
+                                  user: _viewModel.items.users?[index],
+                                ),
+                              ),
+                            );
+                          },
+                          title: BodyText2Copy(
+                              data: _viewModel.items.users?[index].fullName ??
+                                  ""),
+                          subtitle: Text(
+                            _viewModel.items.users?[index].email ?? "",
+                            style: context.textTheme.button,
+                          ),
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage("http://192.168.3.53/assets/images/users/${_viewModel.items.users?[index].photo}"),
+                            radius: 30,
+                          ),
+                          trailing: const Icon(Icons.keyboard_arrow_right),
                         ),
-                        leading: Padding(
-                          padding: context.verticalPaddingLow,
-                          child: const Icon(Icons.person),
-                        ),
-                        trailing: const Icon(Icons.keyboard_arrow_right),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            context.emptySizedHeightBoxLow3x,
-            const Text("Kişiyi silmek veya düzenlemek için sağa kaydırınız.")
-          ],
+              context.emptySizedHeightBoxLow3x,
+              const Text("Kişiyi silmek veya düzenlemek için sağa kaydırınız.")
+            ],
+          ),
         ),
       ),
     );

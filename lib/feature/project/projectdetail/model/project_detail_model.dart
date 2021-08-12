@@ -91,9 +91,7 @@ class Users {
       this.companyId,
       this.birthday});
 
-  factory Users.fromJson(Map<String, dynamic> json) {
-    return _$UsersFromJson(json);
-  }
+  factory Users.fromJson(Map<String, dynamic> json) => _$UsersFromJson(json);
 
   Map<String, dynamic> toJson() => _$UsersToJson(this);
 }

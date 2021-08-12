@@ -1,3 +1,5 @@
+import '../viewmodel/company_view_model.dart';
+
 import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/body_text2_copy.dart';
 import '../company_detail/view/company_detail_view.dart';
@@ -5,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
 
+// ignore: must_be_immutable
 class CompanyView extends StatelessWidget {
-  const CompanyView({Key? key}) : super(key: key);
+  final CompanyViewModel _viewModel = CompanyViewModel();
+  CompanyView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class CompanyView extends StatelessWidget {
         padding: context.paddingLow,
         child: ListView.builder(
           physics: const BouncingScrollPhysics(),
-          itemCount: 10,
+          itemCount: _viewModel.items.company?.length ?? 0,
           // ignore: prefer_const_constructors
           itemBuilder: (context, index) => Column(
             children: [

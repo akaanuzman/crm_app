@@ -1,5 +1,5 @@
 import 'package:boardview/boardview_controller.dart';
-import 'package:crm_app/core/constants/app/app_constants.dart';
+import '../../../core/constants/app/app_constants.dart';
 import '../projectdetail/view/project_detail_view.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/cupertino.dart';
@@ -140,7 +140,6 @@ class _ProjectViewState extends State<ProjectView> {
   }
 
   Widget _buildSubtitle(BuildContext context, int index) {
-    int indexV2 = 0;
     ApplicationConstants.instance!.projectId = viewModel.items[index].id ?? "";
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -150,19 +149,15 @@ class _ProjectViewState extends State<ProjectView> {
         context.emptySizedHeightBoxLow3x,
         Text(viewModel.items[index].detail ?? "Proje icerigi"),
         _buildRowIconTextText(context, index),
-        Wrap(
-          spacing: 5,
-          children: List.generate(
-            viewModel.items[index].users?.length == null
-                ? 0
-                : viewModel.items[index].users!.length,
-            (indexV2) {
-              indexV2++;
-              return CircleAvatar(
-                  // backgroundImage: NetworkImage(
-                  //     "http://192.168.3.53/assets/images/users/${viewModel.items[index].users?[index].photo}"),
-                  );
-            },
+        SizedBox(
+          height: context.dynamicHeight(0.05),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: viewModel.items[index].users?.length,
+            itemBuilder: (context, indexV2) => CircleAvatar(
+              backgroundImage: NetworkImage(
+                  "http://192.168.3.53/assets/images/users/${viewModel.items[index].users?[indexV2].photo}"),
+            ),
           ),
         ),
         context.emptySizedHeightBoxLow3x,

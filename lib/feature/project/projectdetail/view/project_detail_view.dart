@@ -1,6 +1,6 @@
-import 'package:crm_app/core/components/text/bold_text.dart';
-import 'package:crm_app/core/constants/app/app_constants.dart';
-import 'package:crm_app/product/widgets/stack/blue_bar.dart';
+import '../../../../core/components/text/bold_text.dart';
+import '../../../../core/constants/app/app_constants.dart';
+import '../../../../product/widgets/stack/blue_bar.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../../core/components/text/body_text1_copy.dart';
@@ -268,7 +268,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                   children: [
                                     CircleAvatar(
                                       radius: 40,
-                                      child: Icon(Icons.list_rounded,
+                                      child: Icon(Icons.schedule,
                                           size: context.dynamicWidth(0.1),
                                           color: context.colorScheme.error),
                                       backgroundColor:
@@ -361,36 +361,38 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                   const BodyText2Copy(
                                       data: "Erişim Sahipleri--"),
                                   context.emptySizedHeightBoxLow,
-                                  Row(
-                                    children: [
-                                      const CircleAvatar(
-                                        child: Text("AA"),
-                                      ),
-                                      context.emptySizedWidthBoxLow,
-                                      const CircleAvatar(
-                                        child: Text("AA"),
-                                      ),
-                                      context.emptySizedWidthBoxLow,
-                                      const CircleAvatar(
-                                        child: Text("AA"),
-                                      ),
-                                      context.emptySizedWidthBoxLow,
-                                      InkWell(
-                                        onTap: () {
-                                          _showModalBottomSheet(
-                                              context, radius);
-                                        },
-                                        child: CircleAvatar(
-                                          backgroundColor:
-                                              context.colorScheme.onPrimary,
-                                          child: Icon(
-                                            Icons.add,
-                                            color:
-                                                context.colorScheme.onSurface,
+                                  SizedBox(
+                                    height: context.dynamicHeight(0.05),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount:
+                                                viewModel.items.users?.length,
+                                            itemBuilder: (context, index) =>
+                                                CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                  "http://192.168.3.53/assets/images/users/${viewModel.items.users?[index].photo}"),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        GestureDetector(
+                                          onTap: () {
+                                            _showModalBottomSheet(
+                                                context, radius);
+                                          },
+                                          child: CircleAvatar(
+                                            backgroundColor:
+                                                context.colorScheme.onPrimary,
+                                            child: Icon(Icons.add,
+                                                color: context
+                                                    .colorScheme.onSurface,
+                                                size: 32),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -444,7 +446,8 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                     context.emptySizedHeightBoxLow,
                                     Expanded(
                                       child: ListView.builder(
-                                        itemCount: viewModel.items.gorev?.length ?? 0,
+                                        itemCount:
+                                            viewModel.items.gorev?.length ?? 0,
                                         physics: const BouncingScrollPhysics(),
                                         itemBuilder: (context, index) => Column(
                                           children: [
@@ -452,7 +455,9 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                               padding: context.paddingLow,
                                               alignment: Alignment.center,
                                               child: Text(
-                                                viewModel.items.gorev?[0].name ?? "",
+                                                viewModel.items.gorev?[index]
+                                                        .name ??
+                                                    "",
                                                 style:
                                                     context.textTheme.headline4,
                                               ),
@@ -528,21 +533,17 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                             borderRadius: BorderRadius.circular(radius),
                           ),
                           child: ListTile(
-                            title:  BodyText2Copy(
-                              data: viewModel.items.gorev?[0].name ?? ""
+                            leading: Padding(
+                              padding: context.paddingLow,
+                              child:
+                                  const Icon(Icons.pending_actions, size: 28),
                             ),
-                            trailing: SizedBox(
-                              height: context.dynamicHeight(0.1),
-                              width: context.dynamicWidth(0.25),
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.calendar_today),
-                                  context.emptySizedWidthBoxLow,
-                                  Text(
-                                      "${widget._date.day}/${widget._date.month}/${widget._date.year}")
-                                ],
-                              ),
-                            ),
+                            title: BodyText2Copy(
+                                data: viewModel.items.gorev?[index].name ?? ""),
+                            subtitle: Text(
+                                viewModel.items.gorev?[index].detail ?? ""),
+                            trailing: Text(
+                                "${viewModel.items.gorev?[index].sDate} - ${viewModel.items.gorev?[index].fDate}"),
                             onTap: () {},
                           ),
                         ),

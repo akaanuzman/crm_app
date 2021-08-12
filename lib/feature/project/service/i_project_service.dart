@@ -1,5 +1,6 @@
-import '../model/project_model.dart';
 import 'package:dio/dio.dart';
+
+import '../model/project_model.dart';
 
 abstract class IProjectService {
   final Dio dio;
