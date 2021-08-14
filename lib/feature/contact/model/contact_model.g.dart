@@ -26,7 +26,7 @@ Map<String, dynamic> _$ContactModelToJson(ContactModel instance) =>
 Users _$UsersFromJson(Map<String, dynamic> json) {
   return Users(
     screenName: json['screenName'] as String?,
-    fullName: json['fullName'] as String?,
+    fullName: json['full_name'] as String?,
     company: json['company'] as String?,
     email: json['email'] as String?,
     photo: json['photo'] as String?,

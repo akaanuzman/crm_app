@@ -1,3 +1,4 @@
+import 'package:crm_app/feature/register/view/register_view.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../core/components/text/body_text1_copy.dart';
@@ -43,7 +44,6 @@ class _LoginViewState extends State<LoginView> {
             TextField(
               keyboardType: TextInputType.emailAddress,
               controller: emailController,
-              
               decoration: InputDecoration(
                 filled: true,
                 prefixIcon: const Icon(Icons.email),
@@ -157,7 +157,10 @@ class _LoginViewState extends State<LoginView> {
                     shape: RoundedRectangleBorder(
                         borderRadius: context.highBorderRadius),
                     primary: context.colorScheme.onError),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const RegisterView()));
+                },
                 child: BodyText2Copy(
                     data: "Kayıt Ol", color: context.colorScheme.onSurface),
               ),

@@ -1,3 +1,5 @@
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 import '../viewmodel/company_view_model.dart';
 
 import '../../../core/components/text/body_text1_copy.dart';
@@ -46,140 +48,128 @@ class CompanyView extends StatelessWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
-      body: Padding(
-        padding: context.paddingLow,
-        child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: _viewModel.items.company?.length ?? 0,
-          // ignore: prefer_const_constructors
-          itemBuilder: (context, index) => Column(
-            children: [
-              Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: context.normalBorderRadius),
-                elevation: 5,
-                // ignore: prefer_const_constructors
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const CompanyDetailView()));
-                  },
-                  child: ExpansionTile(
-                    // ignore: prefer_const_constructors
-                    title: BodyText2Copy(data: "Kuvarssoft"),
-                    leading: const CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "http://192.168.3.53/assets/images/logo-sm.png"),
+      body: Observer(
+        builder: (context) => Padding(
+          padding: context.paddingLow,
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: _viewModel.items.companys?.length ?? 0,
+            // ignore: prefer_const_constructors
+            itemBuilder: (context, index) => Column(
+              children: [
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: context.normalBorderRadius),
+                  elevation: 5,
+                  // ignore: prefer_const_constructors
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>  CompanyDetailView(id: _viewModel.items.companys?[index].id ?? "",)));
+                    },
+                    child: ExpansionTile(
+                      // ignore: prefer_const_constructors
+                      title: BodyText2Copy(
+                          data: _viewModel.items.companys?[index].name ?? "Geçerli firma adı bulunamadı."),
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            _viewModel.items.companys?[index].photo ?? "Geçerli firma resmi bulunamadı."),
+                        backgroundColor: context.colorScheme.onSurface,
+                      ),
+                      expandedAlignment: Alignment.centerLeft,
+                      children: [
+                        context.emptySizedHeightBoxLow,
+                        Padding(
+                          padding: context.horizontalPaddingNormal,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Email",
+                                style: TextStyle(
+                                    color: context.colorScheme.onBackground),
+                              ),
+                              context.emptySizedWidthBoxLow3x,
+                              Text(_viewModel.items.companys?[index].email ??
+                                  "Geçerli email adresi bulunamadı."),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 2,
+                          indent: 15,
+                          endIndent: 15,
+                        ),
+                        context.emptySizedHeightBoxLow,
+                        Padding(
+                          padding: context.horizontalPaddingNormal,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Telefon",
+                                style: TextStyle(
+                                    color: context.colorScheme.onBackground),
+                              ),
+                              context.emptySizedWidthBoxLow3x,
+                              Text(
+                                  _viewModel.items.companys?[index].telephone ??
+                                      "Geçerli telefon numarası bulunamadı."),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 2,
+                          indent: 15,
+                          endIndent: 15,
+                        ),
+                        context.emptySizedHeightBoxLow,
+                        Padding(
+                          padding: context.horizontalPaddingNormal,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Webiste",
+                                style: TextStyle(
+                                    color: context.colorScheme.onBackground),
+                              ),
+                              context.emptySizedWidthBoxLow3x,
+                              Text(_viewModel.items.companys?[index].webSite ??
+                                  "Geçerli web sitesi bulunamadı."),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 2,
+                          indent: 15,
+                          endIndent: 15,
+                        ),
+                        context.emptySizedHeightBoxLow,
+                        Padding(
+                          padding: context.horizontalPaddingNormal,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Konum",
+                                style: TextStyle(
+                                    color: context.colorScheme.onBackground),
+                              ),
+                              context.emptySizedWidthBoxLow3x,
+                              Text(_viewModel.items.companys?[index].location ?? "Geçerli konum bilgisi bulunamadı."),
+                            ],
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 2,
+                          indent: 15,
+                          endIndent: 15,
+                        ),
+                        context.emptySizedHeightBoxLow3x,
+                      ],
                     ),
-                    expandedAlignment: Alignment.centerLeft,
-                    children: [
-                      context.emptySizedHeightBoxLow,
-                      Padding(
-                        padding: context.horizontalPaddingNormal,
-                        child: Row(
-                          children: [
-                            Text(
-                              "Email",
-                              style: TextStyle(
-                                  color: context.colorScheme.onBackground),
-                            ),
-                            context.emptySizedWidthBoxLow3x,
-                            const Text("test@gmail.com"),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 2,
-                        indent: 15,
-                        endIndent: 15,
-                      ),
-                      context.emptySizedHeightBoxLow,
-                      Padding(
-                        padding: context.horizontalPaddingNormal,
-                        child: Row(
-                          children: [
-                            Text(
-                              "Telefon",
-                              style: TextStyle(
-                                  color: context.colorScheme.onBackground),
-                            ),
-                            context.emptySizedWidthBoxLow3x,
-                            const Text("555 555 55 55"),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 2,
-                        indent: 15,
-                        endIndent: 15,
-                      ),
-                      context.emptySizedHeightBoxLow,
-                      Padding(
-                        padding: context.horizontalPaddingNormal,
-                        child: Row(
-                          children: [
-                            Text(
-                              "Vergi Dairesi",
-                              style: TextStyle(
-                                  color: context.colorScheme.onBackground),
-                            ),
-                            context.emptySizedWidthBoxLow3x,
-                            const Text("Kütahya Vergi Dairesi"),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 2,
-                        indent: 15,
-                        endIndent: 15,
-                      ),
-                      context.emptySizedHeightBoxLow,
-                      Padding(
-                        padding: context.horizontalPaddingNormal,
-                        child: Row(
-                          children: [
-                            Text(
-                              "Vergi Numarası",
-                              style: TextStyle(
-                                  color: context.colorScheme.onBackground),
-                            ),
-                            context.emptySizedWidthBoxLow3x,
-                            const Text("123456"),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 2,
-                        indent: 15,
-                        endIndent: 15,
-                      ),
-                      context.emptySizedHeightBoxLow,
-                      Padding(
-                        padding: context.horizontalPaddingNormal,
-                        child: Row(
-                          children: [
-                            Text(
-                              "Konum",
-                              style: TextStyle(
-                                  color: context.colorScheme.onBackground),
-                            ),
-                            context.emptySizedWidthBoxLow3x,
-                            const Text("Kütahya/Türkiye"),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        thickness: 2,
-                        indent: 15,
-                        endIndent: 15,
-                      ),
-                      context.emptySizedHeightBoxLow3x,
-                    ],
                   ),
                 ),
-              ),
-              context.emptySizedHeightBoxLow,
-            ],
+                context.emptySizedHeightBoxLow,
+              ],
+            ),
           ),
         ),
       ),

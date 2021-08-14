@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import '../model/company_model.dart';
@@ -14,7 +15,7 @@ class CompanyService extends ICompanyService {
     final response =
         await dio.get(CompanyServiceEndPoints.company.rawValue(token));
     if (response.statusCode == HttpStatus.ok) {
-      return CompanyModel.fromJson(response.data);
+      return CompanyModel.fromJson(jsonDecode(response.data));
     }
     return CompanyModel();
   }

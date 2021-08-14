@@ -1,4 +1,6 @@
 
+import 'package:crm_app/feature/splash/view/splash_view.dart';
+
 import 'feature/login/view/login_view.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +18,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppThemeLight.instance.themeDataLight,
-        home: const LoginView());
+        home: const SplashView());
   }
 }

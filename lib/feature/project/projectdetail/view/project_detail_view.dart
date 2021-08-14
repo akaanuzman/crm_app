@@ -15,24 +15,17 @@ import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
 class ProjectDetailView extends StatefulWidget {
-  //const ProjecetDetailView({Key? key}) : super(key: key);
-
-  late final DateTime _now;
-  late final DateTime _date;
   final int allTask;
   final int okTask;
   final ProjectDetailViewModel _viewModel = ProjectDetailViewModel();
   final String projectId;
 
-  // ignore: use_key_in_widget_constructors
   ProjectDetailView(
       {Key? key,
       required this.allTask,
       required this.okTask,
-      required this.projectId}) {
-    _now = DateTime.now();
-    _date = DateTime(_now.year, _now.month, _now.day);
-  }
+      required this.projectId})
+      : super(key: key);
 
   @override
   State<ProjectDetailView> createState() => _ProjectDetailViewState();
@@ -91,7 +84,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
           elevation: 2,
           tag: 'Proje Ekle',
           child: PopUpItemBody(
-            now: widget._now,
+            now: DateTime.now(),
           ),
         ),
       ),

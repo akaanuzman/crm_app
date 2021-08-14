@@ -10,7 +10,7 @@ part 'company_view_model.g.dart';
 class CompanyViewModel = _CompanyViewModelBase with _$CompanyViewModel;
 
 abstract class _CompanyViewModelBase with Store {
-    BuildContext? context;
+  BuildContext? context;
   late ICompanyService companyService;
 
   @observable

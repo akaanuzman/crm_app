@@ -6,9 +6,9 @@ part 'company_model.g.dart';
 class CompanyModel {
   String? message;
   String? userid;
-  List<Company>? company;
+  List<Companys>? companys;
 
-  CompanyModel({this.message, this.userid, this.company});
+  CompanyModel({this.message, this.userid, this.companys});
 
   factory CompanyModel.fromJson(Map<String, dynamic> json) =>
       _$CompanyModelFromJson(json);
@@ -17,7 +17,8 @@ class CompanyModel {
 }
 
 @JsonSerializable()
-class Company {
+class Companys {
+  String? id;
   String? name;
   String? email;
   String? telephone;
@@ -25,7 +26,7 @@ class Company {
   String? webSite;
   String? photo;
 
-  Company(
+  Companys(
       {this.name,
       this.email,
       this.telephone,
@@ -33,8 +34,9 @@ class Company {
       this.webSite,
       this.photo});
 
-  factory Company.fromJson(Map<String, dynamic> json) =>
-      _$CompanyFromJson(json);
+  factory Companys.fromJson(Map<String, dynamic> json) {
+    return _$CompanysFromJson(json);
+  }
 
-  Map<String, dynamic> toJson() => _$CompanyToJson(this);
+  Map<String, dynamic> toJson() => _$CompanysToJson(this);
 }
