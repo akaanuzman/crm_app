@@ -35,6 +35,7 @@ class MailView extends StatelessWidget {
           style: TextStyle(color: context.colorScheme.onSecondary),
         ),
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
         elevation: 0,
       ),
       body: Column(

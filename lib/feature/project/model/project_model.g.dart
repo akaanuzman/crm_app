@@ -8,11 +8,28 @@ part of 'project_model.dart';
 
 ProjectModel _$ProjectModelFromJson(Map<String, dynamic> json) {
   return ProjectModel(
+    message: json['message'] as String?,
+    userid: json['userid'] as String?,
+    projects: (json['projects'] as List<dynamic>?)
+        ?.map((e) => Projects.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
+
+Map<String, dynamic> _$ProjectModelToJson(ProjectModel instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+      'userid': instance.userid,
+      'projects': instance.projects,
+    };
+
+Projects _$ProjectsFromJson(Map<String, dynamic> json) {
+  return Projects(
     id: json['id'] as String?,
     okgorev: json['okgorev'] as int?,
     allgorev: json['allgorev'] as int?,
     name: json['name'] as String?,
-    userName: json['user_name'] as String?,
+    userName: json['userName'] as String?,
     document: json['document'] as String?,
     detail: json['detail'] as String?,
     link: json['link'] as String?,
@@ -24,8 +41,7 @@ ProjectModel _$ProjectModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ProjectModelToJson(ProjectModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ProjectsToJson(Projects instance) => <String, dynamic>{
       'id': instance.id,
       'okgorev': instance.okgorev,
       'allgorev': instance.allgorev,

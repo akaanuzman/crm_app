@@ -17,7 +17,7 @@ abstract class _ProjectViewModelBase with Store {
   late IProjectService projectService;
 
   @observable
-  List<ProjectModel> items = [];
+  ProjectModel items = ProjectModel();
 
   _ProjectViewModelBase() {
     projectService = ProjectService(NetworkManager.instance!.dio);

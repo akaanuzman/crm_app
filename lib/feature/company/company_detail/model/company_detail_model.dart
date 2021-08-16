@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:json_annotation/json_annotation.dart';
 part 'company_detail_model.g.dart';
 
@@ -12,12 +14,12 @@ class CompanyDetailModel {
   String? isActive;
   String? email;
   String? telephone;
-  String? webSite;
+  String? web_site;
   String? address;
   String? detail;
   String? photo;
-  String? taxNumber;
-  String? taxDepartment;
+  String? tax_number;
+  String? tax_department;
   String? location;
 
   CompanyDetailModel(
@@ -30,12 +32,12 @@ class CompanyDetailModel {
       this.isActive,
       this.email,
       this.telephone,
-      this.webSite,
+      this.web_site,
       this.address,
       this.detail,
       this.photo,
-      this.taxNumber,
-      this.taxDepartment,
+      this.tax_number,
+      this.tax_department,
       this.location});
 
   factory CompanyDetailModel.fromJson(Map<String, dynamic> json) =>
@@ -46,7 +48,7 @@ class CompanyDetailModel {
 
 @JsonSerializable()
 class Worker {
-  String? fullName;
+  String? full_name;
   String? email;
   String? photo;
   String? telephone;
@@ -56,7 +58,7 @@ class Worker {
   String? birthday;
 
   Worker(
-      {this.fullName,
+      {this.full_name,
       this.email,
       this.photo,
       this.telephone,

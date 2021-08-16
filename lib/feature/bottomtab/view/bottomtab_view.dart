@@ -1,3 +1,7 @@
+import '../../../core/components/text/body_text2_copy.dart';
+import '../../profile/viewmodel/profile_view_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 import '../../../core/components/text/body_text1_copy.dart';
 
 import '../../mail/view/mail_tab_view.dart';
@@ -11,8 +15,6 @@ import '../../contact/view/contact_view.dart';
 import '../../../core/components/card/card_icon_text.dart';
 import '../../../core/components/row/row_flag_text.dart';
 
-import '../../../product/widgets/row/row_cavatar_text.dart';
-
 import '../../../core/init/theme/light/color_scheme_light.dart';
 import '../model/bottomtab_model.dart';
 import '../../project/view/project_view.dart';
@@ -20,7 +22,8 @@ import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
 class BottomTabView extends StatelessWidget {
-  const BottomTabView({Key? key}) : super(key: key);
+  final ProfileViewModel viewModel = ProfileViewModel();
+  BottomTabView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,25 +63,29 @@ class BottomTabView extends StatelessWidget {
           centerTitle: true,
           bottom: _buildTabBar(items, context));
 
-  Drawer _buildDrawer(BuildContext context, double radius) => Drawer(
-        child: Column(
-          children: [
-            Expanded(
-              child: _buildProfileContainer(context, radius),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                color: context.colorScheme.secondary,
-                child: Column(
-                  children: [
-                    _buildLanguageCard(context),
-                  ],
+  Widget _buildDrawer(BuildContext context, double radius) => Observer(
+        builder: (context) {
+          return Drawer(
+          child: Column(
+            children: [
+              Expanded(
+                child: _buildProfileContainer(context, radius),
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  color: context.colorScheme.secondary,
+                  child: Column(
+                    children: [
+                      _buildLanguageCard(context),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        );
+        },
       );
 
   Container _buildProfileContainer(BuildContext context, double radius) =>
@@ -94,11 +101,22 @@ class BottomTabView extends StatelessWidget {
         children: [
           Padding(
             padding: context.paddingLow,
-            child: const RowCavatarText(),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "http://192.168.3.53/assets/images/users/${viewModel.items.photo}"),
+                ),
+                context.emptySizedWidthBoxLow3x,
+                BodyText2Copy(
+                    data: viewModel.items.full_name ?? "",
+                    color: context.colorScheme.onSurface)
+              ],
+            ),
           ),
           context.emptySizedHeightBoxLow,
           Expanded(
-            child: InkWell(
+            child: GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const ProfileTabbarView()));

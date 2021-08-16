@@ -3,6 +3,20 @@ part 'project_model.g.dart';
 
 @JsonSerializable()
 class ProjectModel {
+  String? message;
+  String? userid;
+  List<Projects>? projects;
+
+  ProjectModel({this.message, this.userid, this.projects});
+
+  factory ProjectModel.fromJson(Map<String, dynamic> json) =>
+      _$ProjectModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProjectModelToJson(this);
+}
+
+@JsonSerializable()
+class Projects {
   String? id;
   int? okgorev;
   int? allgorev;
@@ -15,7 +29,7 @@ class ProjectModel {
   String? isActive;
   List<Users>? users;
 
-  ProjectModel(
+  Projects(
       {this.id,
       this.okgorev,
       this.allgorev,
@@ -28,9 +42,9 @@ class ProjectModel {
       this.isActive,
       this.users});
 
-  factory ProjectModel.fromJson(Map<String, dynamic> json) => _$ProjectModelFromJson(json);
+  factory Projects.fromJson(Map<String, dynamic> json) => _$ProjectsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ProjectModelToJson(this);
+  Map<String, dynamic> toJson() => _$ProjectsToJson(this);
 }
 
 @JsonSerializable()

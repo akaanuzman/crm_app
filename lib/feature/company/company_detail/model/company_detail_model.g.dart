@@ -19,12 +19,12 @@ CompanyDetailModel _$CompanyDetailModelFromJson(Map<String, dynamic> json) {
     isActive: json['isActive'] as String?,
     email: json['email'] as String?,
     telephone: json['telephone'] as String?,
-    webSite: json['web_site'] as String?,
+    web_site: json['web_site'] as String?,
     address: json['address'] as String?,
     detail: json['detail'] as String?,
     photo: json['photo'] as String?,
-    taxNumber: json['tax_number'] as String?,
-    taxDepartment: json['tax_department'] as String?,
+    tax_number: json['tax_number'] as String?,
+    tax_department: json['tax_department'] as String?,
     location: json['location'] as String?,
   );
 }
@@ -40,18 +40,18 @@ Map<String, dynamic> _$CompanyDetailModelToJson(CompanyDetailModel instance) =>
       'isActive': instance.isActive,
       'email': instance.email,
       'telephone': instance.telephone,
-      'webSite': instance.webSite,
+      'web_site': instance.web_site,
       'address': instance.address,
       'detail': instance.detail,
       'photo': instance.photo,
-      'taxNumber': instance.taxNumber,
-      'taxDepartment': instance.taxDepartment,
+      'tax_number': instance.tax_number,
+      'tax_department': instance.tax_department,
       'location': instance.location,
     };
 
 Worker _$WorkerFromJson(Map<String, dynamic> json) {
   return Worker(
-    fullName: json['full_name'] as String?,
+    full_name: json['full_name'] as String?,
     email: json['email'] as String?,
     photo: json['photo'] as String?,
     telephone: json['telephone'] as String?,
@@ -63,7 +63,7 @@ Worker _$WorkerFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$WorkerToJson(Worker instance) => <String, dynamic>{
-      'fullName': instance.fullName,
+      'full_name': instance.full_name,
       'email': instance.email,
       'photo': instance.photo,
       'telephone': instance.telephone,

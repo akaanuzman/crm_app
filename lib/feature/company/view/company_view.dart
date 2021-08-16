@@ -23,6 +23,7 @@ class CompanyView extends StatelessWidget {
           style: TextStyle(color: context.colorScheme.onSecondary),
         ),
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
         elevation: 0,
       ),
       floatingActionButton: PopupItemLauncher(
@@ -132,7 +133,7 @@ class CompanyView extends StatelessWidget {
                                     color: context.colorScheme.onBackground),
                               ),
                               context.emptySizedWidthBoxLow3x,
-                              Text(_viewModel.items.companys?[index].webSite ??
+                              Text(_viewModel.items.companys?[index].web_site ??
                                   "Geçerli web sitesi bulunamadı."),
                             ],
                           ),

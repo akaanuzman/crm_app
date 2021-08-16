@@ -1,9 +1,9 @@
-import '../profile_edit/view/profile_edit_view.dart';
-
-import '../../bottomtab/model/bottomtab_model.dart';
-import 'profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
+
+import '../../bottomtab/model/bottomtab_model.dart';
+import '../profile_edit/view/profile_edit_view.dart';
+import 'profile_view.dart';
 
 class ProfileTabbarView extends StatelessWidget {
   const ProfileTabbarView({Key? key}) : super(key: key);

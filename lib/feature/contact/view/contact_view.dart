@@ -1,9 +1,11 @@
+import '../contact_detail/view/contact_detail_guide_view.dart';
+
 import '../../../core/constants/app/app_constants.dart';
 import '../viewmodel/contact_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:popup_card/popup_card.dart';
 
-import '../contact_detail/view/contact_detail_view.dart';
+import '../contact_detail/view/contact_detail_users_view.dart';
 
 import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/body_text2_copy.dart';
@@ -31,6 +33,7 @@ class ContactView extends StatelessWidget {
           style: TextStyle(color: context.colorScheme.onSecondary),
         ),
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
         elevation: 0,
       ),
       floatingActionButton: PopupItemLauncher(
@@ -60,11 +63,17 @@ class ContactView extends StatelessWidget {
         builder: (context) => Padding(
           padding: context.paddingLow,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Expanded(flex: 2, child: SearchTextField()),
+              context.emptySizedHeightBoxLow3x,
+              Padding(
+                padding: context.horizontalPaddingNormal,
+                child: const Text("Sisteme kayıtlı olan kişiler"),
+              ),
               context.emptySizedHeightBoxLow,
               Expanded(
-                flex: 10,
+                flex: 12,
                 child: ListView.builder(
                   itemCount: _viewModel.items.users?.length ?? 0,
                   physics: const BouncingScrollPhysics(),
@@ -101,21 +110,22 @@ class ContactView extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => ContactDetailView(
+                                builder: (context) => ContactUsersDetailView(
                                   user: _viewModel.items.users?[index],
                                 ),
                               ),
                             );
                           },
                           title: BodyText2Copy(
-                              data: _viewModel.items.users?[index].fullName ??
+                              data: _viewModel.items.users?[index].full_name ??
                                   ""),
                           subtitle: Text(
                             _viewModel.items.users?[index].email ?? "",
                             style: context.textTheme.button,
                           ),
                           leading: CircleAvatar(
-                            backgroundImage: NetworkImage("http://192.168.3.53/assets/images/users/${_viewModel.items.users?[index].photo}"),
+                            backgroundImage: NetworkImage(
+                                "http://192.168.3.53/assets/images/users/${_viewModel.items.users?[index].photo}"),
                             radius: 30,
                           ),
                           trailing: const Icon(Icons.keyboard_arrow_right),
@@ -126,7 +136,79 @@ class ContactView extends StatelessWidget {
                 ),
               ),
               context.emptySizedHeightBoxLow3x,
-              const Text("Kişiyi silmek veya düzenlemek için sağa kaydırınız.")
+              Padding(
+                padding: context.horizontalPaddingNormal,
+                child: const Text("Sisteme kayıtlı olmayan kişiler"),
+              ),
+              context.emptySizedHeightBoxLow,
+              Expanded(
+                flex: 5,
+                child: ListView.builder(
+                  itemCount: _viewModel.items.guides?.length ?? 0,
+                  physics: const BouncingScrollPhysics(),
+                  // ignore: prefer_const_constructors
+                  itemBuilder: (context, index) => Slidable(
+                    actionPane: const SlidableDrawerActionPane(),
+                    actions: [
+                      IconSlideAction(
+                        color: context.colorScheme.primaryVariant,
+                        caption: 'Sil',
+                        icon: Icons.delete,
+                        onTap: () {
+                          _showDialog(context, radius);
+                        },
+                      ),
+                      IconSlideAction(
+                        color: context.colorScheme.onPrimary,
+                        foregroundColor: context.colorScheme.onSurface,
+                        caption: 'Düzenle',
+                        icon: Icons.edit,
+                        onTap: () {
+                          _showModalBottomSheet(context, radius);
+                          debugPrint(_viewModel.items.message);
+                        },
+                      ),
+                    ],
+                    child: Padding(
+                      padding: context.paddingLow,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: context.lowBorderRadius),
+                        elevation: 5,
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ContactGuidesDetailView(
+                                  guides: _viewModel.items.guides?[index],
+                                ),
+                              ),
+                            );
+                          },
+                          title: BodyText2Copy(
+                              data: _viewModel.items.guides?[index].name ?? ""),
+                          subtitle: Text(
+                            _viewModel.items.guides?[index].email ?? "",
+                            style: context.textTheme.button,
+                          ),
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                "http://192.168.3.53/assets/images/users/${_viewModel.items.guides?[index].photo}"),
+                            radius: 30,
+                          ),
+                          trailing: const Icon(Icons.keyboard_arrow_right),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              context.emptySizedHeightBoxLow3x,
+              Padding(
+                padding: context.horizontalPaddingNormal,
+                child:
+                    const Text("Kişiyi silmek veya düzenlemek için sağa kaydırınız."),
+              )
             ],
           ),
         ),

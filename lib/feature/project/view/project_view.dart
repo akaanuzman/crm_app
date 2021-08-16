@@ -45,6 +45,7 @@ class _ProjectViewState extends State<ProjectView> {
           "Projeler",
           style: TextStyle(color: context.colorScheme.onSecondary),
         ),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -84,7 +85,7 @@ class _ProjectViewState extends State<ProjectView> {
 
   Widget get _buildListViewBuilder => Observer(
       builder: (BuildContext context) => ListView.builder(
-            itemCount: viewModel.items.length,
+            itemCount: viewModel.items.projects?.length,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) => _buildProjectCard(context, index),
           ));
@@ -129,7 +130,8 @@ class _ProjectViewState extends State<ProjectView> {
             },
             title: Padding(
               padding: context.verticalPaddingLow,
-              child: BodyText1Copy(data: viewModel.items[index].name ?? ""),
+              child: BodyText1Copy(
+                  data: viewModel.items.projects?[index].name ?? ""),
             ),
             subtitle: _buildSubtitle(context, index),
             trailing: const Icon(Icons.keyboard_arrow_right),
@@ -140,52 +142,58 @@ class _ProjectViewState extends State<ProjectView> {
   }
 
   Widget _buildSubtitle(BuildContext context, int index) {
-    ApplicationConstants.instance!.projectId = viewModel.items[index].id ?? "";
+    ApplicationConstants.instance!.projectId =
+        viewModel.items.projects?[index].id ?? "";
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildRowIconText(index),
         context.emptySizedHeightBoxLow3x,
-        Text(viewModel.items[index].detail ?? "Proje icerigi"),
+        Text(viewModel.items.projects?[index].detail ?? "Proje icerigi"),
         _buildRowIconTextText(context, index),
         SizedBox(
           height: context.dynamicHeight(0.05),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: viewModel.items[index].users?.length,
+            itemCount: viewModel.items.projects?[index].users?.length,
             itemBuilder: (context, indexV2) => CircleAvatar(
               backgroundImage: NetworkImage(
-                  "http://192.168.3.53/assets/images/users/${viewModel.items[index].users?[indexV2].photo}"),
+                  "http://192.168.3.53/assets/images/users/${viewModel.items.projects?[index].users?[indexV2].photo}"),
             ),
           ),
         ),
         context.emptySizedHeightBoxLow3x,
         RowSpaceBetweenText(
           firstText: "Task complated: ",
-          secondText: viewModel.items[index].okgorev.toString(),
-          thirthText: viewModel.items[index].allgorev.toString(),
+          secondText:
+              viewModel.items.projects?[index].okgorev.toString() ?? "0",
+          thirthText:
+              viewModel.items.projects?[index].allgorev.toString() ?? "0",
         ),
         context.emptySizedHeightBoxLow,
         BlueBar(
-          width: viewModel.items[index].okgorev! /
-                      viewModel.items[index].allgorev! ==
-                  1
-              ? 0
-              : viewModel.items[index].okgorev! /
-                          viewModel.items[index].allgorev! ==
-                      0.75
-                  ? 0.2
-                  : viewModel.items[index].okgorev! /
-                              viewModel.items[index].allgorev! ==
-                          0.5
-                      ? 0.345
-                      : viewModel.items[index].okgorev! /
-                                  viewModel.items[index].allgorev! ==
-                              0.25
-                          ? 0.5
-                          : 0,
-        ),
+            width: viewModel.items.projects?[index] != null
+                ? viewModel.items.projects![index].okgorev! /
+                            viewModel.items.projects![index].allgorev! ==
+                        1
+                    ? 0
+                    : viewModel.items.projects![index].okgorev! /
+                                viewModel.items.projects![index].allgorev! ==
+                            0.75
+                        ? 0.2
+                        : viewModel.items.projects![index].okgorev! /
+                                    viewModel
+                                        .items.projects![index].allgorev! ==
+                                0.5
+                            ? 0.345
+                            : viewModel.items.projects![index].okgorev! /
+                                        viewModel
+                                            .items.projects![index].allgorev! ==
+                                    0.25
+                                ? 0.5
+                                : 1
+                : 0),
         context.emptySizedHeightBoxLow3x
       ],
     );
@@ -193,7 +201,7 @@ class _ProjectViewState extends State<ProjectView> {
 
   Widget _buildRowIconText(int index) => RowIconText(
         icon: Icons.account_circle_rounded,
-        text: viewModel.items[index].userName ?? "",
+        text: viewModel.items.projects?[index].userName ?? "",
         sizedBox: const SizedBox(
           height: 0,
           width: 2,
@@ -204,7 +212,8 @@ class _ProjectViewState extends State<ProjectView> {
         children: [
           const Icon(Icons.list),
           context.emptySizedWidthBoxLow,
-          BoldText(data: viewModel.items[index].allgorev.toString()),
+          BoldText(
+              data: viewModel.items.projects?[index].allgorev.toString() ?? ""),
           context.emptySizedWidthBoxLow,
           const Text(
             "Görev",
@@ -217,9 +226,9 @@ class _ProjectViewState extends State<ProjectView> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => ProjectDetailView(
-          allTask: viewModel.items[index].allgorev ?? 0,
-          okTask: viewModel.items[index].okgorev ?? 0,
-          projectId: viewModel.items[index].id ?? "0",
+          allTask: viewModel.items.projects?[index].allgorev ?? 0,
+          okTask: viewModel.items.projects?[index].okgorev ?? 0,
+          projectId: viewModel.items.projects?[index].id ?? "0",
         ),
       ),
     );

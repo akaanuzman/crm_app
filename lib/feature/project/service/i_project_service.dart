@@ -7,5 +7,5 @@ abstract class IProjectService {
 
   IProjectService(this.dio);
 
-  Future<List<ProjectModel>> fetchAllTask(String token);
+  Future<ProjectModel> fetchAllTask(String token);
 }

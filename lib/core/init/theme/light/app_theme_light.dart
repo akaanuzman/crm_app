@@ -29,7 +29,10 @@ class AppThemeLight extends IAppTheme with ILightTheme {
         labelColor: _colorScheme.surface,
         unselectedLabelColor: colorSchemeLight.white,
       ),
-      appBarTheme: AppBarTheme(color: colorSchemeLight.limedSpruce),
+      appBarTheme: AppBarTheme(
+        color: colorSchemeLight.limedSpruce,
+        titleTextStyle: const TextStyle(fontSize: 18),
+      ),
       scaffoldBackgroundColor: colorSchemeLight.athensGray);
 
   ColorScheme get _colorScheme => ColorScheme(

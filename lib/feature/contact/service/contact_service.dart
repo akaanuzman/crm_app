@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import '../model/contact_model.dart';
-import 'contact_service_end_points.dart';
 import 'package:dio/dio.dart';
 
+import '../model/contact_model.dart';
+import 'contact_service_end_points.dart';
 import 'i_contact_service.dart';
 
 class ContactService extends IContactService {

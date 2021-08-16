@@ -1,7 +1,7 @@
-import 'package:crm_app/core/init/network/network_manager.dart';
-import 'package:crm_app/feature/company/company_detail/model/company_detail_model.dart';
-import 'package:crm_app/feature/company/company_detail/service/company_detail_service.dart';
-import 'package:crm_app/feature/company/company_detail/service/i_company_detail_service.dart';
+import '../../../../core/init/network/network_manager.dart';
+import '../model/company_detail_model.dart';
+import '../service/company_detail_service.dart';
+import '../service/i_company_detail_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 part 'company_detail_view_model.g.dart';

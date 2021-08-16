@@ -1,5 +1,5 @@
-import 'package:crm_app/core/constants/app/app_constants.dart';
-import 'package:crm_app/feature/company/company_detail/viewmodel/company_detail_view_model.dart';
+import '../../../../core/constants/app/app_constants.dart';
+import '../viewmodel/company_detail_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../../core/components/text/body_text1_copy.dart';
@@ -203,7 +203,7 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       BodyText1Copy(
-                                        data: _viewModel.items.webSite ??
+                                        data: _viewModel.items.web_site ??
                                             "Geçerli web sitesi bulunamadı.",
                                         color: context.colorScheme.onSecondary,
                                       ),
@@ -348,7 +348,7 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                       color: context.colorScheme.onBackground),
                                 ),
                                 context.emptySizedWidthBoxLow3x,
-                                Text(_viewModel.items.taxDepartment ??
+                                Text(_viewModel.items.tax_department ??
                                     "Geçerli vergi dairesi bulunamadı."),
                               ],
                             ),
@@ -368,7 +368,7 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                       color: context.colorScheme.onBackground),
                                 ),
                                 context.emptySizedWidthBoxLow3x,
-                                Text(_viewModel.items.taxNumber ??
+                                Text(_viewModel.items.tax_number ??
                                     "Geçerli vergi numarası bulunamadı."),
                               ],
                             ),
@@ -459,15 +459,21 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                     Padding(
                                       padding: context.paddingLow,
                                       child: ExpansionTile(
-                                        title:  BodyText1Copy(
-                                            data: _viewModel.items.worker?[index].fullName ?? "Geçerli isim bulunamadı."),
+                                        title: BodyText1Copy(
+                                            data: _viewModel.items
+                                                    .worker?[index].full_name ??
+                                                "Geçerli isim bulunamadı."),
                                         subtitle: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            const Text("uzmanakan@gmail.com"),
+                                            Text(_viewModel.items.worker?[index]
+                                                    .email ??
+                                                "Geçerli eposta adresi bulunamadı."),
                                             context.emptySizedWidthBoxLow3x,
-                                            const Text("555 555 55 55"),
+                                            Text(_viewModel.items.worker?[index]
+                                                    .telephone ??
+                                                "Geçerli telefon numarası bulunamadı."),
                                           ],
                                         ),
                                         leading: const CircleAvatar(
@@ -483,13 +489,15 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  "Konum",
+                                                  "Meslek: ",
                                                   style: TextStyle(
                                                       color: context.colorScheme
                                                           .onBackground),
                                                 ),
                                                 context.emptySizedWidthBoxLow3x,
-                                                const Text("Kütahya"),
+                                                Text(_viewModel.items
+                                                        .worker?[index].job ??
+                                                    "Geçerli meslek bulunamadı."),
                                               ],
                                             ),
                                           ),
@@ -511,7 +519,11 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                                           .onBackground),
                                                 ),
                                                 context.emptySizedWidthBoxLow3x,
-                                                const Text("2001-12-25"),
+                                                Text(_viewModel
+                                                        .items
+                                                        .worker?[index]
+                                                        .birthday ??
+                                                    ""),
                                               ],
                                             ),
                                           ),

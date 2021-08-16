@@ -1,12 +1,10 @@
-import 'package:crm_app/feature/register/view/register_view.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:kartal/kartal.dart';
 
 import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/body_text2_copy.dart';
 import '../../bottomtab/view/bottomtab_view.dart';
 import '../viewmodel/login_view_model.dart';
-import 'package:flutter/material.dart';
-import 'package:kartal/kartal.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -110,7 +108,7 @@ class _LoginViewState extends State<LoginView> {
                   if (_viewModel.item?[1] != null) {
                     if (_viewModel.item![1] == 'success') {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const BottomTabView()));
+                          builder: (context) => BottomTabView()));
                       _showDialog(
                           context,
                           context.lowValue,
@@ -159,7 +157,7 @@ class _LoginViewState extends State<LoginView> {
                     primary: context.colorScheme.onError),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const RegisterView()));
+                      builder: (context) => const Scaffold()));
                 },
                 child: BodyText2Copy(
                     data: "Kayıt Ol", color: context.colorScheme.onSurface),

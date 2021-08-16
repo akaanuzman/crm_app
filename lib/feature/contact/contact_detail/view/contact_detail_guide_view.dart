@@ -6,9 +6,9 @@ import 'package:kartal/kartal.dart';
 import '../../../../core/components/text/body_text1_copy.dart';
 import '../../../../core/components/text/body_text2_copy.dart';
 
-class ContactDetailView extends StatelessWidget {
-  final Users? user;
-  const ContactDetailView({Key? key, required this.user}) : super(key: key);
+class ContactGuidesDetailView extends StatelessWidget {
+  final Guides? guides;
+  const ContactGuidesDetailView({Key? key, this.guides}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +38,15 @@ class ContactDetailView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       // ignore: prefer_const_literals_to_create_immutables
                       children: [
-                        // ignore: prefer_const_constructors
                         CircleAvatar(
-                          // ignore: prefer_const_constructors
                           backgroundImage: NetworkImage(
-                              "http://192.168.3.53/assets/images/users/${user?.photo}"),
-                          radius: 30,
+                              "http://192.168.3.53/assets/images/users/${guides?.photo}"),
+                          radius: 50,
                         ),
                         context.emptySizedWidthBoxLow,
-                        // ignore: prefer_const_constructors
                         Expanded(
-                          // ignore: prefer_const_constructors
                           child: ListTile(
-                            title: BodyText1Copy(data: user?.fullName ?? ""),
+                            title: BodyText1Copy(data: guides?.name ?? ""),
                             subtitle: Column(
                               children: [
                                 Row(
@@ -60,7 +56,7 @@ class ContactDetailView extends StatelessWidget {
                                             context.colorScheme.onBackground),
                                     context.emptySizedWidthBoxLow,
                                     Text(
-                                      user?.company ?? "",
+                                      guides?.company ?? "",
                                       style: context.textTheme.caption!
                                           .copyWith(
                                               color: context
@@ -140,7 +136,7 @@ class ContactDetailView extends StatelessWidget {
                               data: "HAKKIMDA : ",
                               color: context.colorScheme.onBackground,
                             ),
-                            Text(user?.detail ?? ""),
+                            Text(guides?.detail ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,
@@ -150,7 +146,7 @@ class ContactDetailView extends StatelessWidget {
                               data: "DOĞUM TARİHİ : ",
                               color: context.colorScheme.onBackground,
                             ),
-                            Text(user?.birthday ?? ""),
+                            Text(guides?.birthday ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,
@@ -160,7 +156,7 @@ class ContactDetailView extends StatelessWidget {
                               data: "FİRMA : ",
                               color: context.colorScheme.onBackground,
                             ),
-                            Text(user?.company ?? ""),
+                            Text(guides?.company ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,
@@ -170,7 +166,7 @@ class ContactDetailView extends StatelessWidget {
                               data: "MESLEK : ",
                               color: context.colorScheme.onBackground,
                             ),
-                            Text(user?.job ?? ""),
+                            Text(guides?.job ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,
@@ -180,7 +176,7 @@ class ContactDetailView extends StatelessWidget {
                               data: "EPOSTA : ",
                               color: context.colorScheme.onBackground,
                             ),
-                            Text(user?.email ?? ""),
+                            Text(guides?.email ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,
@@ -190,7 +186,7 @@ class ContactDetailView extends StatelessWidget {
                               data: "TELEFON : ",
                               color: context.colorScheme.onBackground,
                             ),
-                             Text(user?.telephone ?? ""),
+                            Text(guides?.phone ?? ""),
                           ],
                         ),
                         context.emptySizedHeightBoxLow3x,
