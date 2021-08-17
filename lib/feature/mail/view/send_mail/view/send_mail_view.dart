@@ -1,4 +1,4 @@
-import '../../../../core/components/text/body_text1_copy.dart';
+import '../../../../../core/components/text/body_text1_copy.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 

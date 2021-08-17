@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../view/mail_view.dart';
+import '../../mail_view.dart';
+
 
 class PostponedView extends StatelessWidget {
   const PostponedView({Key? key}) : super(key: key);

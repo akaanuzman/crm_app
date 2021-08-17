@@ -1,4 +1,5 @@
-import '../send_mail/view/send_mail_view.dart';
+
+import 'send_mail/view/send_mail_view.dart';
 
 import '../viewmodel/mail_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

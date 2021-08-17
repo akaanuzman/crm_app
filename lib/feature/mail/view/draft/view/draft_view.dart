@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../view/mail_view.dart';
+import '../../mail_view.dart';
 
 class DraftView extends StatelessWidget {
   const DraftView({Key? key}) : super(key: key);

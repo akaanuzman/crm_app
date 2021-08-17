@@ -1,4 +1,4 @@
-import '../../view/mail_view.dart';
+import '../../mail_view.dart';
 
 import 'package:flutter/material.dart';
 

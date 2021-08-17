@@ -1,5 +1,6 @@
-import '../model/contact_model.dart';
 import 'package:dio/dio.dart';
+
+import '../model/contact_model.dart';
 
 abstract class IContactService {
   final Dio dio;

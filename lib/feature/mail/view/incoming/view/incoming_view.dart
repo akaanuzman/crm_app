@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../view/mail_view.dart';
+import '../../mail_view.dart';
 
 
 class IncomingView extends StatelessWidget {
