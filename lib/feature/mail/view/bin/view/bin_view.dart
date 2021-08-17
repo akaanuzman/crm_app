@@ -1,13 +1,18 @@
+import '../../../../../core/constants/app/app_constants.dart';
+import '../../../viewmodel/mail_view_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../mail_view.dart';
 
-
 class BinView extends StatelessWidget {
-  const BinView({Key? key}) : super(key: key);
+  final MailViewModel viewModel = MailViewModel();
+  BinView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MailView(content: "çöp mail");
+    viewModel.fetchItems(ApplicationConstants.instance!.token, "trash");
+    return MailView(
+      viewModel: viewModel,
+    );
   }
 }

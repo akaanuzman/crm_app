@@ -26,6 +26,28 @@ mixin _$MailViewModel on _MailViewModelBase, Store {
     });
   }
 
+  final _$itemsAtom = Atom(name: '_MailViewModelBase.items');
+
+  @override
+  MailModel get items {
+    _$itemsAtom.reportRead();
+    return super.items;
+  }
+
+  @override
+  set items(MailModel value) {
+    _$itemsAtom.reportWrite(value, super.items, () {
+      super.items = value;
+    });
+  }
+
+  final _$fetchItemsAsyncAction = AsyncAction('_MailViewModelBase.fetchItems');
+
+  @override
+  Future<void> fetchItems(String token, String category) {
+    return _$fetchItemsAsyncAction.run(() => super.fetchItems(token, category));
+  }
+
   final _$_MailViewModelBaseActionController =
       ActionController(name: '_MailViewModelBase');
 
@@ -43,7 +65,8 @@ mixin _$MailViewModel on _MailViewModelBase, Store {
   @override
   String toString() {
     return '''
-isContainerHeightChange: ${isContainerHeightChange}
+isContainerHeightChange: ${isContainerHeightChange},
+items: ${items}
     ''';
   }
 }

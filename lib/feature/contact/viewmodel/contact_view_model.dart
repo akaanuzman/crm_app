@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+
 import '../../../core/init/network/network_manager.dart';
 import '../model/contact_model.dart';
 import '../service/contact_service.dart';
 import '../service/i_contact_service.dart';
-import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
+
 part 'contact_view_model.g.dart';
 
 class ContactViewModel = _ContactViewModelBase with _$ContactViewModel;

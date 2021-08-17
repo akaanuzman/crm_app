@@ -157,9 +157,12 @@ class _ProjectViewState extends State<ProjectView> {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: viewModel.items.projects?[index].users?.length,
-            itemBuilder: (context, indexV2) => CircleAvatar(
-              backgroundImage: NetworkImage(
-                  "http://192.168.3.53/assets/images/users/${viewModel.items.projects?[index].users?[indexV2].photo}"),
+            itemBuilder: (context, indexV2) => GestureDetector(
+              onTap: () {},
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    "http://192.168.3.53/assets/images/users/${viewModel.items.projects?[index].users?[indexV2].photo}"),
+              ),
             ),
           ),
         ),

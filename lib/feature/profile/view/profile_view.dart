@@ -3,6 +3,9 @@
 import 'package:crm_app/core/components/text/bold_text.dart';
 import 'package:crm_app/core/components/text/subtitle1_copy.dart';
 import 'package:crm_app/feature/profile/viewmodel/profile_view_model.dart';
+import 'package:crm_app/feature/project/model/project_model.dart';
+import 'package:crm_app/feature/project/projectdetail/view/project_detail_view.dart';
+import 'package:crm_app/feature/project/viewmodel/project_view_model.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -26,6 +29,7 @@ class ProfileView extends StatelessWidget {
     double radius = height * 0.02;
 
     final ProfileViewModel _viewModel = ProfileViewModel();
+    final ProjectViewModel _projectViewModel = ProjectViewModel();
 
     return Scaffold(
         body: Observer(
@@ -51,7 +55,7 @@ class ProfileView extends StatelessWidget {
                         ),
                         context.emptySizedHeightBoxLow,
                         BodyText1Copy(data: _viewModel.items.full_name ?? ""),
-                        Text(_viewModel.items.email ?? ""),
+                        Text(_viewModel.items.user_name ?? ""),
                         context.emptySizedHeightBoxLow,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +167,7 @@ class ProfileView extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "Meslek :",
+                                  "Şirket :",
                                   style: TextStyle(
                                       color: context.colorScheme.onBackground,
                                       fontWeight: FontWeight.bold),
@@ -172,7 +176,8 @@ class ProfileView extends StatelessWidget {
                               context.emptySizedWidthBoxLow,
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(_viewModel.items.job ?? ""),
+                                child:
+                                    Text(_viewModel.items.company_name ?? ""),
                               ),
                             ],
                           ),
@@ -322,18 +327,50 @@ class ProfileView extends StatelessWidget {
                                 context.emptySizedHeightBoxLow3x,
                                 Expanded(
                                   child: ListView.builder(
-                                    itemCount: 5,
+                                    itemCount: _projectViewModel
+                                            .items.projects?.length ??
+                                        0,
                                     itemBuilder: (context, index) => Column(
                                       children: [
                                         ListTile(
+                                          onTap: () {
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProjectDetailView(
+                                                allTask: _projectViewModel
+                                                        .items
+                                                        .projects?[index]
+                                                        .allgorev ??
+                                                    0,
+                                                okTask: _projectViewModel
+                                                        .items
+                                                        .projects?[index]
+                                                        .okgorev ??
+                                                    0,
+                                                projectId: _projectViewModel
+                                                        .items
+                                                        .projects?[index]
+                                                        .id ??
+                                                    "0",
+                                              ),
+                                            ));
+                                          },
                                           leading: Icon(Icons.event),
                                           title: BodyText2Copy(
-                                            data: "Proje İsmi",
+                                            data: _projectViewModel.items
+                                                    .projects?[index].name ??
+                                                "Geçerli proje ismi bulunamadı.",
                                             fontWeight: FontWeight.bold,
                                           ),
                                           subtitle: Subtitle1Copy(
-                                              data: "proje detayi"),
-                                          trailing: Text("Ahmet Kaan Uzman"),
+                                              data: _projectViewModel
+                                                      .items
+                                                      .projects?[index]
+                                                      .detail ??
+                                                  "Geçerli detay bulunamadı."),
+                                          trailing:
+                                              Icon(Icons.keyboard_arrow_right),
                                         ),
                                         Divider(
                                           color:

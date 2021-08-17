@@ -1,12 +1,20 @@
+import '../../../../../core/constants/app/app_constants.dart';
+import '../../../viewmodel/mail_view_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../mail_view.dart';
 
 class StarView extends StatelessWidget {
-  const StarView({Key? key}) : super(key: key);
+  final MailViewModel viewModel = MailViewModel();
+  StarView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MailView(content: "yıldızlı mail");
+    viewModel.fetchItems(ApplicationConstants.instance!.token, "starred");
+    return MailView(
+      viewModel: viewModel,
+    );
   }
 }

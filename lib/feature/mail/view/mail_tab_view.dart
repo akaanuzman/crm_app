@@ -20,26 +20,40 @@ class MailTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<BottomTabModel> _items = [
       BottomTabModel(
-          title: "Yıldızlı",
-          icon: Icons.star_border_outlined,
-          child: StarView()),
+        title: "Yıldızlı",
+        icon: Icons.star_border_outlined,
+        child: StarView(),
+      ),
       BottomTabModel(
-          title: "Ertelendi",
-          icon: Icons.schedule_outlined,
-          child: PostponedView()),
+        title: "Ertelendi",
+        icon: Icons.schedule_outlined,
+        child: PostponedView(),
+      ),
       BottomTabModel(
-          title: "Taslak", icon: Icons.article_outlined, child: DraftView()),
+        title: "Taslak",
+        icon: Icons.article_outlined,
+        child: DraftView(),
+      ),
       BottomTabModel(
-          title: "Gönderilenler",
-          icon: Icons.send_outlined,
-          child: IncomingView()),
+        title: "Gönderilenler",
+        icon: Icons.send_outlined,
+        child: IncomingView(),
+      ),
       BottomTabModel(
-          title: "Çöp Kutusu",
-          icon: Icons.delete_forever_outlined,
-          child: BinView()),
+        title: "Çöp Kutusu",
+        icon: Icons.delete_forever_outlined,
+        child: BinView(),
+      ),
       BottomTabModel(
-          title: "Önemli", icon: Icons.label, child: ImportantView()),
-      BottomTabModel(title: "Spam", icon: Icons.warning, child: SpamView()),
+        title: "Önemli",
+        icon: Icons.label,
+        child: ImportantView(),
+      ),
+      BottomTabModel(
+        title: "Spam",
+        icon: Icons.warning,
+        child: SpamView(),
+      ),
     ];
     return DefaultTabController(
       length: _items.length,

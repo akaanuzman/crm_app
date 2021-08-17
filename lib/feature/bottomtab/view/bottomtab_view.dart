@@ -1,25 +1,19 @@
-import '../../../core/components/text/body_text2_copy.dart';
-import '../../profile/viewmodel/profile_view_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
-import '../../../core/components/text/body_text1_copy.dart';
-
-import '../../mail/view/mail_tab_view.dart';
-
-import '../../profile/view/profile_tabbar_view.dart';
-
-import '../../company/view/company_view.dart';
-
-import '../../contact/view/contact_view.dart';
+import 'package:kartal/kartal.dart';
 
 import '../../../core/components/card/card_icon_text.dart';
 import '../../../core/components/row/row_flag_text.dart';
-
+import '../../../core/components/text/body_text1_copy.dart';
+import '../../../core/components/text/body_text2_copy.dart';
 import '../../../core/init/theme/light/color_scheme_light.dart';
-import '../model/bottomtab_model.dart';
+import '../../company/view/company_view.dart';
+import '../../contact/view/contact_view.dart';
+import '../../mail/view/mail_tab_view.dart';
+import '../../profile/view/profile_tabbar_view.dart';
+import '../../profile/viewmodel/profile_view_model.dart';
 import '../../project/view/project_view.dart';
-import 'package:flutter/material.dart';
-import 'package:kartal/kartal.dart';
+import '../model/bottomtab_model.dart';
 
 class BottomTabView extends StatelessWidget {
   final ProfileViewModel viewModel = ProfileViewModel();

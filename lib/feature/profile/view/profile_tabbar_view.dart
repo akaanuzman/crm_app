@@ -14,9 +14,7 @@ class ProfileTabbarView extends StatelessWidget {
       BottomTabModel(
           title: "Hakkımda", icon: Icons.person, child: const ProfileView()),
       BottomTabModel(
-          title: "Düzenle",
-          icon: Icons.edit,
-          child: const ProfileEditView()),
+          title: "Düzenle", icon: Icons.edit, child: ProfileEditView()),
     ];
     return DefaultTabController(
       length: items.length,

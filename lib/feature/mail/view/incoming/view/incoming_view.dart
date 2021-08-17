@@ -1,13 +1,18 @@
+import '../../../../../core/constants/app/app_constants.dart';
+import '../../../viewmodel/mail_view_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../mail_view.dart';
 
-
 class IncomingView extends StatelessWidget {
-  const IncomingView({Key? key}) : super(key: key);
+  final MailViewModel viewModel = MailViewModel();
+  IncomingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MailView(content: "gelen mail");
+    viewModel.fetchItems(ApplicationConstants.instance!.token, "");
+    return MailView(
+      viewModel: viewModel,
+    );
   }
 }

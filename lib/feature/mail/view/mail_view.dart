@@ -1,4 +1,3 @@
-
 import 'send_mail/view/send_mail_view.dart';
 
 import '../viewmodel/mail_view_model.dart';
@@ -12,10 +11,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kartal/kartal.dart';
 
 class MailView extends StatelessWidget {
-  final String content;
-  final MailViewModel _viewModel = MailViewModel();
+  final MailViewModel viewModel;
 
-  MailView({Key? key, required this.content}) : super(key: key);
+  const MailView({Key? key, required this.viewModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,104 +37,111 @@ class MailView extends StatelessWidget {
         automaticallyImplyLeading: false,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 7,
-            child: Padding(
-              padding: context.paddingLow,
-              child: ListView.builder(
-                itemCount: 15,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => Column(
-                  children: [
-                    Slidable(
-                      actionPane: const SlidableDrawerActionPane(),
-                      actions: [
-                        IconSlideAction(
-                          color: context.colorScheme.primaryVariant,
-                          caption: 'Sil',
-                          icon: Icons.delete,
-                          onTap: () {
-                            _showDialog(context, radius);
-                          },
-                        ),
-                        IconSlideAction(
-                            color: context.colorScheme.error,
-                            foregroundColor: context.colorScheme.onSurface,
-                            caption: 'Ertele',
-                            icon: Icons.alarm,
-                            onTap: () {}),
-                      ],
-                      secondaryActions: [
-                        IconSlideAction(
-                          color: context.colorScheme.surface,
-                          foregroundColor: context.colorScheme.onSurface,
-                          caption: 'Okundu',
-                          icon: Icons.mark_email_read,
-                          onTap: () {},
-                        ),
-                        IconSlideAction(
-                          color: context.colorScheme.secondaryVariant,
-                          foregroundColor: context.colorScheme.onSurface,
-                          caption: 'Okunmadı',
-                          icon: Icons.mark_email_unread,
-                          onTap: () {},
-                        ),
-                      ],
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: context.lowBorderRadius),
-                        elevation: 5,
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.star_border_outlined,
+      body: Observer(
+        builder: (context) => Column(
+          children: [
+            Expanded(
+              flex: 7,
+              child: Padding(
+                padding: context.paddingLow,
+                child: ListView.builder(
+                  itemCount: viewModel.items.emails?.length ?? 0,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => Column(
+                    children: [
+                      Slidable(
+                        actionPane: const SlidableDrawerActionPane(),
+                        actions: [
+                          IconSlideAction(
                             color: context.colorScheme.primaryVariant,
+                            caption: 'Sil',
+                            icon: Icons.delete,
+                            onTap: () {
+                              _showDialog(context, radius);
+                            },
                           ),
-                          title: Text(content),
-                          trailing: Text(today.toString().substring(0, 10)),
-                          onTap: () {
-                            _showModalBottomSheet(context, radius);
-                          },
+                          IconSlideAction(
+                              color: context.colorScheme.error,
+                              foregroundColor: context.colorScheme.onSurface,
+                              caption: 'Ertele',
+                              icon: Icons.alarm,
+                              onTap: () {}),
+                        ],
+                        secondaryActions: [
+                          IconSlideAction(
+                            color: context.colorScheme.surface,
+                            foregroundColor: context.colorScheme.onSurface,
+                            caption: 'Okundu',
+                            icon: Icons.mark_email_read,
+                            onTap: () {},
+                          ),
+                          IconSlideAction(
+                            color: context.colorScheme.secondaryVariant,
+                            foregroundColor: context.colorScheme.onSurface,
+                            caption: 'Okunmadı',
+                            icon: Icons.mark_email_unread,
+                            onTap: () {},
+                          ),
+                        ],
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: context.lowBorderRadius),
+                          elevation: 5,
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.star_border_outlined,
+                              color: context.colorScheme.primaryVariant,
+                            ),
+                            title: Text(viewModel.items.emails?[index].title ??
+                                "Geçerli mail başlığı bulunamadı."),
+                            trailing: Text(
+                                viewModel.items.emails?[index].date ??
+                                    "Geçerli tarih bulunamadı."),
+                            onTap: () {
+                              _showModalBottomSheet(
+                                  context, radius, viewModel, index);
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    context.emptySizedHeightBoxLow,
-                  ],
+                      context.emptySizedHeightBoxLow,
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          context.emptySizedHeightBoxLow,
-          Padding(
-            padding: context.paddingNormal,
-            child: const Text(
-              "Projeleri silmek veya düzenlemek için sağa okundu veya okunmadı olarak işaretlemek için sola kaydırın.",
-              maxLines: 2,
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: context.paddingLow,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const SendMailView()));
-                },
-                child: Text(
-                  "Email Gönder",
-                  style: TextStyle(color: context.colorScheme.onSurface),
-                ),
+            context.emptySizedHeightBoxLow,
+            Padding(
+              padding: context.paddingNormal,
+              child: const Text(
+                "Projeleri silmek veya düzenlemek için sağa okundu veya okunmadı olarak işaretlemek için sola kaydırın.",
+                maxLines: 2,
               ),
             ),
-          )
-        ],
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: context.paddingLow,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SendMailView()));
+                  },
+                  child: Text(
+                    "Email Gönder",
+                    style: TextStyle(color: context.colorScheme.onSurface),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
-  _showModalBottomSheet(context, double radius) {
+  _showModalBottomSheet(
+      context, double radius, MailViewModel viewModel, int index) {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -149,7 +154,7 @@ class MailView extends StatelessWidget {
             return AnimatedContainer(
               duration: context.durationNormal,
               padding: context.paddingNormal,
-              height: _viewModel.isContainerHeightChange
+              height: viewModel.isContainerHeightChange
                   ? context.dynamicHeight(0.4)
                   : context.dynamicHeight(0.82),
               child: Column(
@@ -181,7 +186,7 @@ class MailView extends StatelessWidget {
                         CircleAvatar(
                           // ignore: prefer_const_constructors
                           backgroundImage: NetworkImage(
-                              "http://192.168.3.53/assets/images/users/user0.jpg"),
+                              "http://192.168.3.53/assets/images/users/${viewModel.items.emails?[index].user_photo}"),
                           radius: 30,
                         ),
                         context.emptySizedWidthBoxLow,
@@ -189,7 +194,10 @@ class MailView extends StatelessWidget {
                         Expanded(
                           // ignore: prefer_const_constructors
                           child: ListTile(
-                            title: const BodyText1Copy(data: "Deneme Mail"),
+                            title: BodyText1Copy(
+                                data:
+                                    viewModel.items.emails?[index].user_name ??
+                                        "Geçerli kullanıcı adı bulunamadı."),
                             subtitle: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,12 +206,16 @@ class MailView extends StatelessWidget {
                                     data: "Kimden Geldi: ",
                                     color: context.colorScheme.onBackground),
                                 BodyText2Copy(
-                                    data: "test@hotmail.com",
+                                    data: viewModel
+                                            .items.emails?[index].user_email ??
+                                        "Geçerli eposta adresi bulunamadı.",
                                     color: context.colorScheme.onBackground),
                                 context.emptySizedHeightBoxLow,
                               ],
                             ),
-                            trailing: const Text("2021-07-14 08:19:36"),
+                            trailing: Text(
+                                viewModel.items.emails?[index].date ??
+                                    "Geçerli tarih bulunamadı."),
                           ),
                         ),
                       ],
@@ -212,7 +224,7 @@ class MailView extends StatelessWidget {
                   context.emptySizedHeightBoxLow,
                   Padding(
                     padding: context.horizontalPaddingNormal,
-                    child: const Text("mesaj içeriği"),
+                    child:  Text(viewModel.items.emails?[index].content ?? "Geçerli mail içeriği bulunamadı."),
                   ),
                   context.emptySizedHeightBoxLow,
                   Divider(
@@ -220,7 +232,7 @@ class MailView extends StatelessWidget {
                     indent: 20,
                     endIndent: 20,
                   ),
-                  _viewModel.isContainerHeightChange
+                  viewModel.isContainerHeightChange
                       ? context.emptySizedWidthBoxLow
                       : Expanded(
                           child: Padding(
@@ -282,7 +294,7 @@ class MailView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        _viewModel.isContainerHeightChange
+                        viewModel.isContainerHeightChange
                             ? context.emptySizedHeightBoxLow
                             : ElevatedButton(
                                 onPressed: () {},
@@ -294,7 +306,7 @@ class MailView extends StatelessWidget {
                         context.emptySizedWidthBoxLow,
                         ElevatedButton(
                           onPressed: () {
-                            _viewModel.changeContainerHeight();
+                            viewModel.changeContainerHeight();
                           },
                           child: const BodyText2Copy(data: "Yanıtla"),
                         ),
