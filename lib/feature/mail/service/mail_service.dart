@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../model/mail_model.dart';
 import 'package:dio/dio.dart';
 
+import '../model/mail_model.dart';
 import 'i_mail_service.dart';
 import 'mail_service_end_points.dart';
 

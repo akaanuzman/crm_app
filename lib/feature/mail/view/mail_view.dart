@@ -17,8 +17,6 @@ class MailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime time = DateTime.now();
-    final DateTime today = DateTime(time.year, time.month, time.day);
 
     MediaQueryData mediaQuery = MediaQuery.of(context);
 

@@ -1,4 +1,3 @@
-import '../../../core/constants/app/app_constants.dart';
 import '../../../core/init/network/network_manager.dart';
 import '../model/profile_model.dart';
 import '../service/i_profile_service.dart';

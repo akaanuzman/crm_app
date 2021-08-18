@@ -4,7 +4,6 @@ import 'package:crm_app/core/components/text/bold_text.dart';
 import 'package:crm_app/core/components/text/subtitle1_copy.dart';
 import 'package:crm_app/core/constants/app/app_constants.dart';
 import 'package:crm_app/feature/profile/viewmodel/profile_view_model.dart';
-import 'package:crm_app/feature/project/model/project_model.dart';
 import 'package:crm_app/feature/project/projectdetail/view/project_detail_view.dart';
 import 'package:crm_app/feature/project/viewmodel/project_view_model.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';

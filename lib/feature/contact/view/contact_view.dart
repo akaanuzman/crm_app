@@ -1,3 +1,7 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:dio/dio.dart';
+
 import '../contact_detail/view/contact_detail_guide_view.dart';
 
 import '../../../core/constants/app/app_constants.dart';
@@ -26,6 +30,7 @@ class ContactView extends StatelessWidget {
     double radius = height * 0.02;
 
     _viewModel.fetchItems(ApplicationConstants.instance!.token);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -55,7 +60,9 @@ class ContactView extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: context.normalBorderRadius),
           elevation: 2,
           tag: 'Proje Ekle',
-          child: const PopUpItemBody(),
+          child: PopUpItemBody(
+            viewModel: _viewModel,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
@@ -73,7 +80,7 @@ class ContactView extends StatelessWidget {
               ),
               context.emptySizedHeightBoxLow,
               Expanded(
-                flex: 12,
+                flex: 5,
                 child: ListView.builder(
                   itemCount: _viewModel.items.users?.length ?? 0,
                   physics: const BouncingScrollPhysics(),
@@ -86,7 +93,7 @@ class ContactView extends StatelessWidget {
                         caption: 'Sil',
                         icon: Icons.delete,
                         onTap: () {
-                          _showDialog(context, radius);
+                          _showDialog(context, radius, _viewModel, index);
                         },
                       ),
                       IconSlideAction(
@@ -95,7 +102,7 @@ class ContactView extends StatelessWidget {
                         caption: 'Düzenle',
                         icon: Icons.edit,
                         onTap: () {
-                          _showModalBottomSheet(context, radius);
+                          _showModalBottomSheet(context, radius, index);
                           debugPrint(_viewModel.items.message);
                         },
                       ),
@@ -147,56 +154,62 @@ class ContactView extends StatelessWidget {
                   itemCount: _viewModel.items.guides?.length ?? 0,
                   physics: const BouncingScrollPhysics(),
                   // ignore: prefer_const_constructors
-                  itemBuilder: (context, index) => Slidable(
-                    actionPane: const SlidableDrawerActionPane(),
-                    actions: [
-                      IconSlideAction(
-                        color: context.colorScheme.primaryVariant,
-                        caption: 'Sil',
-                        icon: Icons.delete,
-                        onTap: () {
-                          _showDialog(context, radius);
-                        },
-                      ),
-                      IconSlideAction(
-                        color: context.colorScheme.onPrimary,
-                        foregroundColor: context.colorScheme.onSurface,
-                        caption: 'Düzenle',
-                        icon: Icons.edit,
-                        onTap: () {
-                          _showModalBottomSheet(context, radius);
-                          debugPrint(_viewModel.items.message);
-                        },
-                      ),
-                    ],
-                    child: Padding(
-                      padding: context.paddingLow,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: context.lowBorderRadius),
-                        elevation: 5,
-                        child: ListTile(
+                  itemBuilder: (context, index) => Observer(
+                    builder: (context) => Slidable(
+                      actionPane: const SlidableDrawerActionPane(),
+                      actions: [
+                        IconSlideAction(
+                          color: context.colorScheme.primaryVariant,
+                          caption: 'Sil',
+                          icon: Icons.delete,
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ContactGuidesDetailView(
-                                  guides: _viewModel.items.guides?[index],
-                                ),
-                              ),
-                            );
+                            _showDialog(context, radius, _viewModel, index);
                           },
-                          title: BodyText2Copy(
-                              data: _viewModel.items.guides?[index].name ?? ""),
-                          subtitle: Text(
-                            _viewModel.items.guides?[index].email ?? "",
-                            style: context.textTheme.button,
+                        ),
+                        IconSlideAction(
+                          color: context.colorScheme.onPrimary,
+                          foregroundColor: context.colorScheme.onSurface,
+                          caption: 'Düzenle',
+                          icon: Icons.edit,
+                          onTap: () {
+                            _showModalBottomSheet(context, radius, index);
+                            debugPrint(_viewModel.items.message);
+                          },
+                        ),
+                      ],
+                      child: Padding(
+                        padding: context.paddingLow,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: context.lowBorderRadius),
+                          elevation: 5,
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ContactGuidesDetailView(
+                                    guides: _viewModel.items.guides?[index],
+                                  ),
+                                ),
+                              );
+                            },
+                            title: BodyText2Copy(
+                                data:
+                                    _viewModel.items.guides?[index].name ?? ""),
+                            subtitle: Text(
+                              _viewModel.items.guides?[index].email ?? "",
+                              style: context.textTheme.button,
+                            ),
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(_viewModel
+                                          .items.guides?[index].photo ==
+                                      null
+                                  ? "http://192.168.3.53/assets/images/users/user0.jpg"
+                                  : "http://192.168.3.53/assets/images/users/${_viewModel.items.guides?[index].photo}"),
+                              radius: 30,
+                            ),
+                            trailing: const Icon(Icons.keyboard_arrow_right),
                           ),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "http://192.168.3.53/assets/images/users/${_viewModel.items.guides?[index].photo}"),
-                            radius: 30,
-                          ),
-                          trailing: const Icon(Icons.keyboard_arrow_right),
                         ),
                       ),
                     ),
@@ -206,8 +219,8 @@ class ContactView extends StatelessWidget {
               context.emptySizedHeightBoxLow3x,
               Padding(
                 padding: context.horizontalPaddingNormal,
-                child:
-                    const Text("Kişiyi silmek veya düzenlemek için sağa kaydırınız."),
+                child: const Text(
+                    "Kişiyi silmek veya düzenlemek için sağa kaydırınız."),
               )
             ],
           ),
@@ -216,113 +229,257 @@ class ContactView extends StatelessWidget {
     );
   }
 
-  _showModalBottomSheet(context, double radius) {
+  _showModalBottomSheet(context, double radius, int index) {
+    var nameController = TextEditingController();
+
+    var eMailController = TextEditingController();
+
+    var phoneController = TextEditingController();
+
+    var detailController = TextEditingController();
+
+    var jobController = TextEditingController();
+
+    var birthDayController = TextEditingController();
+
+    var locationController = TextEditingController();
+
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(radius),
       ),
       builder: (BuildContext context) {
-        return Container(
-          height: context.dynamicHeight(0.46),
-          padding: context.paddingNormal,
-          decoration: BoxDecoration(
-            color: context.colorScheme.onSurface,
-            borderRadius: BorderRadius.only(
-              topLeft: context.highadius,
-              topRight: context.highadius,
+        return SingleChildScrollView(
+          child: Container(
+            height: context.dynamicHeight(1.1),
+            padding: context.paddingNormal,
+            decoration: BoxDecoration(
+              color: context.colorScheme.onSurface,
+              borderRadius: BorderRadius.only(
+                topLeft: context.highadius,
+                topRight: context.highadius,
+              ),
             ),
-          ),
-          child: Column(
-            children: [
-              Center(
-                child: Container(
-                  height: context.dynamicWidth(0.03),
-                  width: context.dynamicWidth(0.2),
-                  decoration: BoxDecoration(
+            child: Column(
+              children: [
+                context.emptySizedHeightBoxLow3x,
+                Padding(
+                  padding: context.paddingLow,
+                  child: const Text("Kişi"),
+                ),
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.person),
+                    hintText: 'Kişinin ismi',
+                    labelText: "İsim",
+                    enabledBorder: OutlineInputBorder(
                       borderRadius: context.lowBorderRadius,
-                      color: context.colorScheme.background),
-                ),
-              ),
-              context.emptySizedHeightBoxLow3x,
-              Padding(
-                padding: context.paddingLow,
-                child: const Text("Kişi"),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Kişinin ismi',
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: context.lowBorderRadius,
-                    borderSide:
-                        BorderSide(color: context.colorScheme.onBackground),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: context.lowBorderRadius,
-                    borderSide: BorderSide(color: context.colorScheme.surface),
-                  ),
-                ),
-                cursorColor: context.colorScheme.onSecondary,
-              ),
-              context.emptySizedHeightBoxLow,
-              Padding(
-                padding: context.paddingLow,
-                child: const Text("Email"),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Kişinin emaili',
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: context.lowBorderRadius,
-                    borderSide:
-                        BorderSide(color: context.colorScheme.onBackground),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: context.lowBorderRadius,
-                    borderSide: BorderSide(color: context.colorScheme.surface),
-                  ),
-                ),
-                cursorColor: context.colorScheme.onSecondary,
-              ),
-              context.emptySizedHeightBoxLow3x,
-              Divider(
-                color: context.colorScheme.secondaryVariant,
-                thickness: 0.4,
-              ),
-              Padding(
-                padding: context.paddingLow,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: BodyText2Copy(
-                          data: "Vazgeç", color: context.colorScheme.onSurface),
-                      style: ElevatedButton.styleFrom(
-                          primary: context.colorScheme.secondaryVariant),
+                      borderSide:
+                          BorderSide(color: context.colorScheme.onBackground),
                     ),
-                    context.emptySizedWidthBoxLow,
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: BodyText2Copy(
-                          data: "Kaydet", color: context.colorScheme.onSurface),
-                      style: ElevatedButton.styleFrom(
-                          primary: context.colorScheme.surface),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.surface),
                     ),
-                  ],
+                  ),
+                  cursorColor: context.colorScheme.onSecondary,
                 ),
-              ),
-            ],
+                context.emptySizedHeightBoxLow,
+                Padding(
+                  padding: context.paddingLow,
+                  child: const Text("Email"),
+                ),
+                TextField(
+                  controller: eMailController,
+                  decoration: InputDecoration(
+                    hintText: 'Kişinin emaili',
+                    prefixIcon: const Icon(Icons.email),
+                    labelText: "Email",
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.onBackground),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.surface),
+                    ),
+                  ),
+                  cursorColor: context.colorScheme.onSecondary,
+                ),
+                Padding(
+                  padding: context.paddingLow,
+                  child: const Text("Telefon"),
+                ),
+                TextField(
+                  controller: phoneController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.phone),
+                    hintText: 'Kişinin telefonu',
+                    labelText: "Telefon",
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.onBackground),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.surface),
+                    ),
+                  ),
+                  cursorColor: context.colorScheme.onSecondary,
+                ),
+                context.emptySizedHeightBoxLow,
+                Padding(
+                  padding: context.paddingLow,
+                  child: const Text("Hakkında"),
+                ),
+                TextField(
+                  controller: detailController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.description),
+                    hintText: 'Kişinin detayı',
+                    labelText: "Hakkında",
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.onBackground),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.surface),
+                    ),
+                  ),
+                  cursorColor: context.colorScheme.onSecondary,
+                ),
+                context.emptySizedHeightBoxLow,
+                Padding(
+                  padding: context.paddingLow,
+                  child: const Text("Meslek"),
+                ),
+                TextField(
+                  controller: jobController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.work),
+                    hintText: 'Kişinin mesleği',
+                    labelText: "Meslek",
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.onBackground),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.surface),
+                    ),
+                  ),
+                  cursorColor: context.colorScheme.onSecondary,
+                ),
+                context.emptySizedHeightBoxLow,
+                Padding(
+                  padding: context.paddingLow,
+                  child: const Text("Doğum günü"),
+                ),
+                TextField(
+                  controller: birthDayController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.cake),
+                    hintText: 'Kişinin doğum günü',
+                    labelText: "Doğum Günü",
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.onBackground),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.surface),
+                    ),
+                  ),
+                  cursorColor: context.colorScheme.onSecondary,
+                ),
+                context.emptySizedHeightBoxLow,
+                Padding(
+                  padding: context.paddingLow,
+                  child: const Text("Konum"),
+                ),
+                TextField(
+                  controller: locationController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.location_on),
+                    hintText: 'Kişinin konumu',
+                    labelText: "Konum",
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.onBackground),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.surface),
+                    ),
+                  ),
+                  cursorColor: context.colorScheme.onSecondary,
+                ),
+                context.emptySizedHeightBoxLow3x,
+                Divider(
+                  color: context.colorScheme.secondaryVariant,
+                  thickness: 0.4,
+                ),
+                Padding(
+                  padding: context.paddingLow,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: BodyText2Copy(
+                            data: "Vazgeç",
+                            color: context.colorScheme.onSurface),
+                        style: ElevatedButton.styleFrom(
+                            primary: context.colorScheme.secondaryVariant),
+                      ),
+                      context.emptySizedWidthBoxLow,
+                      ElevatedButton(
+                        onPressed: () {
+                          Dio dio = Dio();
+                          dio.post(
+                              "http://192.168.3.53/api/Persons/new_guide?token=xaZIlMlsBFYGyrUx7U4B&id=${_viewModel.items.guides?[index].id}&name=${nameController.text}&email=${eMailController.text}&tel=${phoneController.text}&detail=${detailController.text}&job=${jobController.text}&birthday=${birthDayController.text}&location=${locationController.text}");
+                          _viewModel
+                              .fetchItems(ApplicationConstants.instance!.token);
+                        },
+                        child: BodyText2Copy(
+                            data: "Kaydet",
+                            color: context.colorScheme.onSurface),
+                        style: ElevatedButton.styleFrom(
+                            primary: context.colorScheme.surface),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
     );
   }
 
-  _showDialog(BuildContext context, double radius) {
+  _showDialog(BuildContext context, double radius, ContactViewModel viewModel,
+      int index) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -340,9 +497,10 @@ class ContactView extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       primary: context.colorScheme.surface),
                   onPressed: () {
-                    // setState(() {
-                    //   widget._viewModel.deleteItem(index);
-                    // });
+                    final Dio dio = Dio();
+                    dio.post(
+                        "http://192.168.3.53/api/Persons/delete_guide?token=${ApplicationConstants.instance!.token}&id=${viewModel.items.guides?[index].id}");
+                    viewModel.fetchItems(ApplicationConstants.instance!.token);
                     Navigator.of(context).pop();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -372,170 +530,243 @@ class ContactView extends StatelessWidget {
   }
 }
 
-class PopUpItemBody extends StatelessWidget {
+class PopUpItemBody extends StatefulWidget {
+  final ContactViewModel viewModel;
   const PopUpItemBody({
     Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   @override
+  State<PopUpItemBody> createState() => _PopUpItemBodyState();
+}
+
+class _PopUpItemBodyState extends State<PopUpItemBody> {
+  var nameController = TextEditingController();
+
+  var eMailController = TextEditingController();
+
+  var phoneController = TextEditingController();
+
+  var detailController = TextEditingController();
+
+  var jobController = TextEditingController();
+
+  late final ContactViewModel viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel = widget.viewModel;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: context.paddingNormal,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: CircleAvatar(
-                  backgroundColor: context.colorScheme.primaryVariant,
-                  child: Icon(
-                    Icons.close,
-                    color: context.colorScheme.onSurface,
+    return SizedBox(
+      height: context.dynamicHeight(1.1),
+      child: Center(
+        child: Padding(
+          padding: context.paddingNormal,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: context.colorScheme.primaryVariant,
+                    child: Icon(
+                      Icons.close,
+                      color: context.colorScheme.onSurface,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Center(
-              child: Padding(
-                  padding: context.paddingLow,
-                  child: const BodyText1Copy(data: "Kişi Ekle")),
-            ),
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("İsim"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Kişinin ismini giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
+              Center(
+                child: Padding(
+                    padding: context.paddingLow,
+                    child: const BodyText1Copy(data: "Kişi Ekle")),
               ),
-              cursorColor: context.colorScheme.onSecondary,
-            ),
-            context.emptySizedHeightBoxLow,
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("Eposta"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Eposta giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
+              Padding(
+                padding: context.paddingLow,
+                child: const Text("İsim"),
               ),
-              cursorColor: context.colorScheme.onSecondary,
-            ),
-            context.emptySizedHeightBoxLow,
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("Telefon"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Telefon giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
-              ),
-              cursorColor: context.colorScheme.onSecondary,
-            ),
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("Hakkında"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Hakkında giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
-              ),
-              cursorColor: context.colorScheme.onSecondary,
-              maxLines: 2,
-            ),
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("Meslek"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Meslek giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
-              ),
-              cursorColor: context.colorScheme.onSecondary,
-            ),
-            context.emptySizedHeightBoxLow,
-            context.emptySizedHeightBoxLow,
-            Divider(
-              color: context.colorScheme.secondaryVariant,
-              thickness: 0.4,
-            ),
-            Padding(
-              padding: context.paddingLow,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: BodyText2Copy(
-                        data: "Vazgeç", color: context.colorScheme.onSurface),
-                    style: ElevatedButton.styleFrom(
-                        primary: context.colorScheme.secondaryVariant),
+              context.emptySizedHeightBoxLow,
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.person),
+                  labelText: "İsim",
+                  hintText: 'Kişinin ismini giriniz.',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: context.lowBorderRadius,
+                    borderSide:
+                        BorderSide(color: context.colorScheme.onBackground),
                   ),
-                  context.emptySizedWidthBoxLow,
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: BodyText2Copy(
-                        data: "Ekle", color: context.colorScheme.onSurface),
-                    style: ElevatedButton.styleFrom(
-                        primary: context.colorScheme.surface),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: context.lowBorderRadius,
+                    borderSide: BorderSide(color: context.colorScheme.surface),
                   ),
-                ],
+                ),
+                cursorColor: context.colorScheme.onSecondary,
               ),
-            ),
-          ],
+              context.emptySizedHeightBoxLow,
+              Padding(
+                padding: context.paddingLow,
+                child: const Text("Eposta"),
+              ),
+              context.emptySizedHeightBoxLow,
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                controller: eMailController,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.email),
+                  labelText: "Eposta",
+                  hintText: 'Eposta giriniz.',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: context.lowBorderRadius,
+                    borderSide:
+                        BorderSide(color: context.colorScheme.onBackground),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: context.lowBorderRadius,
+                    borderSide: BorderSide(color: context.colorScheme.surface),
+                  ),
+                ),
+                cursorColor: context.colorScheme.onSecondary,
+              ),
+              context.emptySizedHeightBoxLow,
+              Padding(
+                padding: context.paddingLow,
+                child: const Text("Telefon"),
+              ),
+              context.emptySizedHeightBoxLow,
+              TextField(
+                keyboardType: TextInputType.phone,
+                controller: phoneController,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.phone),
+                  labelText: 'Telefon',
+                  hintText: 'Telefon giriniz.',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: context.lowBorderRadius,
+                    borderSide:
+                        BorderSide(color: context.colorScheme.onBackground),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: context.lowBorderRadius,
+                    borderSide: BorderSide(color: context.colorScheme.surface),
+                  ),
+                ),
+                cursorColor: context.colorScheme.onSecondary,
+              ),
+              context.emptySizedHeightBoxLow,
+              Padding(
+                padding: context.paddingLow,
+                child: const Text("Hakkında"),
+              ),
+              context.emptySizedHeightBoxLow,
+              TextField(
+                controller: detailController,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.description),
+                  labelText: 'Hakkında',
+                  hintText: 'Hakkında giriniz.',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: context.lowBorderRadius,
+                    borderSide:
+                        BorderSide(color: context.colorScheme.onBackground),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: context.lowBorderRadius,
+                    borderSide: BorderSide(color: context.colorScheme.surface),
+                  ),
+                ),
+                cursorColor: context.colorScheme.onSecondary,
+                maxLines: 2,
+              ),
+              context.emptySizedHeightBoxLow,
+              Padding(
+                padding: context.paddingLow,
+                child: const Text("Meslek"),
+              ),
+              context.emptySizedHeightBoxLow,
+              TextField(
+                controller: jobController,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.work),
+                  labelText: 'Meslek',
+                  hintText: 'Meslek giriniz.',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: context.lowBorderRadius,
+                    borderSide:
+                        BorderSide(color: context.colorScheme.onBackground),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: context.lowBorderRadius,
+                    borderSide: BorderSide(color: context.colorScheme.surface),
+                  ),
+                ),
+                cursorColor: context.colorScheme.onSecondary,
+              ),
+              context.emptySizedHeightBoxLow,
+              context.emptySizedHeightBoxLow,
+              Divider(
+                color: context.colorScheme.secondaryVariant,
+                thickness: 0.4,
+              ),
+              Padding(
+                padding: context.paddingLow,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: BodyText2Copy(
+                          data: "Vazgeç", color: context.colorScheme.onSurface),
+                      style: ElevatedButton.styleFrom(
+                          primary: context.colorScheme.secondaryVariant),
+                    ),
+                    context.emptySizedWidthBoxLow,
+                    ElevatedButton(
+                      onPressed: () async {
+                        Dio dio = Dio();
+                        await dio.post(
+                            "http://192.168.3.53/api/Persons/new_guide?token=${ApplicationConstants.instance!.token}&name=${nameController.text}&email=${eMailController.text}&tel=${eMailController.text}&detail=${detailController.text}&company_id=${eMailController.text}&job=${jobController.text}");
+
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor:
+                                context.colorScheme.secondaryVariant,
+                            duration: context.durationSlow,
+                            content: BodyText2Copy(
+                              data: "Kişi başarıyla eklendi !",
+                              color: context.colorScheme.onSurface,
+                            ),
+                          ),
+                        );
+                        setState(() {
+                          viewModel
+                              .fetchItems(ApplicationConstants.instance!.token);
+                        });
+                      },
+                      child: BodyText2Copy(
+                          data: "Ekle", color: context.colorScheme.onSurface),
+                      style: ElevatedButton.styleFrom(
+                          primary: context.colorScheme.surface),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

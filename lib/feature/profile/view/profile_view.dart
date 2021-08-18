@@ -1,8 +1,8 @@
-import 'package:crm_app/core/components/text/body_text1_copy.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
-import 'package:crm_app/core/components/text/bold_text.dart';
-import 'package:crm_app/core/constants/app/app_constants.dart';
-import 'package:crm_app/feature/profile/viewmodel/profile_view_model.dart';
+import '../../../core/components/text/body_text1_copy.dart';
+import '../../../core/components/text/body_text2_copy.dart';
+import '../../../core/components/text/bold_text.dart';
+import '../../../core/constants/app/app_constants.dart';
+import '../viewmodel/profile_view_model.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

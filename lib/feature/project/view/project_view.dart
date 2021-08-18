@@ -1,5 +1,5 @@
 import 'package:boardview/boardview_controller.dart';
-import 'package:crm_app/feature/profile/view/profile_view.dart';
+import '../../profile/view/profile_view.dart';
 import '../../../core/constants/app/app_constants.dart';
 import '../projectdetail/view/project_detail_view.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

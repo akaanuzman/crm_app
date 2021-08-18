@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:mobx/mobx.dart';
+
 import '../../../../core/init/network/network_manager.dart';
 import '../model/project_detail_model.dart';
 import '../service/i_project_detail_service.dart';
 import '../service/project_detail_service.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:mobx/mobx.dart';
+
 part 'project_detail_view_model.g.dart';
 
 class ProjectDetailViewModel = _ProjectDetailViewModelBase
