@@ -7,5 +7,5 @@ abstract class IProfileService {
 
   IProfileService(this.dio);
 
-  Future<ProfileModel> fetchAllTask(String token);
+  Future<ProfileModel> fetchAllTask(String token,String username);
 }

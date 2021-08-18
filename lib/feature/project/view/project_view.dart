@@ -1,4 +1,5 @@
 import 'package:boardview/boardview_controller.dart';
+import 'package:crm_app/feature/profile/view/profile_view.dart';
 import '../../../core/constants/app/app_constants.dart';
 import '../projectdetail/view/project_detail_view.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -158,7 +159,16 @@ class _ProjectViewState extends State<ProjectView> {
             scrollDirection: Axis.horizontal,
             itemCount: viewModel.items.projects?[index].users?.length,
             itemBuilder: (context, indexV2) => GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) {
+                      debugPrint("${viewModel.items.projects?[indexV2].user_name} $indexV2");
+                      return ProfileView(
+                          username:
+                              viewModel.items.projects?[indexV2].user_name ?? "",
+                        );
+                    }));
+              },
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
                     "http://192.168.3.53/assets/images/users/${viewModel.items.projects?[index].users?[indexV2].photo}"),
@@ -204,7 +214,7 @@ class _ProjectViewState extends State<ProjectView> {
 
   Widget _buildRowIconText(int index) => RowIconText(
         icon: Icons.account_circle_rounded,
-        text: viewModel.items.projects?[index].userName ?? "",
+        text: viewModel.items.projects?[index].user_name ?? "",
         sizedBox: const SizedBox(
           height: 0,
           width: 2,

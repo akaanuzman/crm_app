@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:json_annotation/json_annotation.dart';
 part 'project_model.g.dart';
 
@@ -21,7 +23,7 @@ class Projects {
   int? okgorev;
   int? allgorev;
   String? name;
-  String? userName;
+  String? user_name;
   String? document;
   String? detail;
   String? link;
@@ -34,7 +36,7 @@ class Projects {
       this.okgorev,
       this.allgorev,
       this.name,
-      this.userName,
+      this.user_name,
       this.document,
       this.detail,
       this.link,

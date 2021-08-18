@@ -1,5 +1,6 @@
-import '../model/company_detail_model.dart';
 import 'package:dio/dio.dart';
+
+import '../model/company_detail_model.dart';
 
 abstract class ICompanyDetailService {
   final Dio dio;

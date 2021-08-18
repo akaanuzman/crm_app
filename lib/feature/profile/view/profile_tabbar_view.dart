@@ -3,7 +3,7 @@ import 'package:kartal/kartal.dart';
 
 import '../../bottomtab/model/bottomtab_model.dart';
 import '../profile_edit/view/profile_edit_view.dart';
-import 'profile_view.dart';
+import 'my_profile_view.dart';
 
 class ProfileTabbarView extends StatelessWidget {
   const ProfileTabbarView({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class ProfileTabbarView extends StatelessWidget {
   Widget build(BuildContext context) {
     List<BottomTabModel> items = [
       BottomTabModel(
-          title: "Hakkımda", icon: Icons.person, child: const ProfileView()),
+          title: "Hakkımda", icon: Icons.person, child: const MyProfileView()),
       BottomTabModel(
           title: "Düzenle", icon: Icons.edit, child: ProfileEditView()),
     ];

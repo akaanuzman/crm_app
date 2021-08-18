@@ -28,8 +28,8 @@ mixin _$ProfileViewModel on _ProfileViewModelBase, Store {
       AsyncAction('_ProfileViewModelBase.fetchItems');
 
   @override
-  Future<void> fetchItems(String token) {
-    return _$fetchItemsAsyncAction.run(() => super.fetchItems(token));
+  Future<void> fetchItems(String token, String username) {
+    return _$fetchItemsAsyncAction.run(() => super.fetchItems(token, username));
   }
 
   @override

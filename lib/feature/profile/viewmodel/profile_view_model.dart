@@ -18,7 +18,6 @@ abstract class _ProfileViewModelBase with Store {
 
   _ProfileViewModelBase() {
     profileService = ProfileService(NetworkManager.instance!.dio);
-    fetchItems(ApplicationConstants.instance!.token);
   }
 
   void setContext(BuildContext context) {
@@ -26,7 +25,7 @@ abstract class _ProfileViewModelBase with Store {
   }
 
   @action
-  Future<void> fetchItems(String token) async {
-    items = await profileService.fetchAllTask(token);
+  Future<void> fetchItems(String token, String username) async {
+    items = await profileService.fetchAllTask(token, username);
   }
 }
