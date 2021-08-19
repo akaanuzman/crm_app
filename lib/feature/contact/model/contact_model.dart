@@ -32,6 +32,9 @@ class Users {
   String? job;
   String? birthday;
 
+  @JsonKey(ignore:true)
+  bool isChanged = false;
+
   Users(
       {this.screenName,
       this.full_name,

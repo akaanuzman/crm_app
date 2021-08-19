@@ -1,3 +1,5 @@
+import 'package:crm_app/feature/project/model/project_model.dart';
+
 import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/body_text2_copy.dart';
 import '../../../core/components/text/bold_text.dart';
@@ -12,7 +14,8 @@ import 'package:kartal/kartal.dart';
 class ProfileView extends StatelessWidget {
   final ProfileViewModel _viewModel = ProfileViewModel();
   final String username;
-  ProfileView({Key? key, required this.username}) : super(key: key);
+  ProfileView({Key? key, required this.username})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class ProfileView extends StatelessWidget {
                 CircleAvatar(
                   radius: 45,
                   backgroundImage: NetworkImage(
-                      _viewModel.items.photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
+                    _viewModel.items.photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
                 ),
                 context.emptySizedHeightBoxLow,
                 BodyText1Copy(data: _viewModel.items.full_name ?? ""),
@@ -47,7 +50,8 @@ class ProfileView extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {},
                       child: BodyText2Copy(
-                          data: "Message", color: context.colorScheme.onSurface),
+                          data: "Message",
+                          color: context.colorScheme.onSurface),
                       style: ElevatedButton.styleFrom(
                           primary: context.colorScheme.primaryVariant),
                     ),

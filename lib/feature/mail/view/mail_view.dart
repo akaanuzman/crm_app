@@ -17,7 +17,6 @@ class MailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     MediaQueryData mediaQuery = MediaQuery.of(context);
 
     double height = mediaQuery.size.height;
@@ -123,7 +122,7 @@ class MailView extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SendMailView()));
+                        builder: (context) => SendMailView()));
                   },
                   child: Text(
                     "Email Gönder",
@@ -222,7 +221,8 @@ class MailView extends StatelessWidget {
                   context.emptySizedHeightBoxLow,
                   Padding(
                     padding: context.horizontalPaddingNormal,
-                    child:  Text(viewModel.items.emails?[index].content ?? "Geçerli mail içeriği bulunamadı."),
+                    child: Text(viewModel.items.emails?[index].content ??
+                        "Geçerli mail içeriği bulunamadı."),
                   ),
                   context.emptySizedHeightBoxLow,
                   Divider(

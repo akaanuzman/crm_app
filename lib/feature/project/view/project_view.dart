@@ -1,4 +1,5 @@
 import 'package:boardview/boardview_controller.dart';
+import 'package:crm_app/feature/project/model/project_model.dart';
 import '../../profile/view/profile_view.dart';
 import '../../../core/constants/app/app_constants.dart';
 import '../projectdetail/view/project_detail_view.dart';
@@ -158,11 +159,12 @@ class _ProjectViewState extends State<ProjectView> {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: viewModel.items.projects?[index].users?.length,
-            itemBuilder: (context, indexV2) => GestureDetector(
+            itemBuilder: (context, indexV2) {
+              return GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) {
-                      debugPrint("${viewModel.items.projects?[indexV2].user_name} $indexV2");
+                      debugPrint(" Username: ${viewModel.items.projects?[indexV2].user_name} $indexV2");
                       return ProfileView(
                           username:
                               viewModel.items.projects?[indexV2].user_name ?? "",
@@ -173,7 +175,8 @@ class _ProjectViewState extends State<ProjectView> {
                 backgroundImage: NetworkImage(
                     viewModel.items.projects?[index].users?[indexV2].photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
               ),
-            ),
+            );
+            },
           ),
         ),
         context.emptySizedHeightBoxLow3x,
