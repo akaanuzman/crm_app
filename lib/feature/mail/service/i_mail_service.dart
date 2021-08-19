@@ -1,5 +1,6 @@
-import '../model/mail_model.dart';
 import 'package:dio/dio.dart';
+
+import '../model/mail_model.dart';
 
 abstract class IMailService {
   final Dio dio;

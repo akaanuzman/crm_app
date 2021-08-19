@@ -1,6 +1,9 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../contact_detail/view/contact_detail_guide_view.dart';
 
@@ -18,9 +21,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kartal/kartal.dart';
 
-class ContactView extends StatelessWidget {
+class ContactView extends StatefulWidget {
+  const ContactView({Key? key}) : super(key: key);
+
+  @override
+  State<ContactView> createState() => _ContactViewState();
+}
+
+class _ContactViewState extends State<ContactView> {
   final ContactViewModel _viewModel = ContactViewModel();
-  ContactView({Key? key}) : super(key: key);
+  final imagePicker = ImagePicker();
+  String _image = "";
+
+  Future<void> pickImage() async {
+    final image = await imagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image!.path.substring(39);
+    });
+
+    debugPrint(_image);
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -85,58 +107,36 @@ class ContactView extends StatelessWidget {
                   itemCount: _viewModel.items.users?.length ?? 0,
                   physics: const BouncingScrollPhysics(),
                   // ignore: prefer_const_constructors
-                  itemBuilder: (context, index) => Slidable(
-                    actionPane: const SlidableDrawerActionPane(),
-                    actions: [
-                      IconSlideAction(
-                        color: context.colorScheme.primaryVariant,
-                        caption: 'Sil',
-                        icon: Icons.delete,
+                  itemBuilder: (context, index) => Padding(
+                    padding: context.paddingLow,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: context.lowBorderRadius),
+                      elevation: 5,
+                      child: ListTile(
                         onTap: () {
-                          _showDialog(context, radius, _viewModel, index);
-                        },
-                      ),
-                      IconSlideAction(
-                        color: context.colorScheme.onPrimary,
-                        foregroundColor: context.colorScheme.onSurface,
-                        caption: 'Düzenle',
-                        icon: Icons.edit,
-                        onTap: () {
-                          _showModalBottomSheet(context, radius, index);
-                          debugPrint(_viewModel.items.message);
-                        },
-                      ),
-                    ],
-                    child: Padding(
-                      padding: context.paddingLow,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: context.lowBorderRadius),
-                        elevation: 5,
-                        child: ListTile(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ContactUsersDetailView(
-                                  user: _viewModel.items.users?[index],
-                                ),
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ContactUsersDetailView(
+                                user: _viewModel.items.users?[index],
                               ),
-                            );
-                          },
-                          title: BodyText2Copy(
-                              data: _viewModel.items.users?[index].full_name ??
-                                  ""),
-                          subtitle: Text(
-                            _viewModel.items.users?[index].email ?? "",
-                            style: context.textTheme.button,
-                          ),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "http://192.168.3.53/assets/images/users/${_viewModel.items.users?[index].photo}"),
-                            radius: 30,
-                          ),
-                          trailing: const Icon(Icons.keyboard_arrow_right),
+                            ),
+                          );
+                        },
+                        title: BodyText2Copy(
+                            data:
+                                _viewModel.items.users?[index].full_name ?? ""),
+                        subtitle: Text(
+                          _viewModel.items.users?[index].email ?? "",
+                          style: context.textTheme.button,
                         ),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(_viewModel
+                                  .items.users?[index].photo ??
+                              "http://192.168.3.53/assets/images/users/user0.jpg"),
+                          radius: 30,
+                        ),
+                        trailing: const Icon(Icons.keyboard_arrow_right),
                       ),
                     ),
                   ),
@@ -202,10 +202,8 @@ class ContactView extends StatelessWidget {
                             ),
                             leading: CircleAvatar(
                               backgroundImage: NetworkImage(_viewModel
-                                          .items.guides?[index].photo ==
-                                      null
-                                  ? "http://192.168.3.53/assets/images/users/user0.jpg"
-                                  : "http://192.168.3.53/assets/images/users/${_viewModel.items.guides?[index].photo}"),
+                                      .items.guides?[index].photo ??
+                                  "http://192.168.3.53/assets/images/users/user0.jpg"),
                               radius: 30,
                             ),
                             trailing: const Icon(Icons.keyboard_arrow_right),
@@ -242,6 +240,8 @@ class ContactView extends StatelessWidget {
 
     var birthDayController = TextEditingController();
 
+    var webSiteController = TextEditingController();
+
     var locationController = TextEditingController();
 
     showModalBottomSheet(
@@ -253,7 +253,7 @@ class ContactView extends StatelessWidget {
       builder: (BuildContext context) {
         return SingleChildScrollView(
           child: Container(
-            height: context.dynamicHeight(1.1),
+            height: context.dynamicHeight(1.3),
             padding: context.paddingNormal,
             decoration: BoxDecoration(
               color: context.colorScheme.onSurface,
@@ -410,6 +410,30 @@ class ContactView extends StatelessWidget {
                 context.emptySizedHeightBoxLow,
                 Padding(
                   padding: context.paddingLow,
+                  child: const Text("Web Sitesi"),
+                ),
+                TextField(
+                  controller: webSiteController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.public),
+                    hintText: 'Kişinin web sitesi',
+                    labelText: "Web Sitesi",
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.onBackground),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: context.lowBorderRadius,
+                      borderSide:
+                          BorderSide(color: context.colorScheme.surface),
+                    ),
+                  ),
+                  cursorColor: context.colorScheme.onSecondary,
+                ),
+                context.emptySizedHeightBoxLow,
+                Padding(
+                  padding: context.paddingLow,
                   child: const Text("Konum"),
                 ),
                 TextField(
@@ -430,6 +454,21 @@ class ContactView extends StatelessWidget {
                     ),
                   ),
                   cursorColor: context.colorScheme.onSecondary,
+                ),
+                context.emptySizedHeightBoxLow3x,
+                Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        pickImage();
+                      },
+                      child: Text(
+                        "Resim Yükle",
+                        style: TextStyle(color: context.colorScheme.onSurface),
+                      ),
+                    ),
+                  ),
                 ),
                 context.emptySizedHeightBoxLow3x,
                 Divider(
@@ -454,12 +493,29 @@ class ContactView extends StatelessWidget {
                       ),
                       context.emptySizedWidthBoxLow,
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          String baseImageUrl =
+                              "http://192.168.3.53/assets/images/users/";
                           Dio dio = Dio();
-                          dio.post(
-                              "http://192.168.3.53/api/Persons/new_guide?token=xaZIlMlsBFYGyrUx7U4B&id=${_viewModel.items.guides?[index].id}&name=${nameController.text}&email=${eMailController.text}&tel=${phoneController.text}&detail=${detailController.text}&job=${jobController.text}&birthday=${birthDayController.text}&location=${locationController.text}");
-                          _viewModel
-                              .fetchItems(ApplicationConstants.instance!.token);
+                          final response = await dio.post(
+                              "http://192.168.3.53/api/Persons/update_guide?token=${ApplicationConstants.instance!.token}&id=${_viewModel.items.guides?[index].id}&name=${nameController.text}&email=${eMailController.text}&tel=${phoneController.text}&detail=${detailController.text}&company_id=${_viewModel.items.guides?[index].companyId}&job=${jobController.text}&photo=$_image&birthday=${birthDayController.text}&web_site=${webSiteController.text}&location=${locationController.text}");
+                              debugPrint(response.data);
+                          setState(() {
+                            _viewModel.fetchItems(
+                                ApplicationConstants.instance!.token);
+                            Navigator.of(context).pop();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor:
+                                    context.colorScheme.secondaryVariant,
+                                duration: context.durationSlow,
+                                content: BodyText2Copy(
+                                  data: "Kişi başarıyla güncellendi !",
+                                  color: context.colorScheme.onSurface,
+                                ),
+                              ),
+                            );
+                          });
                         },
                         child: BodyText2Copy(
                             data: "Kaydet",

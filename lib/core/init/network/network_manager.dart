@@ -1,5 +1,6 @@
-import '../../constants/app/app_constants.dart';
 import 'package:dio/dio.dart';
+
+import '../../constants/app/app_constants.dart';
 
 
 class NetworkManager {

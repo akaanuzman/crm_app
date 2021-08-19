@@ -44,6 +44,7 @@ dependencies:
   mobx: ^2.0.3
   mobx_codegen: ^2.0.2
   popup_card: ^0.1.0
+  image_picker: ^0.8.3+2
 
 dev_dependencies:
   flutter_test:

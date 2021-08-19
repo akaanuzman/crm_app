@@ -40,7 +40,7 @@ class ContactGuidesDetailView extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           backgroundImage: NetworkImage(
-                              "http://192.168.3.53/assets/images/users/${guides?.photo}"),
+                              guides?.photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
                           radius: 50,
                         ),
                         context.emptySizedWidthBoxLow,

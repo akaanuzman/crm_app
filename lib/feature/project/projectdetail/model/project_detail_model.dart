@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'project_detail_model.g.dart';
@@ -42,8 +44,8 @@ class Gorev {
   String? access;
   String? projectId;
   String? name;
-  String? sDate;
-  String? fDate;
+  String? s_date;
+  String? f_date;
   String? detail;
   String? isActive;
   String? document;
@@ -57,8 +59,8 @@ class Gorev {
       this.access,
       this.projectId,
       this.name,
-      this.sDate,
-      this.fDate,
+      this.s_date,
+      this.f_date,
       this.detail,
       this.isActive,
       this.document,
@@ -73,7 +75,7 @@ class Gorev {
 
 @JsonSerializable()
 class Users {
-  String? fullName;
+  String? full_name;
   String? email;
   String? photo;
   String? telephone;
@@ -83,7 +85,7 @@ class Users {
   String? birthday;
 
   Users(
-      {this.fullName,
+      {this.full_name,
       this.email,
       this.photo,
       this.telephone,
@@ -101,7 +103,7 @@ class Users {
 class Doc {
   String? id;
   String? isActive;
-  String? projectAccess;
+  String? project_access;
   String? userId;
   String? date;
   String? location;
@@ -112,7 +114,7 @@ class Doc {
   Doc(
       {this.id,
       this.isActive,
-      this.projectAccess,
+      this.project_access,
       this.userId,
       this.date,
       this.location,

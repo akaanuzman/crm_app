@@ -1,3 +1,4 @@
+import '../../../core/constants/app/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
@@ -37,6 +38,8 @@ class BottomTabView extends StatelessWidget {
     double height = mediaQuery.size.height;
 
     double radius = height * 0.02;
+
+    viewModel.fetchItems(ApplicationConstants.instance!.token,"");
 
     return DefaultTabController(
       length: items.length,
@@ -99,11 +102,11 @@ class BottomTabView extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "http://192.168.3.53/assets/images/users/${viewModel.items.photo}"),
+                      viewModel.items.photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
                 ),
                 context.emptySizedWidthBoxLow3x,
                 BodyText2Copy(
-                    data: viewModel.items.full_name ?? "",
+                    data: viewModel.items.full_name ?? "asfsaf",
                     color: context.colorScheme.onSurface)
               ],
             ),

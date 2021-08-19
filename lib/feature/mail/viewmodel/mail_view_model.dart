@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+
 import '../../../core/init/network/network_manager.dart';
 import '../model/mail_model.dart';
 import '../service/i_mail_service.dart';
 import '../service/mail_service.dart';
-import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
 
 part 'mail_view_model.g.dart';
 

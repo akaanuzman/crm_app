@@ -50,8 +50,8 @@ Gorev _$GorevFromJson(Map<String, dynamic> json) {
     access: json['access'] as String?,
     projectId: json['projectId'] as String?,
     name: json['name'] as String?,
-    sDate: json['sDate'] as String?,
-    fDate: json['fDate'] as String?,
+    s_date: json['s_date'] as String?,
+    f_date: json['f_date'] as String?,
     detail: json['detail'] as String?,
     isActive: json['isActive'] as String?,
     document: json['document'] as String?,
@@ -67,8 +67,8 @@ Map<String, dynamic> _$GorevToJson(Gorev instance) => <String, dynamic>{
       'access': instance.access,
       'projectId': instance.projectId,
       'name': instance.name,
-      'sDate': instance.sDate,
-      'fDate': instance.fDate,
+      's_date': instance.s_date,
+      'f_date': instance.f_date,
       'detail': instance.detail,
       'isActive': instance.isActive,
       'document': instance.document,
@@ -79,7 +79,7 @@ Map<String, dynamic> _$GorevToJson(Gorev instance) => <String, dynamic>{
 
 Users _$UsersFromJson(Map<String, dynamic> json) {
   return Users(
-    fullName: json['fullName'] as String?,
+    full_name: json['full_name'] as String?,
     email: json['email'] as String?,
     photo: json['photo'] as String?,
     telephone: json['telephone'] as String?,
@@ -91,7 +91,7 @@ Users _$UsersFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$UsersToJson(Users instance) => <String, dynamic>{
-      'fullName': instance.fullName,
+      'full_name': instance.full_name,
       'email': instance.email,
       'photo': instance.photo,
       'telephone': instance.telephone,
@@ -105,7 +105,7 @@ Doc _$DocFromJson(Map<String, dynamic> json) {
   return Doc(
     id: json['id'] as String?,
     isActive: json['isActive'] as String?,
-    projectAccess: json['projectAccess'] as String?,
+    project_access: json['project_access'] as String?,
     userId: json['userId'] as String?,
     date: json['date'] as String?,
     location: json['location'] as String?,
@@ -118,7 +118,7 @@ Doc _$DocFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$DocToJson(Doc instance) => <String, dynamic>{
       'id': instance.id,
       'isActive': instance.isActive,
-      'projectAccess': instance.projectAccess,
+      'project_access': instance.project_access,
       'userId': instance.userId,
       'date': instance.date,
       'location': instance.location,

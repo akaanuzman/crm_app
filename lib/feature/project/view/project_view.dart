@@ -171,7 +171,7 @@ class _ProjectViewState extends State<ProjectView> {
               },
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
-                    "http://192.168.3.53/assets/images/users/${viewModel.items.projects?[index].users?[indexV2].photo}"),
+                    viewModel.items.projects?[index].users?[indexV2].photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
               ),
             ),
           ),

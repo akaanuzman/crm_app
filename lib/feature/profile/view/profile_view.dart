@@ -29,7 +29,7 @@ class ProfileView extends StatelessWidget {
                 CircleAvatar(
                   radius: 45,
                   backgroundImage: NetworkImage(
-                      "http://192.168.3.53/assets/images/users/${_viewModel.items.photo}"),
+                      _viewModel.items.photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
                 ),
                 context.emptySizedHeightBoxLow,
                 BodyText1Copy(data: _viewModel.items.full_name ?? ""),

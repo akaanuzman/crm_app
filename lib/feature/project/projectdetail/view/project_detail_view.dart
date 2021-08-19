@@ -343,10 +343,10 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                   Row(
                                     // ignore: prefer_const_literals_to_create_immutables
                                     children: [
-                                      Text(viewModel.items.gorev?[0].sDate ??
+                                      Text(viewModel.items.gorev?[0].s_date ??
                                           "null"),
                                       context.emptySizedWidthBoxLow3x,
-                                      Text(viewModel.items.gorev?[0].fDate ??
+                                      Text(viewModel.items.gorev?[0].f_date ??
                                           "null"),
                                     ],
                                   ),
@@ -366,7 +366,9 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                                             itemBuilder: (context, index) =>
                                                 CircleAvatar(
                                               backgroundImage: NetworkImage(
-                                                  "http://192.168.3.53/assets/images/users/${viewModel.items.users?[index].photo}"),
+                                                  viewModel.items.users?[index]
+                                                          .photo ??
+                                                      "http://192.168.3.53/assets/images/users/user0.jpg"),
                                             ),
                                           ),
                                         ),
@@ -536,7 +538,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                             subtitle: Text(
                                 viewModel.items.gorev?[index].detail ?? ""),
                             trailing: Text(
-                                "${viewModel.items.gorev?[index].sDate} - ${viewModel.items.gorev?[index].fDate}"),
+                                "${viewModel.items.gorev?[index].s_date} - ${viewModel.items.gorev?[index].f_date}"),
                             onTap: () {},
                           ),
                         ),
@@ -675,7 +677,7 @@ class PopUpItemBody extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.topRight,
-            child: InkWell(
+            child: GestureDetector(
               onTap: () {
                 Navigator.pop(context);
               },

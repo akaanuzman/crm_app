@@ -1,3 +1,5 @@
+import '../../../../core/constants/app/app_constants.dart';
+
 import '../../viewmodel/profile_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -12,8 +14,10 @@ class ProfileEditView extends StatelessWidget {
   final ProfileViewModel _viewModel = ProfileViewModel();
   ProfileEditView({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    _viewModel.fetchItems(ApplicationConstants.instance!.token, "");
     DateTime now = DateTime.now();
     return Scaffold(
       body: Observer(

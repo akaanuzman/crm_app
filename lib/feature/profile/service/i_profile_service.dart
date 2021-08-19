@@ -1,5 +1,6 @@
-import '../model/profile_model.dart';
 import 'package:dio/dio.dart';
+
+import '../model/profile_model.dart';
 
 
 abstract class IProfileService {
