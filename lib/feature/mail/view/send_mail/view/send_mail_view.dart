@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../../../../core/constants/app/app_constants.dart';
 import '../../../../contact/viewmodel/contact_view_model.dart';
 import '../../../../../product/widgets/card/check_box_card.dart';
@@ -17,26 +19,26 @@ class SendMailView extends StatefulWidget {
 class _SendMailViewState extends State<SendMailView> {
   final ContactViewModel _viewModel = ContactViewModel();
   List<String> names = [];
-  List<bool> selects = [];
-
-  void setNameAndSelect() {
-    for (var i = 0; i < _viewModel.items.users!.length; i++) {
-      names.add(_viewModel.items.users![i].full_name ?? "");
-      selects.add(_viewModel.items.users![i].isSelect);
-    }
-    for (var i = 0; i < _viewModel.items.guides!.length; i++) {
-      names.add(_viewModel.items.guides![i].name ?? "");
-      selects.add(_viewModel.items.guides![i].isSelect);
-    }
-
-    for (var i = 0; i < names.length; i++) {
-      debugPrint(names[i]);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    void setNameAndGetLenght() {
+      for (var i = 0; i < _viewModel.items.users!.length; i++) {
+        names.add(_viewModel.items.users![i].full_name ?? "");
+      }
+      for (var i = 0; i < _viewModel.items.guides!.length; i++) {
+        names.add(_viewModel.items.guides![i].name ?? "");
+      }
+
+      for (var i = 0; i < names.length; i++) {
+        debugPrint(names[i]);
+      }
+    }
+
     _viewModel.fetchItems(ApplicationConstants.instance!.token);
+
+    var titleController = TextEditingController();
+    var contentController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Image.network(
@@ -47,6 +49,7 @@ class _SendMailViewState extends State<SendMailView> {
       ),
       body: Observer(
         builder: (context) {
+          //setNameAndGetLenght();
           return SingleChildScrollView(
             child: SizedBox(
               height: context.dynamicHeight(1.6),
@@ -76,11 +79,15 @@ class _SendMailViewState extends State<SendMailView> {
                               Expanded(
                                 child: ListView.builder(
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: names.length,
+                                  itemCount:
+                                      _viewModel.items.users?.length ?? 0,
                                   itemBuilder: (context, index) {
                                     return CheckBoxCard(
-                                        isSelect: selects[index],
-                                        data: names[index]);
+                                        isSelect: _viewModel
+                                            .items.users![index].isSelect,
+                                        data: _viewModel.items.users?[index]
+                                                .full_name ??
+                                            "");
                                   },
                                 ),
                               ),
@@ -183,9 +190,13 @@ class _SendMailViewState extends State<SendMailView> {
                                 padding: context.paddingLow,
                                 child: const Text("Başlık"),
                               ),
+                              context.emptySizedHeightBoxLow,
                               TextField(
+                                controller: titleController,
                                 decoration: InputDecoration(
-                                  hintText: 'Kişinin adi soyadini giriniz.',
+                                  hintText: 'Mailin başlığını giriniz.',
+                                  labelText: "Başlık",
+                                  prefixIcon: const Icon(Icons.title),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
                                     borderSide: BorderSide(
@@ -200,10 +211,13 @@ class _SendMailViewState extends State<SendMailView> {
                                 ),
                                 cursorColor: context.colorScheme.onSecondary,
                               ),
-                              context.emptySizedHeightBoxLow,
+                              context.emptySizedHeightBoxLow3x,
                               TextField(
+                                controller: contentController,
                                 decoration: InputDecoration(
                                   hintText: 'İçerik',
+                                  labelText: "Mail içeriğini giriniz.",
+                                  prefixIcon: const Icon(Icons.content_paste),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
                                     borderSide: BorderSide(
@@ -217,7 +231,7 @@ class _SendMailViewState extends State<SendMailView> {
                                   ),
                                 ),
                                 cursorColor: context.colorScheme.onSecondary,
-                                maxLines: 16,
+                                maxLines: 15,
                               ),
                               context.emptySizedHeightBoxLow,
                             ],
@@ -231,7 +245,17 @@ class _SendMailViewState extends State<SendMailView> {
                     child: Padding(
                       padding: context.horizontalPaddingMedium,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          int id = 0;
+                          for (var i = 0; i < _viewModel.items.users!.length; i++) {
+                            bool select = _viewModel.items.users![i].isSelect;
+                            if (select) {
+                              id = int.parse(_viewModel.items.userid ?? "0");
+                            }
+                          }
+                          Dio dio = Dio();
+                          dio.post("http://192.168.3.53/api/Email/send_email?user_id=u$id&token=${ApplicationConstants.instance!.token}&title=${titleController.text}&content=${contentController.text}");
+                        },
                         child: Text(
                           "Eposta Gönder",
                           style:

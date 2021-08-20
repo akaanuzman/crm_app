@@ -1,4 +1,3 @@
-import '../../../core/constants/app/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
@@ -7,6 +6,7 @@ import '../../../core/components/card/card_icon_text.dart';
 import '../../../core/components/row/row_flag_text.dart';
 import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/body_text2_copy.dart';
+import '../../../core/constants/app/app_constants.dart';
 import '../../../core/init/theme/light/color_scheme_light.dart';
 import '../../company/view/company_view.dart';
 import '../../contact/view/contact_view.dart';
