@@ -32,9 +32,8 @@ class Users {
   String? job;
   String? birthday;
 
-  @JsonKey(ignore:true)
-  bool isChanged = false;
-
+  @JsonKey(ignore: true)
+  bool isSelect = false;
   Users(
       {this.screenName,
       this.full_name,
@@ -71,6 +70,9 @@ class Guides {
   String? userId;
   String? customer;
   String? worker;
+
+  @JsonKey(ignore: true)
+  bool isSelect = false;
 
   Guides(
       {this.id,

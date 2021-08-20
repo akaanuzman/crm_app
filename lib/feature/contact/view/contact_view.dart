@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
@@ -494,8 +493,8 @@ class _ContactViewState extends State<ContactView> {
                       context.emptySizedWidthBoxLow,
                       ElevatedButton(
                         onPressed: () async {
-                          String baseImageUrl =
-                              "http://192.168.3.53/assets/images/users/";
+                          // String baseImageUrl =
+                          //     "http://192.168.3.53/assets/images/users/";
                           Dio dio = Dio();
                           final response = await dio.post(
                               "http://192.168.3.53/api/Persons/update_guide?token=${ApplicationConstants.instance!.token}&id=${_viewModel.items.guides?[index].id}&name=${nameController.text}&email=${eMailController.text}&tel=${phoneController.text}&detail=${detailController.text}&company_id=${_viewModel.items.guides?[index].companyId}&job=${jobController.text}&photo=$_image&birthday=${birthDayController.text}&web_site=${webSiteController.text}&location=${locationController.text}");

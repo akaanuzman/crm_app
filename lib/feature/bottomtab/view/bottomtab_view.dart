@@ -26,7 +26,7 @@ class BottomTabView extends StatelessWidget {
       BottomTabModel(
           title: "Proje", icon: Icons.assignment, child: ProjectView()),
       BottomTabModel(
-          title: "Rehber", icon: Icons.contacts_sharp, child: ContactView()),
+          title: "Rehber", icon: Icons.contacts_sharp, child: const ContactView()),
       BottomTabModel(
           title: "Email", icon: Icons.email, child: const MailTabView()),
       BottomTabModel(

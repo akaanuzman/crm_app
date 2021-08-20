@@ -1,4 +1,3 @@
-import 'package:crm_app/feature/project/model/project_model.dart';
 
 import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/body_text2_copy.dart';

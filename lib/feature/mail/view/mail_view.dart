@@ -122,7 +122,7 @@ class MailView extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SendMailView()));
+                        builder: (context) => const SendMailView()));
                   },
                   child: Text(
                     "Email Gönder",
