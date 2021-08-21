@@ -30,6 +30,7 @@ Map<String, dynamic> _$ContactModelToJson(ContactModel instance) =>
 Users _$UsersFromJson(Map<String, dynamic> json) {
   return Users(
     screenName: json['screenName'] as String?,
+    id: json['id'] as String?,
     full_name: json['full_name'] as String?,
     company: json['company'] as String?,
     email: json['email'] as String?,
@@ -43,6 +44,7 @@ Users _$UsersFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$UsersToJson(Users instance) => <String, dynamic>{
       'screenName': instance.screenName,
+      'id': instance.id,
       'full_name': instance.full_name,
       'company': instance.company,
       'email': instance.email,

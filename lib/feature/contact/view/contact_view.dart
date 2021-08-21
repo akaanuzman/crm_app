@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -15,7 +14,6 @@ import '../contact_detail/view/contact_detail_users_view.dart';
 
 import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/body_text2_copy.dart';
-import '../../../core/components/textfield/search_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kartal/kartal.dart';
@@ -93,7 +91,25 @@ class _ContactViewState extends State<ContactView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(flex: 2, child: SearchTextField()),
+              Padding(
+                padding: context.horizontalPaddingLow,
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Arama',
+                    prefixIcon: const Icon(Icons.search),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 2, color: context.colorScheme.onBackground),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 2, color: context.colorScheme.surface),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+              ),
               context.emptySizedHeightBoxLow3x,
               Padding(
                 padding: context.horizontalPaddingNormal,
@@ -498,7 +514,7 @@ class _ContactViewState extends State<ContactView> {
                           Dio dio = Dio();
                           final response = await dio.post(
                               "http://192.168.3.53/api/Persons/update_guide?token=${ApplicationConstants.instance!.token}&id=${_viewModel.items.guides?[index].id}&name=${nameController.text}&email=${eMailController.text}&tel=${phoneController.text}&detail=${detailController.text}&company_id=${_viewModel.items.guides?[index].companyId}&job=${jobController.text}&photo=$_image&birthday=${birthDayController.text}&web_site=${webSiteController.text}&location=${locationController.text}");
-                              debugPrint(response.data);
+                          debugPrint(response.data);
                           setState(() {
                             _viewModel.fetchItems(
                                 ApplicationConstants.instance!.token);

@@ -14,4 +14,6 @@ class ApplicationConstants {
   final String baseUrl = "http://192.168.3.53/api/";
   String token = "";
   String projectId = "";
+  List<String> guiId = [];
+  List<String> userId = [];
 }

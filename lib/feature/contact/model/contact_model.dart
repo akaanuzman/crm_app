@@ -23,6 +23,7 @@ class ContactModel {
 class Users {
   String? screenName;
   // ignore: non_constant_identifier_names
+  String? id;
   String? full_name;
   String? company;
   String? email;
@@ -36,6 +37,7 @@ class Users {
   bool isSelect = false;
   Users(
       {this.screenName,
+      this.id,
       this.full_name,
       this.company,
       this.email,

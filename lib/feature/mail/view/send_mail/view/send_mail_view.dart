@@ -1,3 +1,4 @@
+import '../../../../../core/components/text/body_text2_copy.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../../core/constants/app/app_constants.dart';
@@ -18,27 +19,17 @@ class SendMailView extends StatefulWidget {
 
 class _SendMailViewState extends State<SendMailView> {
   final ContactViewModel _viewModel = ContactViewModel();
-  List<String> names = [];
+  var titleController = TextEditingController();
+  var contentController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _viewModel.fetchItems(ApplicationConstants.instance!.token);
+  }
 
   @override
   Widget build(BuildContext context) {
-    void setNameAndGetLenght() {
-      for (var i = 0; i < _viewModel.items.users!.length; i++) {
-        names.add(_viewModel.items.users![i].full_name ?? "");
-      }
-      for (var i = 0; i < _viewModel.items.guides!.length; i++) {
-        names.add(_viewModel.items.guides![i].name ?? "");
-      }
-
-      for (var i = 0; i < names.length; i++) {
-        debugPrint(names[i]);
-      }
-    }
-
-    _viewModel.fetchItems(ApplicationConstants.instance!.token);
-
-    var titleController = TextEditingController();
-    var contentController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Image.network(
@@ -49,8 +40,10 @@ class _SendMailViewState extends State<SendMailView> {
       ),
       body: Observer(
         builder: (context) {
-          //setNameAndGetLenght();
+          int lenght =
+              _viewModel.items.guides!.length + _viewModel.items.users!.length;
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: SizedBox(
               height: context.dynamicHeight(1.6),
               child: Column(
@@ -71,23 +64,46 @@ class _SendMailViewState extends State<SendMailView> {
                             children: [
                               Center(
                                 child: Padding(
-                                    padding: context.paddingLow,
-                                    child:
-                                        const BodyText1Copy(data: "Kişilerim")),
+                                  padding: context.paddingLow,
+                                  child: const BodyText1Copy(data: "Kişilerim"),
+                                ),
                               ),
                               context.emptySizedHeightBoxLow,
                               Expanded(
                                 child: ListView.builder(
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount:
-                                      _viewModel.items.users?.length ?? 0,
+                                  itemCount: lenght,
                                   itemBuilder: (context, index) {
-                                    return CheckBoxCard(
-                                        isSelect: _viewModel
-                                            .items.users![index].isSelect,
-                                        data: _viewModel.items.users?[index]
-                                                .full_name ??
-                                            "");
+                                    return Column(
+                                      children: [
+                                        index < _viewModel.items.users!.length
+                                            ? CheckBoxCard(
+                                                isSelect: _viewModel.items
+                                                    .users![index].isSelect,
+                                                data: _viewModel
+                                                        .items
+                                                        .users?[index]
+                                                        .full_name ??
+                                                    "",
+                                                userId: _viewModel.items
+                                                        .users?[index].id ??
+                                                    "0",
+                                              )
+                                            : const SizedBox(),
+                                        index < _viewModel.items.guides!.length
+                                            ? CheckBoxCard(
+                                                isSelect: _viewModel.items
+                                                    .guides![index].isSelect,
+                                                data: _viewModel.items
+                                                        .guides?[index].name ??
+                                                    "",
+                                                guiId: _viewModel.items
+                                                        .guides?[index].id ??
+                                                    "0",
+                                              )
+                                            : const SizedBox()
+                                      ],
+                                    );
                                   },
                                 ),
                               ),
@@ -114,9 +130,10 @@ class _SendMailViewState extends State<SendMailView> {
                             children: [
                               Center(
                                 child: Padding(
-                                    padding: context.paddingLow,
-                                    child: const BodyText1Copy(
-                                        data: "Kayıtlı olmayan eposta ekle")),
+                                  padding: context.paddingLow,
+                                  child: const BodyText1Copy(
+                                      data: "Kayıtlı olmayan eposta ekle"),
+                                ),
                               ),
                               context.emptySizedHeightBoxLow,
                               TextField(
@@ -212,6 +229,10 @@ class _SendMailViewState extends State<SendMailView> {
                                 cursorColor: context.colorScheme.onSecondary,
                               ),
                               context.emptySizedHeightBoxLow3x,
+                              Padding(
+                                padding: context.paddingLow,
+                                child: const Text("İçerik"),
+                              ),
                               TextField(
                                 controller: contentController,
                                 decoration: InputDecoration(
@@ -231,7 +252,7 @@ class _SendMailViewState extends State<SendMailView> {
                                   ),
                                 ),
                                 cursorColor: context.colorScheme.onSecondary,
-                                maxLines: 15,
+                                maxLines: 13,
                               ),
                               context.emptySizedHeightBoxLow,
                             ],
@@ -246,15 +267,23 @@ class _SendMailViewState extends State<SendMailView> {
                       padding: context.horizontalPaddingMedium,
                       child: ElevatedButton(
                         onPressed: () {
-                          int id = 0;
-                          for (var i = 0; i < _viewModel.items.users!.length; i++) {
-                            bool select = _viewModel.items.users![i].isSelect;
-                            if (select) {
-                              id = int.parse(_viewModel.items.userid ?? "0");
-                            }
-                          }
+                          debugPrint(
+                              ApplicationConstants.instance!.userId.first);
                           Dio dio = Dio();
-                          dio.post("http://192.168.3.53/api/Email/send_email?user_id=u$id&token=${ApplicationConstants.instance!.token}&title=${titleController.text}&content=${contentController.text}");
+                          dio.post(
+                              "http://192.168.3.53/api/Email/send_email?user_id=u${ApplicationConstants.instance!.userId.first}&token=${ApplicationConstants.instance!.token}&title=${titleController.text}&content=${contentController.text}");
+                          Navigator.of(context).pop();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor:
+                                  context.colorScheme.secondaryVariant,
+                              duration: context.durationSlow,
+                              content: BodyText2Copy(
+                                data: "Mail başarıyla gönderildi!",
+                                color: context.colorScheme.onSurface,
+                              ),
+                            ),
+                          );
                         },
                         child: Text(
                           "Eposta Gönder",
