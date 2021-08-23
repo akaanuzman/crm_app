@@ -159,6 +159,7 @@ class _SendMailViewState extends State<SendMailView> {
                               context.emptySizedHeightBoxLow3x,
                               TextField(
                                 controller: eMailController,
+                                keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
                                   prefixIcon:
                                       const Icon(Icons.mail_outline_outlined),
@@ -293,11 +294,32 @@ class _SendMailViewState extends State<SendMailView> {
                       padding: context.horizontalPaddingMedium,
                       child: ElevatedButton(
                         onPressed: () {
-                          debugPrint(
-                              ApplicationConstants.instance!.userId.first);
+                          List<String> userId =
+                              ApplicationConstants.instance!.userId;
+                          List<String> guiId =
+                              ApplicationConstants.instance!.guiId;
+                          String token = ApplicationConstants.instance!.token;
                           Dio dio = Dio();
-                          dio.post(
-                              "http://192.168.3.53/api/Email/send_email?user_id=u${ApplicationConstants.instance!.userId.first}&token=${ApplicationConstants.instance!.token}&title=${titleController.text}&content=${contentController.text}");
+                          if (userId.isNotEmpty && guiId.isEmpty) {
+                            for (var i = 0; i < userId.length; i++) {
+                              dio.post(
+                                  "http://192.168.3.53/api/Email/send_email?user_id=u${userId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
+                            }
+                          } else if (userId.isEmpty && guiId.isNotEmpty) {
+                            for (var i = 0; i < userId.length; i++) {
+                              dio.post(
+                                  "http://192.168.3.53/api/Email/send_email?user_id=g${guiId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
+                            }
+                          } else if (userId.isNotEmpty && guiId.isNotEmpty) {
+                            for (var i = 0; i < userId.length; i++) {
+                              dio.post(
+                                  "http://192.168.3.53/api/Email/send_email?user_id=g${guiId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
+                            }
+                            for (var i = 0; i < userId.length; i++) {
+                              dio.post(
+                                  "http://192.168.3.53/api/Email/send_email?user_id=u${userId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
+                            }
+                          }
                           Navigator.of(context).pop();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

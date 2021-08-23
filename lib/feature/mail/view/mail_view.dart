@@ -1,3 +1,5 @@
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'send_mail/view/send_mail_view.dart';
 
 import '../viewmodel/mail_view_model.dart';
@@ -14,7 +16,8 @@ class MailView extends StatelessWidget {
   final MailViewModel viewModel;
   final String title;
 
-  const MailView({Key? key, required this.viewModel, required this.title}) : super(key: key);
+  const MailView({Key? key, required this.viewModel, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,7 @@ class MailView extends StatelessWidget {
     double height = mediaQuery.size.height;
 
     double radius = height * 0.02;
+
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -36,7 +40,9 @@ class MailView extends StatelessWidget {
         elevation: 0,
       ),
       body: Observer(
-        builder: (context) => Column(
+        builder: (context) {
+          
+          return Column(
           children: [
             Expanded(
               flex: 7,
@@ -45,7 +51,10 @@ class MailView extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: viewModel.items.emails?.length ?? 0,
                   physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) => Column(
+                  itemBuilder: (context, index) {
+    final String content = viewModel.items.emails?[index].content ?? "";
+
+                    return Column(
                     children: [
                       Slidable(
                         actionPane: const SlidableDrawerActionPane(),
@@ -97,14 +106,15 @@ class MailView extends StatelessWidget {
                                     "Geçerli tarih bulunamadı."),
                             onTap: () {
                               _showModalBottomSheet(
-                                  context, radius, viewModel, index);
+                                  context, radius, viewModel, index,content);
                             },
                           ),
                         ),
                       ),
                       context.emptySizedHeightBoxLow,
                     ],
-                  ),
+                  );
+                  },
                 ),
               ),
             ),
@@ -133,13 +143,14 @@ class MailView extends StatelessWidget {
               ),
             )
           ],
-        ),
+        );
+        },
       ),
     );
   }
 
   _showModalBottomSheet(
-      context, double radius, MailViewModel viewModel, int index) {
+      context, double radius, MailViewModel viewModel, int index,String content) {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -153,8 +164,8 @@ class MailView extends StatelessWidget {
               duration: context.durationNormal,
               padding: context.paddingNormal,
               height: viewModel.isContainerHeightChange
-                  ? context.dynamicHeight(0.4)
-                  : context.dynamicHeight(0.82),
+                  ? context.dynamicHeight(0.45)
+                  : context.dynamicHeight(0.9),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -178,19 +189,14 @@ class MailView extends StatelessWidget {
                     padding: context.paddingLow,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      // ignore: prefer_const_literals_to_create_immutables
                       children: [
-                        // ignore: prefer_const_constructors
                         CircleAvatar(
-                          // ignore: prefer_const_constructors
                           backgroundImage: NetworkImage(
-                              "http://192.168.3.53/assets/images/users/${viewModel.items.emails?[index].user_photo}"),
+                              viewModel.items.emails?[index].user_photo ?? ""),
                           radius: 30,
                         ),
                         context.emptySizedWidthBoxLow,
-                        // ignore: prefer_const_constructors
                         Expanded(
-                          // ignore: prefer_const_constructors
                           child: ListTile(
                             title: BodyText1Copy(
                                 data:
@@ -220,10 +226,16 @@ class MailView extends StatelessWidget {
                     ),
                   ),
                   context.emptySizedHeightBoxLow,
-                  Padding(
-                    padding: context.horizontalPaddingNormal,
-                    child: Text(viewModel.items.emails?[index].content ??
-                        "Geçerli mail içeriği bulunamadı."),
+                  SizedBox(
+                    height: context.dynamicHeight(0.1),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: context.horizontalPaddingNormal,
+                        child: HtmlWidget(
+                          content
+                        ),
+                      ),
+                    ),
                   ),
                   context.emptySizedHeightBoxLow,
                   Divider(

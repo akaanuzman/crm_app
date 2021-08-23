@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart';
+
 import '../../../../../core/constants/app/app_constants.dart';
 import '../../../viewmodel/mail_view_model.dart';
-
 import '../../mail_view.dart';
-
-import 'package:flutter/material.dart';
 
 class SpamView extends StatelessWidget {
   final MailViewModel viewModel = MailViewModel();

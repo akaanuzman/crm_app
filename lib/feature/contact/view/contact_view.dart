@@ -309,6 +309,7 @@ class _ContactViewState extends State<ContactView> {
                   child: const Text("Email"),
                 ),
                 TextField(
+                  keyboardType: TextInputType.emailAddress,
                   controller: eMailController,
                   decoration: InputDecoration(
                     hintText: 'Kişinin emaili',
@@ -332,6 +333,7 @@ class _ContactViewState extends State<ContactView> {
                   child: const Text("Telefon"),
                 ),
                 TextField(
+                  keyboardType: TextInputType.phone,
                   controller: phoneController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.phone),
@@ -404,6 +406,7 @@ class _ContactViewState extends State<ContactView> {
                   child: const Text("Doğum günü"),
                 ),
                 TextField(
+                  keyboardType: TextInputType.datetime,
                   controller: birthDayController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.cake),
