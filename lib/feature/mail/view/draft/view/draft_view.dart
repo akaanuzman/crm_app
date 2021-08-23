@@ -12,6 +12,7 @@ class DraftView extends StatelessWidget {
   Widget build(BuildContext context) {
     viewModel.fetchItems(ApplicationConstants.instance!.token, "draft");
     return MailView(
+      title: "Taslak Mailler",
       viewModel: viewModel,
     );
   }

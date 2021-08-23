@@ -12,6 +12,7 @@ class IncomingView extends StatelessWidget {
   Widget build(BuildContext context) {
     viewModel.fetchItems(ApplicationConstants.instance!.token, "");
     return MailView(
+      title: "Gönderilen Mailler",
       viewModel: viewModel,
     );
   }

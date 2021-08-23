@@ -12,6 +12,7 @@ class PostponedView extends StatelessWidget {
   Widget build(BuildContext context) {
     viewModel.fetchItems(ApplicationConstants.instance!.token, "snoozed");
     return MailView(
+      title: "Ertelenen Mailler",
       viewModel: viewModel,
     );
   }

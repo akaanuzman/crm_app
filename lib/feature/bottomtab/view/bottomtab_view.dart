@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
@@ -10,7 +11,7 @@ import '../../../core/constants/app/app_constants.dart';
 import '../../../core/init/theme/light/color_scheme_light.dart';
 import '../../company/view/company_view.dart';
 import '../../contact/view/contact_view.dart';
-import '../../mail/view/mail_tab_view.dart';
+import '../../mail/view/tab/view/mail_tab_view.dart';
 import '../../profile/view/profile_tabbar_view.dart';
 import '../../profile/viewmodel/profile_view_model.dart';
 import '../../project/view/project_view.dart';
@@ -26,7 +27,9 @@ class BottomTabView extends StatelessWidget {
       BottomTabModel(
           title: "Proje", icon: Icons.assignment, child: ProjectView()),
       BottomTabModel(
-          title: "Rehber", icon: Icons.contacts_sharp, child: const ContactView()),
+          title: "Rehber",
+          icon: Icons.contacts_sharp,
+          child: const ContactView()),
       BottomTabModel(
           title: "Email", icon: Icons.email, child: const MailTabView()),
       BottomTabModel(
@@ -39,7 +42,7 @@ class BottomTabView extends StatelessWidget {
 
     double radius = height * 0.02;
 
-    viewModel.fetchItems(ApplicationConstants.instance!.token,"");
+    viewModel.fetchItems(ApplicationConstants.instance!.token, "");
 
     return DefaultTabController(
       length: items.length,
@@ -63,25 +66,25 @@ class BottomTabView extends StatelessWidget {
   Widget _buildDrawer(BuildContext context, double radius) => Observer(
         builder: (context) {
           return Drawer(
-          child: Column(
-            children: [
-              Expanded(
-                child: _buildProfileContainer(context, radius),
-              ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  color: context.colorScheme.secondary,
-                  child: Column(
-                    children: [
-                      _buildLanguageCard(context),
-                    ],
+            child: Column(
+              children: [
+                Expanded(
+                  child: _buildProfileContainer(context, radius),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    color: context.colorScheme.secondary,
+                    child: Column(
+                      children: [
+                        _buildLanguageCard(context),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
+              ],
+            ),
+          );
         },
       );
 
@@ -101,8 +104,8 @@ class BottomTabView extends StatelessWidget {
             child: Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      viewModel.items.photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
+                  backgroundImage: NetworkImage(viewModel.items.photo ??
+                      "http://192.168.3.53/assets/images/users/user0.jpg"),
                 ),
                 context.emptySizedWidthBoxLow3x,
                 BodyText2Copy(
@@ -138,10 +141,30 @@ class BottomTabView extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: CardIconText(
-              cardColor: ColorSchemeLight.instance.limedSpruce,
-              text: "Çıkış Yap",
-              icon: Icons.exit_to_app,
+            child: GestureDetector(
+              onTap: () async {
+                Dio dio = Dio();
+                dio.get(
+                    "http://192.168.3.53/api/Foreign/log_out?token=${ApplicationConstants.instance!.token}");
+                Navigator.pop(context);
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: context.colorScheme.secondaryVariant,
+                    duration: context.durationSlow,
+                    content: BodyText2Copy(
+                      data: "Başarıyla çıkış yapıldı !",
+                      color: context.colorScheme.onSurface,
+                    ),
+                  ),
+                );
+                _showDialog(context);
+              },
+              child: CardIconText(
+                cardColor: ColorSchemeLight.instance.limedSpruce,
+                text: "Çıkış Yap",
+                icon: Icons.exit_to_app,
+              ),
             ),
           ),
         ],
@@ -286,6 +309,31 @@ class BottomTabView extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(context.lowValue),
+        ),
+        title: const BodyText1Copy(
+            data: "Çıkış işlemi başarılı !"),
+        content: const BodyText2Copy(data: "Başarıyla çıkış yapıldı."),
+        actions: [
+          ElevatedButton(
+            child: Text("Evet",
+                style: TextStyle(color: context.colorScheme.onSurface)),
+            style:
+                ElevatedButton.styleFrom(primary: context.colorScheme.surface),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

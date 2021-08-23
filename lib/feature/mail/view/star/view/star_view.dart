@@ -14,6 +14,7 @@ class StarView extends StatelessWidget {
   Widget build(BuildContext context) {
     viewModel.fetchItems(ApplicationConstants.instance!.token, "starred");
     return MailView(
+      title: "Yıldızlı Mailler",
       viewModel: viewModel,
     );
   }

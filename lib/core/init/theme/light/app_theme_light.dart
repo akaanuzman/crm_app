@@ -18,22 +18,23 @@ class AppThemeLight extends IAppTheme with ILightTheme {
 
   @override
   ThemeData get themeDataLight => ThemeData.light().copyWith(
-      colorScheme: _colorScheme,
-      textTheme: textThemeLight.textTheme,
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          primary: colorSchemeLight.shamrock,
+        colorScheme: _colorScheme,
+        textTheme: textThemeLight.textTheme,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: colorSchemeLight.shamrock,
+          ),
         ),
-      ),
-      tabBarTheme: TabBarTheme(
-        labelColor: _colorScheme.surface,
-        unselectedLabelColor: colorSchemeLight.white,
-      ),
-      appBarTheme: AppBarTheme(
-        color: colorSchemeLight.limedSpruce,
-        titleTextStyle: const TextStyle(fontSize: 18),
-      ),
-      scaffoldBackgroundColor: colorSchemeLight.athensGray);
+        tabBarTheme: TabBarTheme(
+          labelColor: _colorScheme.surface,
+          unselectedLabelColor: colorSchemeLight.white,
+        ),
+        appBarTheme: AppBarTheme(
+          color: colorSchemeLight.limedSpruce,
+          titleTextStyle: const TextStyle(fontSize: 18),
+        ),
+        scaffoldBackgroundColor: colorSchemeLight.athensGray,
+      );
 
   ColorScheme get _colorScheme => ColorScheme(
       primary: colorSchemeLight.black,

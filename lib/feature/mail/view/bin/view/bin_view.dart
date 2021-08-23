@@ -12,6 +12,7 @@ class BinView extends StatelessWidget {
   Widget build(BuildContext context) {
     viewModel.fetchItems(ApplicationConstants.instance!.token, "trash");
     return MailView(
+      title: "Çöp Kutusu",
       viewModel: viewModel,
     );
   }

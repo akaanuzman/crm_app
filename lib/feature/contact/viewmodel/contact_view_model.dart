@@ -17,6 +17,9 @@ abstract class _ContactViewModelBase with Store {
   @observable
   ContactModel items = ContactModel();
 
+  @observable
+  int lenght = 0;
+
   _ContactViewModelBase() {
     contactService = ContactService(NetworkManager.instance!.dio);
   }
@@ -28,5 +31,6 @@ abstract class _ContactViewModelBase with Store {
   @action
   Future<void> fetchItems(String token) async {
     items = await contactService.fetchAllTask(token);
+    lenght = items.guides!.length + items.users!.length;
   }
 }

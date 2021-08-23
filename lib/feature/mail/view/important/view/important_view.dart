@@ -12,6 +12,7 @@ class ImportantView extends StatelessWidget {
   Widget build(BuildContext context) {
     viewModel.fetchItems(ApplicationConstants.instance!.token, "important");
     return MailView(
+      title: "Önemli Mailler",
       viewModel: viewModel,
     );
   }

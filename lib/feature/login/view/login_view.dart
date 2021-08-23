@@ -177,17 +177,33 @@ class _LoginViewState extends State<LoginView> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(radius),
               ),
-              title: BodyText1Copy(data: title),
-              content: BodyText2Copy(data: content),
+              title: BodyText1Copy(
+                data: title,
+                color: context.colorScheme.onSecondary,
+                fontWeight: FontWeight.bold,
+              ),
+              content: SizedBox(
+                height: context.dynamicHeight(0.14),
+                child: Column(
+                  children: [
+                    BodyText2Copy(data: content),
+                    context.emptySizedHeightBoxLow,
+                     Icon(Icons.check_circle,size: context.dynamicHeight(0.1),color: context.colorScheme.onPrimary,)
+                  ],
+                ),
+              ),
               actions: [
-                ElevatedButton(
-                  child: Text("Tamam",
-                      style: TextStyle(color: context.colorScheme.onSurface)),
-                  style: ElevatedButton.styleFrom(
-                      primary: context.colorScheme.primaryVariant),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                Padding(
+                  padding: context.horizontalPaddingLow,
+                  child: ElevatedButton(
+                    child: Text("Tamam",
+                        style: TextStyle(color: context.colorScheme.onSurface)),
+                    style: ElevatedButton.styleFrom(
+                        primary: context.colorScheme.onError),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
                 ),
               ],
             ));

@@ -1,17 +1,18 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:crm_app/feature/bottomtab/model/bottomtab_model.dart';
+import 'package:crm_app/feature/mail/view/inbox/view/inbox_view.dart';
 import 'package:crm_app/feature/mail/view/postponed/view/postponed_view.dart';
 import 'package:crm_app/feature/mail/view/star/view/star_view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
-import 'bin/view/bin_view.dart';
-import 'draft/view/draft_view.dart';
-import 'important/view/important_view.dart';
-import 'incoming/view/incoming_view.dart';
-import 'spam/view/spam_view.dart';
+import '../../bin/view/bin_view.dart';
+import '../../draft/view/draft_view.dart';
+import '../../important/view/important_view.dart';
+import '../../incoming/view/incoming_view.dart';
+import '../../spam/view/spam_view.dart';
 
 class MailTabView extends StatelessWidget {
   const MailTabView({Key? key}) : super(key: key);
@@ -19,6 +20,11 @@ class MailTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<BottomTabModel> _items = [
+      BottomTabModel(
+        title: "Gelen Kutusu",
+        icon: Icons.inbox,
+        child: InboxView(),
+      ),
       BottomTabModel(
         title: "Yıldızlı",
         icon: Icons.star_border_outlined,

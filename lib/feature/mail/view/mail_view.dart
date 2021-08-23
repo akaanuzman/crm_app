@@ -12,8 +12,9 @@ import 'package:kartal/kartal.dart';
 
 class MailView extends StatelessWidget {
   final MailViewModel viewModel;
+  final String title;
 
-  const MailView({Key? key, required this.viewModel}) : super(key: key);
+  const MailView({Key? key, required this.viewModel, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class MailView extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
-          "Gelen Kutusu",
+          title,
           style: TextStyle(color: context.colorScheme.onSecondary),
         ),
         backgroundColor: Colors.transparent,
@@ -111,7 +112,7 @@ class MailView extends StatelessWidget {
             Padding(
               padding: context.paddingNormal,
               child: const Text(
-                "Projeleri silmek veya düzenlemek için sağa okundu veya okunmadı olarak işaretlemek için sola kaydırın.",
+                "Mailleri silmek veya düzenlemek için sağa okundu veya okunmadı olarak işaretlemek için sola kaydırın.",
                 maxLines: 2,
               ),
             ),

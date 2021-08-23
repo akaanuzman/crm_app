@@ -21,6 +21,8 @@ class _SendMailViewState extends State<SendMailView> {
   final ContactViewModel _viewModel = ContactViewModel();
   var titleController = TextEditingController();
   var contentController = TextEditingController();
+  var nameController = TextEditingController();
+  var eMailController = TextEditingController();
 
   @override
   void initState() {
@@ -30,19 +32,17 @@ class _SendMailViewState extends State<SendMailView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Image.network(
-          "http://192.168.3.53/assets/images/logo-light.png",
-          width: context.dynamicWidth(0.28),
-        ),
-        centerTitle: true,
-      ),
-      body: Observer(
-        builder: (context) {
-          int lenght =
-              _viewModel.items.guides!.length + _viewModel.items.users!.length;
-          return SingleChildScrollView(
+    return Observer(
+      builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Image.network(
+              "http://192.168.3.53/assets/images/logo-light.png",
+              width: context.dynamicWidth(0.28),
+            ),
+            centerTitle: true,
+          ),
+          body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: SizedBox(
               height: context.dynamicHeight(1.6),
@@ -72,7 +72,7 @@ class _SendMailViewState extends State<SendMailView> {
                               Expanded(
                                 child: ListView.builder(
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: lenght,
+                                  itemCount: _viewModel.lenght,
                                   itemBuilder: (context, index) {
                                     return Column(
                                       children: [
@@ -135,10 +135,13 @@ class _SendMailViewState extends State<SendMailView> {
                                       data: "Kayıtlı olmayan eposta ekle"),
                                 ),
                               ),
-                              context.emptySizedHeightBoxLow,
+                              context.emptySizedHeightBoxLow3x,
                               TextField(
+                                controller: nameController,
                                 decoration: InputDecoration(
-                                  hintText: 'Kişinin adi soyadini giriniz.',
+                                  prefixIcon: const Icon(Icons.portrait),
+                                  hintText: 'Kişinin adı soyadını giriniz.',
+                                  labelText: 'Ad soyad',
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
                                     borderSide: BorderSide(
@@ -155,8 +158,12 @@ class _SendMailViewState extends State<SendMailView> {
                               ),
                               context.emptySizedHeightBoxLow3x,
                               TextField(
+                                controller: eMailController,
                                 decoration: InputDecoration(
+                                  prefixIcon:
+                                      const Icon(Icons.mail_outline_outlined),
                                   hintText: 'Kişinin emailini giriniz.',
+                                  labelText: 'Email',
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
                                     borderSide: BorderSide(
@@ -174,7 +181,26 @@ class _SendMailViewState extends State<SendMailView> {
                               context.emptySizedHeightBoxLow,
                               Center(
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    Dio dio = Dio();
+                                    await dio.post(
+                                        "http://192.168.3.53/api/Persons/new_guide?token=${ApplicationConstants.instance!.token}&name=${nameController.text}&email=${eMailController.text}");
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: context
+                                            .colorScheme.secondaryVariant,
+                                        duration: context.durationSlow,
+                                        content: BodyText2Copy(
+                                          data: "Kişi başarıyla eklendi !",
+                                          color: context.colorScheme.onSurface,
+                                        ),
+                                      ),
+                                    );
+                                    setState(() {
+                                      _viewModel.fetchItems(
+                                          ApplicationConstants.instance!.token);
+                                    });
+                                  },
                                   child: Text(
                                     "Kişilerime Ekle",
                                     style: TextStyle(
@@ -297,9 +323,9 @@ class _SendMailViewState extends State<SendMailView> {
                 ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

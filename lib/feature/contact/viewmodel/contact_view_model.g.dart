@@ -24,6 +24,21 @@ mixin _$ContactViewModel on _ContactViewModelBase, Store {
     });
   }
 
+  final _$lenghtAtom = Atom(name: '_ContactViewModelBase.lenght');
+
+  @override
+  int get lenght {
+    _$lenghtAtom.reportRead();
+    return super.lenght;
+  }
+
+  @override
+  set lenght(int value) {
+    _$lenghtAtom.reportWrite(value, super.lenght, () {
+      super.lenght = value;
+    });
+  }
+
   final _$fetchItemsAsyncAction =
       AsyncAction('_ContactViewModelBase.fetchItems');
 
@@ -35,7 +50,8 @@ mixin _$ContactViewModel on _ContactViewModelBase, Store {
   @override
   String toString() {
     return '''
-items: ${items}
+items: ${items},
+lenght: ${lenght}
     ''';
   }
 }
