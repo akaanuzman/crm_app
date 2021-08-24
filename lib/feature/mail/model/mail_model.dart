@@ -20,10 +20,11 @@ class MailModel {
 
 @JsonSerializable()
 class Emails {
-  String? its_id;
+  String? user_id;
   String? user_name;
   String? user_email;
   String? user_photo;
+  String ? my_id;
   String? id;
   String? read_it;
   String? title;
@@ -31,10 +32,11 @@ class Emails {
   String? date;
 
   Emails(
-      {this.its_id,
+      {this.user_id,
       this.user_name,
       this.user_email,
       this.user_photo,
+      this.my_id,
       this.id,
       this.read_it,
       this.title,

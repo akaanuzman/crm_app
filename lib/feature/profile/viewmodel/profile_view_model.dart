@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+
 import '../../../core/init/network/network_manager.dart';
 import '../model/profile_model.dart';
 import '../service/i_profile_service.dart';
 import '../service/profile_service.dart';
-import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
+
 part 'profile_view_model.g.dart';
 
 class ProfileViewModel = _ProfileViewModelBase with _$ProfileViewModel;

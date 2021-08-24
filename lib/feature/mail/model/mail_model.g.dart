@@ -24,10 +24,11 @@ Map<String, dynamic> _$MailModelToJson(MailModel instance) => <String, dynamic>{
 
 Emails _$EmailsFromJson(Map<String, dynamic> json) {
   return Emails(
-    its_id: json['its_id'] as String?,
+    user_id: json['user_id'] as String?,
     user_name: json['user_name'] as String?,
     user_email: json['user_email'] as String?,
     user_photo: json['user_photo'] as String?,
+    my_id: json['my_id'] as String?,
     id: json['id'] as String?,
     read_it: json['read_it'] as String?,
     title: json['title'] as String?,
@@ -37,10 +38,11 @@ Emails _$EmailsFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$EmailsToJson(Emails instance) => <String, dynamic>{
-      'its_id': instance.its_id,
+      'user_id': instance.user_id,
       'user_name': instance.user_name,
       'user_email': instance.user_email,
       'user_photo': instance.user_photo,
+      'my_id': instance.my_id,
       'id': instance.id,
       'read_it': instance.read_it,
       'title': instance.title,

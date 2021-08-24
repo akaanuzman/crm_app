@@ -144,7 +144,7 @@ class BottomTabView extends StatelessWidget {
             child: GestureDetector(
               onTap: () async {
                 Dio dio = Dio();
-                dio.get(
+                dio.post(
                     "http://192.168.3.53/api/Foreign/log_out?token=${ApplicationConstants.instance!.token}");
                 Navigator.pop(context);
                 Navigator.pop(context);
