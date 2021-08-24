@@ -22,6 +22,7 @@ class MailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String token = ApplicationConstants.instance!.token;
     MediaQueryData mediaQuery = MediaQuery.of(context);
 
     double height = mediaQuery.size.height;
@@ -58,31 +59,165 @@ class MailView extends StatelessWidget {
                             color: context.colorScheme.primaryVariant,
                             caption: 'Sil',
                             icon: Icons.delete,
-                            onTap: () {
-                              _showDialog(context, radius);
+                            onTap: () async {
+                              Dio dio = Dio();
+                              await dio.post(
+                                  "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=trash&token=$token");
+                              viewModel.fetchItems(token, "is_active");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor:
+                                      context.colorScheme.secondaryVariant,
+                                  duration: context.durationSlow,
+                                  content: BodyText2Copy(
+                                    data: "Mail çöp kutusu klasörüne eklendi !",
+                                    color: context.colorScheme.onSurface,
+                                  ),
+                                ),
+                              );
                             },
                           ),
                           IconSlideAction(
-                              color: context.colorScheme.error,
-                              foregroundColor: context.colorScheme.onSurface,
-                              caption: 'Ertele',
-                              icon: Icons.alarm,
-                              onTap: () {}),
+                            color: context.colorScheme.error,
+                            foregroundColor: context.colorScheme.onSurface,
+                            caption: 'Ertele',
+                            icon: Icons.alarm,
+                            onTap: () async {
+                              Dio dio = Dio();
+                              await dio.post(
+                                  "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=snoozed&token=$token");
+                              viewModel.fetchItems(token, "is_active");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor:
+                                      context.colorScheme.secondaryVariant,
+                                  duration: context.durationSlow,
+                                  content: BodyText2Copy(
+                                    data:
+                                        "Mail ertelenenler klasörüne eklendi !",
+                                    color: context.colorScheme.onSurface,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          IconSlideAction(
+                            color: context.colorScheme.onPrimary,
+                            foregroundColor: context.colorScheme.onSurface,
+                            caption: 'Taslak',
+                            icon: Icons.article_outlined,
+                            onTap: () async {
+                              debugPrint(token);
+                              Dio dio = Dio();
+                              await dio.post(
+                                  "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=draft&token=$token");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor:
+                                      context.colorScheme.secondaryVariant,
+                                  duration: context.durationSlow,
+                                  content: BodyText2Copy(
+                                    data: "Mail taslak klasörüne eklendi !",
+                                    color: context.colorScheme.onSurface,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ],
                         secondaryActions: [
+                          IconSlideAction(
+                            color: context.colorScheme.error,
+                            foregroundColor: context.colorScheme.onSurface,
+                            caption: 'Spam',
+                            icon: Icons.warning,
+                            onTap: () async {
+                              Dio dio = Dio();
+                              await dio.post(
+                                  "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=snoozed&token=$token");
+                              viewModel.fetchItems(token, "is_active");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor:
+                                      context.colorScheme.secondaryVariant,
+                                  duration: context.durationSlow,
+                                  content: BodyText2Copy(
+                                    data: "Mail spam klasörüne eklendi !",
+                                    color: context.colorScheme.onSurface,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          IconSlideAction(
+                            color: context.colorScheme.onError,
+                            foregroundColor: context.colorScheme.onSurface,
+                            caption: 'Önemli',
+                            icon: Icons.label,
+                            onTap: () async {
+                              Dio dio = Dio();
+                              await dio.post(
+                                  "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=important&token=$token");
+                              viewModel.fetchItems(token, "is_active");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor:
+                                      context.colorScheme.secondaryVariant,
+                                  duration: context.durationSlow,
+                                  content: BodyText2Copy(
+                                    data:
+                                        "Mail ertelenenler klasörüne eklendi !",
+                                    color: context.colorScheme.onSurface,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                           IconSlideAction(
                             color: context.colorScheme.surface,
                             foregroundColor: context.colorScheme.onSurface,
                             caption: 'Okundu',
                             icon: Icons.mark_email_read,
-                            onTap: () {},
+                            onTap: () async {
+                              Dio dio = Dio();
+                              await dio.post(
+                                  "http://192.168.3.53/api/Email/read_it?id=${viewModel.items.emails?[index].id}&folder=read&token=$token");
+                              viewModel.fetchItems(token, "is_active");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor:
+                                      context.colorScheme.secondaryVariant,
+                                  duration: context.durationSlow,
+                                  content: BodyText2Copy(
+                                    data: "Mail okundu olarak işaretlendi !",
+                                    color: context.colorScheme.onSurface,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                           IconSlideAction(
                             color: context.colorScheme.secondaryVariant,
                             foregroundColor: context.colorScheme.onSurface,
                             caption: 'Okunmadı',
                             icon: Icons.mark_email_unread,
-                            onTap: () {},
+                            onTap: () async {
+                              Dio dio = Dio();
+                              await dio.post(
+                                  "http://192.168.3.53/api/Email/read_it?id=${viewModel.items.emails?[index].id}&folder=unread&token=$token");
+                              viewModel.fetchItems(token, "is_active");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor:
+                                      context.colorScheme.secondaryVariant,
+                                  duration: context.durationSlow,
+                                  content: BodyText2Copy(
+                                    data: "Mail okunmadı olarak işaretlendi !",
+                                    color: context.colorScheme.onSurface,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ],
                         child: Card(
@@ -90,8 +225,25 @@ class MailView extends StatelessWidget {
                               borderRadius: context.lowBorderRadius),
                           elevation: 5,
                           child: ListTile(
-                            leading: Icon(
-                              Icons.star_border_outlined,
+                            leading: IconButton(
+                              onPressed: () async {
+                                Dio dio = Dio();
+                                await dio.post(
+                                    "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=starred&token=$token");
+                                viewModel.fetchItems(token, "is_active");
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor:
+                                        context.colorScheme.secondaryVariant,
+                                    duration: context.durationSlow,
+                                    content: BodyText2Copy(
+                                      data: "Mail yıldızlı klasörüne taşındı !",
+                                      color: context.colorScheme.onSurface,
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(Icons.star_border_outlined),
                               color: context.colorScheme.primaryVariant,
                             ),
                             title: Text(viewModel.items.emails?[index].title ??
@@ -105,7 +257,8 @@ class MailView extends StatelessWidget {
                                   radius,
                                   viewModel,
                                   index,
-                                  viewModel.items.emails?[index].user_id ?? "0");
+                                  viewModel.items.emails?[index].user_id ?? "0",
+                                  token);
                             },
                           ),
                         ),
@@ -146,8 +299,8 @@ class MailView extends StatelessWidget {
     );
   }
 
-  _showModalBottomSheet(
-      context, double radius, MailViewModel viewModel, int index, String id) {
+  _showModalBottomSheet(context, double radius, MailViewModel viewModel,
+      int index, String id, String token) {
     var titleController = TextEditingController();
     var contentController = TextEditingController();
     showModalBottomSheet(
@@ -320,9 +473,7 @@ class MailView extends StatelessWidget {
                           ? context.emptySizedHeightBoxLow
                           : ElevatedButton(
                               onPressed: () async {
-                                String token =
-                                    ApplicationConstants.instance!.token;
-                                    debugPrint("Id:"+id);
+                                debugPrint("Id:" + id);
                                 Dio dio = Dio();
                                 await dio.post(
                                     "http://192.168.3.53/api/Email/send_email?user_id=u$id&token=$token&title=${titleController.text}&content=${contentController.text}");
@@ -367,52 +518,6 @@ class MailView extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  _showDialog(BuildContext context, double radius) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radius),
-        ),
-        title: const BodyText1Copy(
-            data: "Kişiyi silmek istediğinizden emin misiniz ?"),
-        content: const BodyText2Copy(data: "Kişi kalıcı olarak silinecektir."),
-        actions: [
-          ElevatedButton(
-            child: Text("Evet",
-                style: TextStyle(color: context.colorScheme.onSurface)),
-            style:
-                ElevatedButton.styleFrom(primary: context.colorScheme.surface),
-            onPressed: () {
-              Navigator.of(context).pop();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: context.colorScheme.secondaryVariant,
-                  duration: context.durationSlow,
-                  content: BodyText2Copy(
-                    data: "Eposta başarıyla silindi !",
-                    color: context.colorScheme.onSurface,
-                  ),
-                ),
-              );
-            },
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            style: ElevatedButton.styleFrom(
-                primary: context.colorScheme.secondaryVariant),
-            child: Text(
-              "Hayır",
-              style: TextStyle(color: context.colorScheme.onSurface),
-            ),
-          )
-        ],
-      ),
     );
   }
 }

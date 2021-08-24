@@ -1,3 +1,7 @@
+// ignore_for_file: must_be_immutable, duplicate_ignore
+
+import 'package:crm_app/core/constants/app/app_constants.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../viewmodel/company_view_model.dart';
@@ -45,7 +49,9 @@ class CompanyView extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: context.normalBorderRadius),
           elevation: 2,
           tag: 'Proje Ekle',
-          child: const PopUpItemBody(),
+          child: PopUpItemBody(
+            viewModel: _viewModel,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
@@ -66,15 +72,19 @@ class CompanyView extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>  CompanyDetailView(id: _viewModel.items.companys?[index].id ?? "",)));
+                          builder: (context) => CompanyDetailView(
+                                id: _viewModel.items.companys?[index].id ?? "",
+                              )));
                     },
                     child: ExpansionTile(
                       // ignore: prefer_const_constructors
                       title: BodyText2Copy(
-                          data: _viewModel.items.companys?[index].name ?? "Geçerli firma adı bulunamadı."),
+                          data: _viewModel.items.companys?[index].name ??
+                              "Geçerli firma adı bulunamadı."),
                       leading: CircleAvatar(
                         backgroundImage: NetworkImage(
-                            _viewModel.items.companys?[index].photo ?? "Geçerli firma resmi bulunamadı."),
+                            _viewModel.items.companys?[index].photo ??
+                                "Geçerli firma resmi bulunamadı."),
                         backgroundColor: context.colorScheme.onSurface,
                       ),
                       expandedAlignment: Alignment.centerLeft,
@@ -154,7 +164,8 @@ class CompanyView extends StatelessWidget {
                                     color: context.colorScheme.onBackground),
                               ),
                               context.emptySizedWidthBoxLow3x,
-                              Text(_viewModel.items.companys?[index].location ?? "Geçerli konum bilgisi bulunamadı."),
+                              Text(_viewModel.items.companys?[index].location ??
+                                  "Geçerli konum bilgisi bulunamadı."),
                             ],
                           ),
                         ),
@@ -179,9 +190,17 @@ class CompanyView extends StatelessWidget {
 }
 
 class PopUpItemBody extends StatelessWidget {
-  const PopUpItemBody({
-    Key? key,
-  }) : super(key: key);
+  var nameController = TextEditingController();
+  var mailController = TextEditingController();
+  var phoneController = TextEditingController();
+  var webSiteController = TextEditingController();
+  var taxNumberController = TextEditingController();
+  var taxDepartmentController = TextEditingController();
+  var detailController = TextEditingController();
+  var locationController = TextEditingController();
+  final CompanyViewModel viewModel;
+
+  PopUpItemBody({Key? key, required this.viewModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -215,9 +234,13 @@ class PopUpItemBody extends StatelessWidget {
               padding: context.paddingLow,
               child: const Text("Firma İsmi"),
             ),
+            context.emptySizedHeightBoxLow,
             TextField(
+              controller: nameController,
               decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.business),
                 hintText: 'Firma ismi giriniz.',
+                labelText: 'Firma ismi',
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
                   borderSide:
@@ -235,66 +258,14 @@ class PopUpItemBody extends StatelessWidget {
               padding: context.paddingLow,
               child: const Text("Eposta Adresi"),
             ),
+            context.emptySizedHeightBoxLow,
             TextField(
+              controller: mailController,
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.mail),
                 hintText: 'Eposta adresi giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
-              ),
-              cursorColor: context.colorScheme.onSecondary,
-            ),
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("Telefon"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Telefon numarası giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
-              ),
-              cursorColor: context.colorScheme.onSecondary,
-            ),
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("Web Sayfanız"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Web sayfanızı giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
-              ),
-              cursorColor: context.colorScheme.onSecondary,
-            ),
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("Adres"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Adresinizi giriniz.',
+                labelText: 'Eposta adresi',
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
                   borderSide:
@@ -308,6 +279,154 @@ class PopUpItemBody extends StatelessWidget {
               cursorColor: context.colorScheme.onSecondary,
             ),
             context.emptySizedHeightBoxLow,
+            Padding(
+              padding: context.paddingLow,
+              child: const Text("Telefon"),
+            ),
+            context.emptySizedHeightBoxLow,
+            TextField(
+              controller: phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.phone),
+                hintText: 'Telefon numarası giriniz.',
+                labelText: 'Telefon numarası',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide:
+                      BorderSide(color: context.colorScheme.onBackground),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide: BorderSide(color: context.colorScheme.surface),
+                ),
+              ),
+              cursorColor: context.colorScheme.onSecondary,
+            ),
+            context.emptySizedHeightBoxLow,
+            Padding(
+              padding: context.paddingLow,
+              child: const Text("Web Sayfanız"),
+            ),
+            context.emptySizedHeightBoxLow,
+            TextField(
+              controller: webSiteController,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.public),
+                hintText: 'Web sayfanızı giriniz.',
+                labelText: 'Web sayfası',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide:
+                      BorderSide(color: context.colorScheme.onBackground),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide: BorderSide(color: context.colorScheme.surface),
+                ),
+              ),
+              cursorColor: context.colorScheme.onSecondary,
+            ),
+            context.emptySizedHeightBoxLow,
+            Padding(
+              padding: context.paddingLow,
+              child: const Text("Vergi Numarası"),
+            ),
+            context.emptySizedHeightBoxLow,
+            TextField(
+              controller: taxNumberController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.tag),
+                hintText: 'Veri numarası giriniz.',
+                labelText: 'Vergi numarası',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide:
+                      BorderSide(color: context.colorScheme.onBackground),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide: BorderSide(color: context.colorScheme.surface),
+                ),
+              ),
+              cursorColor: context.colorScheme.onSecondary,
+            ),
+            context.emptySizedHeightBoxLow,
+            Padding(
+              padding: context.paddingLow,
+              child: const Text("Vergi Dairesi"),
+            ),
+            context.emptySizedHeightBoxLow,
+            TextField(
+              controller: taxDepartmentController,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.store),
+                hintText: 'Veri dairesi giriniz.',
+                labelText: 'Vergi dairesi',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide:
+                      BorderSide(color: context.colorScheme.onBackground),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide: BorderSide(color: context.colorScheme.surface),
+                ),
+              ),
+              cursorColor: context.colorScheme.onSecondary,
+            ),
+            context.emptySizedHeightBoxLow,
+            Padding(
+              padding: context.paddingLow,
+              child: const Text("Detay"),
+            ),
+            context.emptySizedHeightBoxLow,
+            TextField(
+              controller: detailController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.description),
+                hintText: 'Detay giriniz.',
+                labelText: 'Detay',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide:
+                      BorderSide(color: context.colorScheme.onBackground),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide: BorderSide(color: context.colorScheme.surface),
+                ),
+              ),
+              cursorColor: context.colorScheme.onSecondary,
+            ),
+            context.emptySizedHeightBoxLow,
+            Padding(
+              padding: context.paddingLow,
+              child: const Text("Konum"),
+            ),
+            context.emptySizedHeightBoxLow,
+            TextField(
+              controller: locationController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.location_on),
+                hintText: 'Konum giriniz.',
+                labelText: 'Konum',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide:
+                      BorderSide(color: context.colorScheme.onBackground),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide: BorderSide(color: context.colorScheme.surface),
+                ),
+              ),
+              cursorColor: context.colorScheme.onSecondary,
+            ),
+            context.emptySizedHeightBoxLow3x,
             Divider(
               color: context.colorScheme.secondaryVariant,
               thickness: 0.4,
@@ -329,9 +448,26 @@ class PopUpItemBody extends StatelessWidget {
                   ),
                   context.emptySizedWidthBoxLow,
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      String token = ApplicationConstants.instance!.baseUrl;
+                      Dio dio = Dio();
+                      await dio.post(
+                          "http://192.168.3.53/api/Companys/new_company?token=$token&name=${nameController.text}&email=${mailController.text}&telephone=${phoneController.text}&web_site=${webSiteController.text}&tax_number=${taxNumberController.text}&tax_department=${taxDepartmentController.text}&detail=${detailController.text}&location=${locationController.text}");
+                      viewModel.fetchItems(token);
+                      Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: context.colorScheme.secondaryVariant,
+                          duration: context.durationSlow,
+                          content: BodyText2Copy(
+                            data: "Firma başarıyla eklendi !",
+                            color: context.colorScheme.onSurface,
+                          ),
+                        ),
+                      );
+                    },
                     child: BodyText2Copy(
-                        data: "Kaydet", color: context.colorScheme.onSurface),
+                        data: "Ekle", color: context.colorScheme.onSurface),
                     style: ElevatedButton.styleFrom(
                         primary: context.colorScheme.surface),
                   ),
