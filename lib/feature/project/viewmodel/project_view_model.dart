@@ -1,12 +1,11 @@
-import '../../../core/init/network/network_manager.dart';
-import '../service/project_service.dart';
-
-import '../../../core/constants/app/app_constants.dart';
-
-import '../model/project_model.dart';
-import '../service/i_project_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../../core/constants/app/app_constants.dart';
+import '../../../core/init/network/network_manager.dart';
+import '../model/project_model.dart';
+import '../service/i_project_service.dart';
+import '../service/project_service.dart';
 
 part 'project_view_model.g.dart';
 

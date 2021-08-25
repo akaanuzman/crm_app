@@ -1,3 +1,7 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:dio/dio.dart';
+
 import '../../../../core/constants/app/app_constants.dart';
 import '../viewmodel/company_detail_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -24,7 +28,6 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
   void initState() {
     super.initState();
     _viewModel.fetchItems(ApplicationConstants.instance!.token, widget.id);
-    debugPrint("Id: ${widget.id}");
   }
 
   @override
@@ -61,7 +64,9 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
               RoundedRectangleBorder(borderRadius: context.normalBorderRadius),
           elevation: 2,
           tag: 'Proje Ekle',
-          child: const PopUpItemBody(),
+          child: PopUpItemBody(
+            viewModel: _viewModel,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
@@ -287,14 +292,46 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                       color: context.colorScheme.onSecondary),
                                 ),
                               ),
-                              const Icon(Icons.more_vert)
+                              Padding(
+                                padding: context.horizontalPaddingNormal,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    String token =
+                                        ApplicationConstants.instance!.token;
+                                    Dio dio = Dio();
+                                    dio.post(
+                                        "http://192.168.3.53/api/Companys/delete_company?token=$token&id=${_viewModel.items.id}");
+                                    Navigator.of(context).pop();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: context
+                                            .colorScheme.secondaryVariant,
+                                        duration: context.durationSlow,
+                                        content: BodyText2Copy(
+                                          data: "Firma başarıyla silindi !",
+                                          color: context.colorScheme.onSurface,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    "Firmayı sil",
+                                    style: TextStyle(
+                                      color: context.colorScheme.onSurface,
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: context.colorScheme.primaryVariant,
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                           CircleAvatar(
                             radius: 64,
-                            backgroundImage: NetworkImage(
-                                _viewModel.items.photo ??
-                                    "Geçerli firma fotoğrafı bulunamadı."),
+                            backgroundImage: NetworkImage(_viewModel
+                                    .items.photo ??
+                                "http://192.168.3.53/assets/images/companies/company.png"),
                             backgroundColor: context.colorScheme.onSurface,
                           ),
                           context.emptySizedHeightBoxLow3x,
@@ -318,6 +355,7 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                             indent: 15,
                             endIndent: 15,
                           ),
+                          context.emptySizedHeightBoxLow,
                           Padding(
                             padding: context.horizontalPaddingNormal,
                             child: Row(
@@ -338,6 +376,7 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                             indent: 15,
                             endIndent: 15,
                           ),
+                          context.emptySizedHeightBoxLow,
                           Padding(
                             padding: context.horizontalPaddingNormal,
                             child: Row(
@@ -358,6 +397,7 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                             indent: 15,
                             endIndent: 15,
                           ),
+                          context.emptySizedHeightBoxLow,
                           Padding(
                             padding: context.horizontalPaddingNormal,
                             child: Row(
@@ -378,6 +418,7 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                             indent: 15,
                             endIndent: 15,
                           ),
+                          context.emptySizedHeightBoxLow,
                           Padding(
                             padding: context.horizontalPaddingNormal,
                             child: Row(
@@ -477,8 +518,10 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                           ],
                                         ),
                                         leading: const CircleAvatar(
+                                          radius: 30,
                                           backgroundImage: NetworkImage(
-                                              "http://192.168.3.53/assets/images/users/user0.jpg"),
+                                            "http://192.168.3.53/assets/images/users/user0.jpg",
+                                          ),
                                         ),
                                         expandedAlignment: Alignment.centerLeft,
                                         children: [
@@ -670,9 +713,18 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
 }
 
 class PopUpItemBody extends StatelessWidget {
-  const PopUpItemBody({
-    Key? key,
-  }) : super(key: key);
+  var nameController = TextEditingController();
+  var mailController = TextEditingController();
+  var phoneController = TextEditingController();
+  var webSiteController = TextEditingController();
+  var taxNumberController = TextEditingController();
+  var taxDepartmentController = TextEditingController();
+  var detailController = TextEditingController();
+  var locationController = TextEditingController();
+
+  final CompanyDetailViewModel viewModel;
+
+  PopUpItemBody({Key? key, required this.viewModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -700,36 +752,19 @@ class PopUpItemBody extends StatelessWidget {
             Center(
               child: Padding(
                   padding: context.paddingLow,
-                  child:
-                      const BodyText1Copy(data: "Firma Ayrıntıları Düzenle")),
+                  child: const BodyText1Copy(data: "Firma Ekle")),
             ),
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("Erişim İsmi"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Erisim ismi giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
-              ),
-              cursorColor: context.colorScheme.onSecondary,
-            ),
-            context.emptySizedHeightBoxLow,
             Padding(
               padding: context.paddingLow,
               child: const Text("Firma İsmi"),
             ),
+            context.emptySizedHeightBoxLow,
             TextField(
+              controller: nameController,
               decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.business),
                 hintText: 'Firma ismi giriniz.',
+                labelText: 'Firma ismi',
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
                   borderSide:
@@ -745,31 +780,16 @@ class PopUpItemBody extends StatelessWidget {
             context.emptySizedHeightBoxLow,
             Padding(
               padding: context.paddingLow,
-              child: const Text("Eposta"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Eposta giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
-              ),
-              cursorColor: context.colorScheme.onSecondary,
+              child: const Text("Eposta Adresi"),
             ),
             context.emptySizedHeightBoxLow,
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("Web Site"),
-            ),
             TextField(
+              controller: mailController,
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                hintText: 'Web site giriniz.',
+                prefixIcon: const Icon(Icons.mail),
+                hintText: 'Eposta adresi giriniz.',
+                labelText: 'Eposta adresi',
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
                   borderSide:
@@ -787,9 +807,14 @@ class PopUpItemBody extends StatelessWidget {
               padding: context.paddingLow,
               child: const Text("Telefon"),
             ),
+            context.emptySizedHeightBoxLow,
             TextField(
+              controller: phoneController,
+              keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                hintText: 'Telefon giriniz.',
+                prefixIcon: const Icon(Icons.phone),
+                hintText: 'Telefon numarası giriniz.',
+                labelText: 'Telefon numarası',
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
                   borderSide:
@@ -805,31 +830,15 @@ class PopUpItemBody extends StatelessWidget {
             context.emptySizedHeightBoxLow,
             Padding(
               padding: context.paddingLow,
-              child: const Text("Konum"),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Konum giriniz.',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: context.lowBorderRadius,
-                  borderSide: BorderSide(color: context.colorScheme.surface),
-                ),
-              ),
-              cursorColor: context.colorScheme.onSecondary,
+              child: const Text("Web Sayfanız"),
             ),
             context.emptySizedHeightBoxLow,
-            Padding(
-              padding: context.paddingLow,
-              child: const Text("Detay"),
-            ),
             TextField(
+              controller: webSiteController,
               decoration: InputDecoration(
-                hintText: 'Detay giriniz.',
+                prefixIcon: const Icon(Icons.public),
+                hintText: 'Web sayfanızı giriniz.',
+                labelText: 'Web sayfası',
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
                   borderSide:
@@ -847,9 +856,14 @@ class PopUpItemBody extends StatelessWidget {
               padding: context.paddingLow,
               child: const Text("Vergi Numarası"),
             ),
+            context.emptySizedHeightBoxLow,
             TextField(
+              controller: taxNumberController,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                hintText: 'Vergi numarası giriniz.',
+                prefixIcon: const Icon(Icons.tag),
+                hintText: 'Veri numarası giriniz.',
+                labelText: 'Vergi numarası',
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
                   borderSide:
@@ -867,9 +881,13 @@ class PopUpItemBody extends StatelessWidget {
               padding: context.paddingLow,
               child: const Text("Vergi Dairesi"),
             ),
+            context.emptySizedHeightBoxLow,
             TextField(
+              controller: taxDepartmentController,
               decoration: InputDecoration(
-                hintText: 'Vergi Dairesi giriniz.',
+                prefixIcon: const Icon(Icons.store),
+                hintText: 'Veri dairesi giriniz.',
+                labelText: 'Vergi dairesi',
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
                   borderSide:
@@ -883,6 +901,54 @@ class PopUpItemBody extends StatelessWidget {
               cursorColor: context.colorScheme.onSecondary,
             ),
             context.emptySizedHeightBoxLow,
+            Padding(
+              padding: context.paddingLow,
+              child: const Text("Detay"),
+            ),
+            context.emptySizedHeightBoxLow,
+            TextField(
+              controller: detailController,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.description),
+                hintText: 'Detay giriniz.',
+                labelText: 'Detay',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide:
+                      BorderSide(color: context.colorScheme.onBackground),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide: BorderSide(color: context.colorScheme.surface),
+                ),
+              ),
+              cursorColor: context.colorScheme.onSecondary,
+            ),
+            context.emptySizedHeightBoxLow,
+            Padding(
+              padding: context.paddingLow,
+              child: const Text("Konum"),
+            ),
+            context.emptySizedHeightBoxLow,
+            TextField(
+              controller: locationController,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.location_on),
+                hintText: 'Konum giriniz.',
+                labelText: 'Konum',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide:
+                      BorderSide(color: context.colorScheme.onBackground),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: context.lowBorderRadius,
+                  borderSide: BorderSide(color: context.colorScheme.surface),
+                ),
+              ),
+              cursorColor: context.colorScheme.onSecondary,
+            ),
+            context.emptySizedHeightBoxLow3x,
             Divider(
               color: context.colorScheme.secondaryVariant,
               thickness: 0.4,
@@ -904,7 +970,25 @@ class PopUpItemBody extends StatelessWidget {
                   ),
                   context.emptySizedWidthBoxLow,
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      debugPrint(viewModel.items.id);
+                      String token = ApplicationConstants.instance!.token;
+                      Dio dio = Dio();
+                      await dio.post(
+                          "http://192.168.3.53/api/Companys/update_company?token=$token&id=${viewModel.items.id}&name=${nameController.text}&email=${mailController.text}&telephone=${phoneController.text}&web_site=${webSiteController.text}&tax_number=${taxNumberController.text}&tax_department=${taxDepartmentController.text}&detail=${detailController.text}&location=${locationController.text}");
+                      viewModel.fetchItems(token, viewModel.items.id ?? "0");
+                      Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: context.colorScheme.secondaryVariant,
+                          duration: context.durationSlow,
+                          content: BodyText2Copy(
+                            data: "Firma bilgileri başarıyla güncellendi !",
+                            color: context.colorScheme.onSurface,
+                          ),
+                        ),
+                      );
+                    },
                     child: BodyText2Copy(
                         data: "Kaydet", color: context.colorScheme.onSurface),
                     style: ElevatedButton.styleFrom(

@@ -60,31 +60,28 @@ class CompanyView extends StatelessWidget {
           padding: context.paddingLow,
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
-            itemCount: _viewModel.items.companys?.length ?? 0,
-            // ignore: prefer_const_constructors
+            itemCount: _viewModel.items.company?.length ?? 0,
             itemBuilder: (context, index) => Column(
               children: [
                 Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: context.normalBorderRadius),
                   elevation: 5,
-                  // ignore: prefer_const_constructors
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => CompanyDetailView(
-                                id: _viewModel.items.companys?[index].id ?? "",
+                                id: _viewModel.items.company?[index].id ?? "",
                               )));
                     },
                     child: ExpansionTile(
-                      // ignore: prefer_const_constructors
                       title: BodyText2Copy(
-                          data: _viewModel.items.companys?[index].name ??
+                          data: _viewModel.items.company?[index].name ??
                               "Geçerli firma adı bulunamadı."),
                       leading: CircleAvatar(
                         backgroundImage: NetworkImage(
-                            _viewModel.items.companys?[index].photo ??
-                                "Geçerli firma resmi bulunamadı."),
+                            _viewModel.items.company?[index].photo ??
+                                "http://192.168.3.53/assets/images/companies/company.png"),
                         backgroundColor: context.colorScheme.onSurface,
                       ),
                       expandedAlignment: Alignment.centerLeft,
@@ -100,7 +97,7 @@ class CompanyView extends StatelessWidget {
                                     color: context.colorScheme.onBackground),
                               ),
                               context.emptySizedWidthBoxLow3x,
-                              Text(_viewModel.items.companys?[index].email ??
+                              Text(_viewModel.items.company?[index].email ??
                                   "Geçerli email adresi bulunamadı."),
                             ],
                           ),
@@ -121,9 +118,8 @@ class CompanyView extends StatelessWidget {
                                     color: context.colorScheme.onBackground),
                               ),
                               context.emptySizedWidthBoxLow3x,
-                              Text(
-                                  _viewModel.items.companys?[index].telephone ??
-                                      "Geçerli telefon numarası bulunamadı."),
+                              Text(_viewModel.items.company?[index].telephone ??
+                                  "Geçerli telefon numarası bulunamadı."),
                             ],
                           ),
                         ),
@@ -143,7 +139,7 @@ class CompanyView extends StatelessWidget {
                                     color: context.colorScheme.onBackground),
                               ),
                               context.emptySizedWidthBoxLow3x,
-                              Text(_viewModel.items.companys?[index].web_site ??
+                              Text(_viewModel.items.company?[index].web_site ??
                                   "Geçerli web sitesi bulunamadı."),
                             ],
                           ),
@@ -164,7 +160,7 @@ class CompanyView extends StatelessWidget {
                                     color: context.colorScheme.onBackground),
                               ),
                               context.emptySizedWidthBoxLow3x,
-                              Text(_viewModel.items.companys?[index].location ??
+                              Text(_viewModel.items.company?[index].location ??
                                   "Geçerli konum bilgisi bulunamadı."),
                             ],
                           ),
@@ -384,7 +380,6 @@ class PopUpItemBody extends StatelessWidget {
             context.emptySizedHeightBoxLow,
             TextField(
               controller: detailController,
-              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.description),
                 hintText: 'Detay giriniz.',
@@ -409,7 +404,6 @@ class PopUpItemBody extends StatelessWidget {
             context.emptySizedHeightBoxLow,
             TextField(
               controller: locationController,
-              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.location_on),
                 hintText: 'Konum giriniz.',
@@ -449,7 +443,7 @@ class PopUpItemBody extends StatelessWidget {
                   context.emptySizedWidthBoxLow,
                   ElevatedButton(
                     onPressed: () async {
-                      String token = ApplicationConstants.instance!.baseUrl;
+                      String token = ApplicationConstants.instance!.token;
                       Dio dio = Dio();
                       await dio.post(
                           "http://192.168.3.53/api/Companys/new_company?token=$token&name=${nameController.text}&email=${mailController.text}&telephone=${phoneController.text}&web_site=${webSiteController.text}&tax_number=${taxNumberController.text}&tax_department=${taxDepartmentController.text}&detail=${detailController.text}&location=${locationController.text}");

@@ -515,9 +515,8 @@ class _ContactViewState extends State<ContactView> {
                           // String baseImageUrl =
                           //     "http://192.168.3.53/assets/images/users/";
                           Dio dio = Dio();
-                          final response = await dio.post(
+                          await dio.post(
                               "http://192.168.3.53/api/Persons/update_guide?token=${ApplicationConstants.instance!.token}&id=${_viewModel.items.guides?[index].id}&name=${nameController.text}&email=${eMailController.text}&tel=${phoneController.text}&detail=${detailController.text}&company_id=${_viewModel.items.guides?[index].companyId}&job=${jobController.text}&photo=$_image&birthday=${birthDayController.text}&web_site=${webSiteController.text}&location=${locationController.text}");
-                          debugPrint(response.data);
                           setState(() {
                             _viewModel.fetchItems(
                                 ApplicationConstants.instance!.token);

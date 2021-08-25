@@ -1,16 +1,15 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:json_annotation/json_annotation.dart';
-
 part 'company_model.g.dart';
 
 @JsonSerializable()
 class CompanyModel {
   String? message;
   String? userid;
-  List<Companys>? companys;
+  List<Company>? company;
 
-  CompanyModel({this.message, this.userid, this.companys});
+  CompanyModel({this.message, this.userid, this.company});
 
   factory CompanyModel.fromJson(Map<String, dynamic> json) =>
       _$CompanyModelFromJson(json);
@@ -19,26 +18,38 @@ class CompanyModel {
 }
 
 @JsonSerializable()
-class Companys {
+class Company {
   String? id;
   String? name;
+  String? c_name;
+  String? is_active;
   String? email;
   String? telephone;
-  String? location;
   String? web_site;
+  String? address;
+  String? detail;
   String? photo;
+  String? tax_number;
+  String? tax_department;
+  String? location;
 
-  Companys(
-      {this.name,
+  Company(
+      {this.id,
+      this.name,
+      this.c_name,
+      this.is_active,
       this.email,
       this.telephone,
-      this.location,
       this.web_site,
-      this.photo});
+      this.address,
+      this.detail,
+      this.photo,
+      this.tax_number,
+      this.tax_department,
+      this.location});
 
-  factory Companys.fromJson(Map<String, dynamic> json) {
-    return _$CompanysFromJson(json);
-  }
+  factory Company.fromJson(Map<String, dynamic> json) =>
+      _$CompanyFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CompanysToJson(this);
+  Map<String, dynamic> toJson() => _$CompanyToJson(this);
 }

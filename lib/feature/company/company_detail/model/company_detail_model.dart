@@ -11,8 +11,8 @@ class CompanyDetailModel {
   String? id;
   List<Worker>? worker;
   String? name;
-  String? cName;
-  String? isActive;
+  String? c_name;
+  String? is_active;
   String? email;
   String? telephone;
   String? web_site;
@@ -29,8 +29,8 @@ class CompanyDetailModel {
       this.id,
       this.worker,
       this.name,
-      this.cName,
-      this.isActive,
+      this.c_name,
+      this.is_active,
       this.email,
       this.telephone,
       this.web_site,
@@ -55,7 +55,7 @@ class Worker {
   String? telephone;
   String? detail;
   String? job;
-  String? companyId;
+  String? company_id;
   String? birthday;
 
   Worker(
@@ -65,7 +65,7 @@ class Worker {
       this.telephone,
       this.detail,
       this.job,
-      this.companyId,
+      this.company_id,
       this.birthday});
 
   factory Worker.fromJson(Map<String, dynamic> json) => _$WorkerFromJson(json);
