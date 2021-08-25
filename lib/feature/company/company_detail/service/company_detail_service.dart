@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../model/company_detail_model.dart';
 import 'package:dio/dio.dart';
 
+import '../model/company_detail_model.dart';
 import 'company_detail_service_end_points.dart';
 import 'i_company_detail_service.dart';
 

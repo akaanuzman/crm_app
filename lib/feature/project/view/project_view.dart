@@ -1,10 +1,7 @@
 import 'package:boardview/boardview_controller.dart';
-import '../../profile/view/profile_view.dart';
-import '../../../core/constants/app/app_constants.dart';
-import '../projectdetail/view/project_detail_view.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
@@ -14,7 +11,10 @@ import '../../../core/components/row/row_space_between_text.dart';
 import '../../../core/components/text/body_text1_copy.dart';
 import '../../../core/components/text/body_text2_copy.dart';
 import '../../../core/components/text/bold_text.dart';
+import '../../../core/constants/app/app_constants.dart';
 import '../../../product/widgets/stack/blue_bar.dart';
+import '../../profile/view/profile_view.dart';
+import '../projectdetail/view/project_detail_view.dart';
 import '../viewmodel/project_view_model.dart';
 
 // ignore: must_be_immutable

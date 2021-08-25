@@ -1,24 +1,24 @@
-
-import '../../../core/components/text/body_text1_copy.dart';
-import '../../../core/components/text/body_text2_copy.dart';
-import '../../../core/components/text/bold_text.dart';
-import '../../../core/constants/app/app_constants.dart';
-import '../viewmodel/profile_view_model.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:geira_icons/geira_icons.dart';
 import 'package:kartal/kartal.dart';
 
+import '../../../core/components/text/body_text1_copy.dart';
+import '../../../core/components/text/body_text2_copy.dart';
+import '../../../core/components/text/bold_text.dart';
+import '../../../core/constants/app/app_constants.dart';
+import '../viewmodel/profile_view_model.dart';
+
 class ProfileView extends StatelessWidget {
   final ProfileViewModel _viewModel = ProfileViewModel();
   final String username;
-  ProfileView({Key? key, required this.username})
-      : super(key: key);
+  ProfileView({Key? key, required this.username}) : super(key: key) {
+    _viewModel.fetchItems(ApplicationConstants.instance!.token, username);
+  }
 
   @override
   Widget build(BuildContext context) {
-    _viewModel.fetchItems(ApplicationConstants.instance!.token, username);
     return Observer(
       builder: (context) {
         return Card(
@@ -30,8 +30,8 @@ class ProfileView extends StatelessWidget {
                 context.emptySizedHeightBoxLow,
                 CircleAvatar(
                   radius: 45,
-                  backgroundImage: NetworkImage(
-                    _viewModel.items.photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
+                  backgroundImage: NetworkImage(_viewModel.items.photo ??
+                      ""),
                 ),
                 context.emptySizedHeightBoxLow,
                 BodyText1Copy(data: _viewModel.items.full_name ?? ""),

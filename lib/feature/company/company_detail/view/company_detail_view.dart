@@ -1,6 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:crm_app/feature/contact/model/contact_model.dart';
+import 'package:crm_app/feature/contact/viewmodel/contact_view_model.dart';
+import 'package:crm_app/product/widgets/card/check_box_card_v2.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../../core/constants/app/app_constants.dart';
 import '../viewmodel/company_detail_view_model.dart';
@@ -23,11 +27,13 @@ class CompanyDetailView extends StatefulWidget {
 
 class _CompanyDetailViewState extends State<CompanyDetailView> {
   final CompanyDetailViewModel _viewModel = CompanyDetailViewModel();
+  final ContactViewModel _contactViewModel = ContactViewModel();
 
   @override
   void initState() {
     super.initState();
     _viewModel.fetchItems(ApplicationConstants.instance!.token, widget.id);
+    _contactViewModel.fetchItems(ApplicationConstants.instance!.token);
   }
 
   @override
@@ -45,30 +51,34 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
         ),
         centerTitle: true,
       ),
-      floatingActionButton: PopupItemLauncher(
-        tag: 'Proje Ekle',
-        child: Material(
-          color: context.colorScheme.surface,
-          elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: context.highBorderRadius),
-          child: Icon(
-            Icons.more_vert,
-            size: 48,
-            color: context.colorScheme.onSurface,
-          ),
-        ),
-        popUp: PopUpItem(
-          padding: EdgeInsets.zero,
-          color: context.colorScheme.onSurface,
-          shape:
-              RoundedRectangleBorder(borderRadius: context.normalBorderRadius),
-          elevation: 2,
-          tag: 'Proje Ekle',
-          child: PopUpItemBody(
-            viewModel: _viewModel,
-          ),
-        ),
-      ),
+      floatingActionButton:
+          _viewModel.items.access == "2" || _viewModel.items.access == "3"
+              ? PopupItemLauncher(
+                  tag: 'Proje Ekle',
+                  child: Material(
+                    color: context.colorScheme.surface,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: context.highBorderRadius),
+                    child: Icon(
+                      Icons.more_vert,
+                      size: 48,
+                      color: context.colorScheme.onSurface,
+                    ),
+                  ),
+                  popUp: PopUpItem(
+                    padding: EdgeInsets.zero,
+                    color: context.colorScheme.onSurface,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: context.normalBorderRadius),
+                    elevation: 2,
+                    tag: 'Proje Ekle',
+                    child: PopUpItemBody(
+                      viewModel: _viewModel,
+                    ),
+                  ),
+                )
+              : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       body: Observer(
         builder: (context) => SingleChildScrollView(
@@ -292,39 +302,46 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                       color: context.colorScheme.onSecondary),
                                 ),
                               ),
-                              Padding(
-                                padding: context.horizontalPaddingNormal,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    String token =
-                                        ApplicationConstants.instance!.token;
-                                    Dio dio = Dio();
-                                    dio.post(
-                                        "http://192.168.3.53/api/Companys/delete_company?token=$token&id=${_viewModel.items.id}");
-                                    Navigator.of(context).pop();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        backgroundColor: context
-                                            .colorScheme.secondaryVariant,
-                                        duration: context.durationSlow,
-                                        content: BodyText2Copy(
-                                          data: "Firma başarıyla silindi !",
-                                          color: context.colorScheme.onSurface,
+                              _viewModel.items.access == "3"
+                                  ? Padding(
+                                      padding: context.horizontalPaddingNormal,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          String token = ApplicationConstants
+                                              .instance!.token;
+                                          Dio dio = Dio();
+                                          dio.post(
+                                              "http://192.168.3.53/api/Companys/delete_company?token=$token&id=${_viewModel.items.id}");
+                                          Navigator.of(context).pop();
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              backgroundColor: context
+                                                  .colorScheme.secondaryVariant,
+                                              duration: context.durationSlow,
+                                              content: BodyText2Copy(
+                                                data:
+                                                    "Firma başarıyla silindi !",
+                                                color: context
+                                                    .colorScheme.onSurface,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          "Firmayı sil",
+                                          style: TextStyle(
+                                            color:
+                                                context.colorScheme.onSurface,
+                                          ),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                          primary: context
+                                              .colorScheme.primaryVariant,
                                         ),
                                       ),
-                                    );
-                                  },
-                                  child: Text(
-                                    "Firmayı sil",
-                                    style: TextStyle(
-                                      color: context.colorScheme.onSurface,
-                                    ),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: context.colorScheme.primaryVariant,
-                                  ),
-                                ),
-                              )
+                                    )
+                                  : const SizedBox()
                             ],
                           ),
                           CircleAvatar(
@@ -469,22 +486,37 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                                 .colorScheme.onSecondary),
                                   ),
                                 ),
-                                Padding(
-                                  padding: context.horizontalPaddingNormal,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      _showModalBottomSheet(context, radius);
-                                    },
-                                    child: Text(
-                                      "Çalışan Ekle",
-                                      style: TextStyle(
-                                          color: context.colorScheme.onSurface),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: context.colorScheme.onError,
-                                    ),
-                                  ),
-                                )
+                                _viewModel.items.access == "3"
+                                    ? Padding(
+                                        padding:
+                                            context.horizontalPaddingNormal,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            ApplicationConstants
+                                                .instance!.accessLevel
+                                                .clear();
+                                            ApplicationConstants
+                                                .instance!.userId
+                                                .clear();
+
+                                            _showModalBottomSheet(
+                                                context,
+                                                radius,
+                                                _contactViewModel.items.users);
+                                          },
+                                          child: Text(
+                                            "Çalışan Ekle",
+                                            style: TextStyle(
+                                                color: context
+                                                    .colorScheme.onSurface),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            primary:
+                                                context.colorScheme.onError,
+                                          ),
+                                        ),
+                                      )
+                                    : const SizedBox()
                               ],
                             ),
                           ),
@@ -499,84 +531,127 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                   children: [
                                     Padding(
                                       padding: context.paddingLow,
-                                      child: ExpansionTile(
-                                        title: BodyText1Copy(
-                                            data: _viewModel.items
-                                                    .worker?[index].full_name ??
-                                                "Geçerli isim bulunamadı."),
-                                        subtitle: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                      child: Slidable(
+                                        actionPane:
+                                            const SlidableDrawerActionPane(),
+                                        secondaryActions: [
+                                          IconSlideAction(
+                                            color: context
+                                                .colorScheme.primaryVariant,
+                                            caption: 'Sil',
+                                            icon: Icons.delete,
+                                            onTap: () async {
+                                              String token = ApplicationConstants.instance!.token;
+                                              Dio dio = Dio();
+                                              await dio.post("http://192.168.3.53/api/Companys/delete_access?token=$token&user_id=${_viewModel.items.worker?[index].id}&company_id=${_viewModel.items.id}");
+                                              _viewModel.fetchItems(token, _viewModel.items.id ?? "");
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  backgroundColor: context
+                                                      .colorScheme
+                                                      .secondaryVariant,
+                                                  duration:
+                                                      context.durationSlow,
+                                                  content: BodyText2Copy(
+                                                    data:
+                                                        "Çalışan başarıyla silindi !",
+                                                    color: context
+                                                        .colorScheme.onSurface,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                        child: ExpansionTile(
+                                          title: BodyText1Copy(
+                                              data: _viewModel
+                                                      .items
+                                                      .worker?[index]
+                                                      .full_name ??
+                                                  "Geçerli isim bulunamadı."),
+                                          subtitle: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(_viewModel.items
+                                                      .worker?[index].email ??
+                                                  "Geçerli eposta adresi bulunamadı."),
+                                              context.emptySizedWidthBoxLow3x,
+                                              Text(_viewModel
+                                                      .items
+                                                      .worker?[index]
+                                                      .telephone ??
+                                                  "Geçerli telefon numarası bulunamadı."),
+                                            ],
+                                          ),
+                                          leading: const CircleAvatar(
+                                            radius: 30,
+                                            backgroundImage: NetworkImage(
+                                              "http://192.168.3.53/assets/images/users/user0.jpg",
+                                            ),
+                                          ),
+                                          expandedAlignment:
+                                              Alignment.centerLeft,
                                           children: [
-                                            Text(_viewModel.items.worker?[index]
-                                                    .email ??
-                                                "Geçerli eposta adresi bulunamadı."),
-                                            context.emptySizedWidthBoxLow3x,
-                                            Text(_viewModel.items.worker?[index]
-                                                    .telephone ??
-                                                "Geçerli telefon numarası bulunamadı."),
+                                            context.emptySizedHeightBoxLow3x,
+                                            Padding(
+                                              padding: context
+                                                  .horizontalPaddingNormal,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "Meslek: ",
+                                                    style: TextStyle(
+                                                        color: context
+                                                            .colorScheme
+                                                            .onBackground),
+                                                  ),
+                                                  context
+                                                      .emptySizedWidthBoxLow3x,
+                                                  Text(_viewModel.items
+                                                          .worker?[index].job ??
+                                                      "Geçerli meslek bulunamadı."),
+                                                ],
+                                              ),
+                                            ),
+                                            const Divider(
+                                              thickness: 2,
+                                              indent: 15,
+                                              endIndent: 15,
+                                            ),
+                                            context.emptySizedHeightBoxLow,
+                                            Padding(
+                                              padding: context
+                                                  .horizontalPaddingNormal,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "Doğum Tarihi",
+                                                    style: TextStyle(
+                                                        color: context
+                                                            .colorScheme
+                                                            .onBackground),
+                                                  ),
+                                                  context
+                                                      .emptySizedWidthBoxLow3x,
+                                                  Text(_viewModel
+                                                          .items
+                                                          .worker?[index]
+                                                          .birthday ??
+                                                      ""),
+                                                ],
+                                              ),
+                                            ),
+                                            const Divider(
+                                              thickness: 2,
+                                              indent: 15,
+                                              endIndent: 15,
+                                            ),
+                                            context.emptySizedHeightBoxLow3x,
                                           ],
                                         ),
-                                        leading: const CircleAvatar(
-                                          radius: 30,
-                                          backgroundImage: NetworkImage(
-                                            "http://192.168.3.53/assets/images/users/user0.jpg",
-                                          ),
-                                        ),
-                                        expandedAlignment: Alignment.centerLeft,
-                                        children: [
-                                          context.emptySizedHeightBoxLow3x,
-                                          Padding(
-                                            padding:
-                                                context.horizontalPaddingNormal,
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  "Meslek: ",
-                                                  style: TextStyle(
-                                                      color: context.colorScheme
-                                                          .onBackground),
-                                                ),
-                                                context.emptySizedWidthBoxLow3x,
-                                                Text(_viewModel.items
-                                                        .worker?[index].job ??
-                                                    "Geçerli meslek bulunamadı."),
-                                              ],
-                                            ),
-                                          ),
-                                          const Divider(
-                                            thickness: 2,
-                                            indent: 15,
-                                            endIndent: 15,
-                                          ),
-                                          context.emptySizedHeightBoxLow,
-                                          Padding(
-                                            padding:
-                                                context.horizontalPaddingNormal,
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  "Doğum Tarihi",
-                                                  style: TextStyle(
-                                                      color: context.colorScheme
-                                                          .onBackground),
-                                                ),
-                                                context.emptySizedWidthBoxLow3x,
-                                                Text(_viewModel
-                                                        .items
-                                                        .worker?[index]
-                                                        .birthday ??
-                                                    ""),
-                                              ],
-                                            ),
-                                          ),
-                                          const Divider(
-                                            thickness: 2,
-                                            indent: 15,
-                                            endIndent: 15,
-                                          ),
-                                          context.emptySizedHeightBoxLow3x,
-                                        ],
                                       ),
                                     ),
                                     const Divider(
@@ -602,7 +677,7 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
     );
   }
 
-  _showModalBottomSheet(context, double radius) {
+  _showModalBottomSheet(context, double radius, List<Users>? users) {
     showModalBottomSheet(
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
@@ -634,7 +709,6 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
               ),
               context.emptySizedHeightBoxLow3x,
               Row(
-                // ignore: prefer_const_literals_to_create_immutables
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const BodyText1Copy(data: "Çalışan Ekle"),
@@ -654,28 +728,16 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
               ),
               context.emptySizedHeightBoxLow3x,
               Expanded(
-                child: Container(
-                  padding: context.paddingNormal,
-                  decoration: BoxDecoration(
-                    border:
-                        Border.all(color: context.colorScheme.secondaryVariant),
-                  ),
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: 10,
-                    itemBuilder: (context, index) => Padding(
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: users?.length ?? 0,
+                  itemBuilder: (context, index) => Padding(
                       padding: context.paddingLow,
-                      child: Card(
-                        color: context.colorScheme.secondary,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: context.lowBorderRadius),
-                        elevation: 5,
-                        child: const ListTile(
-                          title: BodyText2Copy(data: "çalisan ismi"),
-                        ),
-                      ),
-                    ),
-                  ),
+                      child: CheckBoxCardV2(
+                        isSelect: users![index].isSelect,
+                        data: users[index].full_name ?? "",
+                        userId: users[index].id ?? "",
+                      )),
                 ),
               ),
               Padding(
@@ -695,7 +757,25 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                     ),
                     context.emptySizedWidthBoxLow,
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        String token = ApplicationConstants.instance!.token;
+                        List<String> userId =
+                            ApplicationConstants.instance!.userId;
+                        List<String> accesLevel =
+                            ApplicationConstants.instance!.accessLevel;
+                        Dio dio = Dio();
+                        for (var i = 0;
+                            i <
+                                ApplicationConstants
+                                    .instance!.accessLevel.length;
+                            i++) {
+                          await dio.post(
+                              "http://192.168.3.53/api/Companys/new_access?token=$token&user_id=${userId[i]}&company_id=${_viewModel.items.id}&access=${accesLevel[i]}");
+                          _viewModel.fetchItems(
+                              token, _viewModel.items.id ?? "");
+                          Navigator.of(context).pop();
+                        }
+                      },
                       child: BodyText2Copy(
                           data: "Ekle", color: context.colorScheme.onSurface),
                       style: ElevatedButton.styleFrom(

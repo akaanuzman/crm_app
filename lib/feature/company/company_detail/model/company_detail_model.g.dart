@@ -11,6 +11,7 @@ CompanyDetailModel _$CompanyDetailModelFromJson(Map<String, dynamic> json) {
     message: json['message'] as String?,
     userid: json['userid'] as String?,
     id: json['id'] as String?,
+    access: json['access'] as String?,
     worker: (json['worker'] as List<dynamic>?)
         ?.map((e) => Worker.fromJson(e as Map<String, dynamic>))
         .toList(),
@@ -34,6 +35,7 @@ Map<String, dynamic> _$CompanyDetailModelToJson(CompanyDetailModel instance) =>
       'message': instance.message,
       'userid': instance.userid,
       'id': instance.id,
+      'access': instance.access,
       'worker': instance.worker,
       'name': instance.name,
       'c_name': instance.c_name,
@@ -53,6 +55,7 @@ Worker _$WorkerFromJson(Map<String, dynamic> json) {
   return Worker(
     full_name: json['full_name'] as String?,
     email: json['email'] as String?,
+    id: json['id'] as String?,
     photo: json['photo'] as String?,
     telephone: json['telephone'] as String?,
     detail: json['detail'] as String?,
@@ -65,6 +68,7 @@ Worker _$WorkerFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$WorkerToJson(Worker instance) => <String, dynamic>{
       'full_name': instance.full_name,
       'email': instance.email,
+      'id': instance.id,
       'photo': instance.photo,
       'telephone': instance.telephone,
       'detail': instance.detail,

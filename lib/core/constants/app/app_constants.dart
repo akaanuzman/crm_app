@@ -16,4 +16,5 @@ class ApplicationConstants {
   String projectId = "";
   List<String> guiId = [];
   List<String> userId = [];
+  List<String> accessLevel = [];
 }

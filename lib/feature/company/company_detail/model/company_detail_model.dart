@@ -9,6 +9,7 @@ class CompanyDetailModel {
   String? message;
   String? userid;
   String? id;
+  String? access;
   List<Worker>? worker;
   String? name;
   String? c_name;
@@ -27,6 +28,7 @@ class CompanyDetailModel {
       {this.message,
       this.userid,
       this.id,
+      this.access,
       this.worker,
       this.name,
       this.c_name,
@@ -51,6 +53,7 @@ class CompanyDetailModel {
 class Worker {
   String? full_name;
   String? email;
+  String? id;
   String? photo;
   String? telephone;
   String? detail;
@@ -61,6 +64,7 @@ class Worker {
   Worker(
       {this.full_name,
       this.email,
+      this.id,
       this.photo,
       this.telephone,
       this.detail,
