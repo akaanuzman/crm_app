@@ -1,6 +1,7 @@
-import '../../../core/constants/app/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
+
+import '../../../core/constants/app/app_constants.dart';
 
 class CheckBoxCard extends StatefulWidget {
   final bool isSelect;
