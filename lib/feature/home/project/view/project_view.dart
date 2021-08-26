@@ -1,4 +1,5 @@
 import 'package:boardview/boardview_controller.dart';
+import 'package:cool_alert/cool_alert.dart';
 import '../../../../core/components/row/row_icon_text.dart';
 import '../../../../core/components/row/row_space_between_text.dart';
 import '../../../../core/components/text/body_text1_copy.dart';
@@ -159,21 +160,23 @@ class _ProjectViewState extends State<ProjectView> {
             itemCount: viewModel.items.projects?[index].users?.length,
             itemBuilder: (context, indexV2) {
               return GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) {
-                      debugPrint(" Username: ${viewModel.items.projects?[indexV2].user_name} $indexV2");
-                      return ProfileView(
-                          username:
-                              viewModel.items.projects?[indexV2].user_name ?? "",
-                        );
-                    }));
-              },
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    viewModel.items.projects?[index].users?[indexV2].photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
-              ),
-            );
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    debugPrint(
+                        " Username: ${viewModel.items.projects?[indexV2].user_name} $indexV2");
+                    return ProfileView(
+                      username:
+                          viewModel.items.projects?[indexV2].user_name ?? "",
+                    );
+                  }));
+                },
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      viewModel.items.projects?[index].users?[indexV2].photo ??
+                          "http://192.168.3.53/assets/images/users/user0.jpg"),
+                ),
+              );
             },
           ),
         ),
@@ -519,7 +522,18 @@ class PopUpItemBody extends StatelessWidget {
                 ),
                 context.emptySizedWidthBoxLow,
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    CoolAlert.show(
+                      context: context,
+                      type: CoolAlertType.info,
+                      title: "",
+                      text: 'Kişi uygulamadan kalıcı olarak silinecektir. \n Emin misiniz ?',
+                      loopAnimation: false,
+                      cancelBtnText: "Hayır",
+                      showCancelBtn: true,
+                      confirmBtnColor: context.colorScheme.primaryVariant,
+                    );
+                  },
                   child: BodyText2Copy(
                       data: "Ekle", color: context.colorScheme.onSurface),
                   style: ElevatedButton.styleFrom(

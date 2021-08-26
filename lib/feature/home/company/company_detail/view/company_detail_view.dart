@@ -4,6 +4,7 @@
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/core/constants/app/app_constants.dart';
+import 'package:crm_app/feature/home/company/viewmodel/company_view_model.dart';
 import 'package:crm_app/feature/home/contact/model/contact_model.dart';
 import 'package:crm_app/feature/home/contact/viewmodel/contact_view_model.dart';
 import 'package:crm_app/product/widgets/card/check_box_card_v2.dart';
@@ -29,6 +30,7 @@ class CompanyDetailView extends StatefulWidget {
 
 class _CompanyDetailViewState extends State<CompanyDetailView> {
   final CompanyDetailViewModel _viewModel = CompanyDetailViewModel();
+  final CompanyViewModel _companyViewModel = CompanyViewModel();
   final ContactViewModel _contactViewModel = ContactViewModel();
 
   @override
@@ -36,6 +38,7 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
     super.initState();
     _viewModel.fetchItems(ApplicationConstants.instance!.token, widget.id);
     _contactViewModel.fetchItems(ApplicationConstants.instance!.token);
+    _companyViewModel.fetchItems(ApplicationConstants.instance!.token);
   }
 
   @override
@@ -54,8 +57,8 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
         centerTitle: true,
       ),
       floatingActionButton:
-          _viewModel.items.access == "2" || _viewModel.items.access == "3"
-              ? PopupItemLauncher(
+          // _viewModel.items.access == "2" || _viewModel.items.access == "3" ?
+               PopupItemLauncher(
                   tag: 'Proje Ekle',
                   child: Material(
                     color: context.colorScheme.surface,
@@ -79,8 +82,8 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                       viewModel: _viewModel,
                     ),
                   ),
-                )
-              : null,
+                ),
+              // : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       body: Observer(
         builder: (context) => SingleChildScrollView(
@@ -329,6 +332,7 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                               ),
                                             ),
                                           );
+                                          _companyViewModel.fetchItems(token);
                                         },
                                         child: Text(
                                           "Firmayı sil",

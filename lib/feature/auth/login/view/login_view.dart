@@ -1,9 +1,9 @@
-import '../../../../core/components/text/body_text1_copy.dart';
-import '../../../../core/components/text/body_text2_copy.dart';
-import '../../../home/bottomtab/view/bottomtab_view.dart';
+import 'package:cool_alert/cool_alert.dart';
+import 'package:crm_app/core/components/text/body_text1_copy.dart';
+import 'package:crm_app/core/components/text/body_text2_copy.dart';
+import 'package:crm_app/feature/home/bottomtab/view/bottomtab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-
 
 import '../viewmodel/login_view_model.dart';
 
@@ -110,11 +110,21 @@ class _LoginViewState extends State<LoginView> {
                     if (_viewModel.item![1] == 'success') {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => BottomTabView()));
-                      _showDialog(
-                          context,
-                          context.lowValue,
-                          "Doğru kullanıcı adı ve şifre !",
-                          "Sisteme başarıyla giriş yapıldı.");
+                      CoolAlert.show(
+                        context: context,
+                        type: CoolAlertType.success,
+                        title: "",
+                        text:
+                            'Doğru kullanıcı adı ve şifre !\n Sisteme başarıyla giriş yapıldı.',
+                        confirmBtnText: "Tamam",
+                        loopAnimation: false,
+                        confirmBtnColor: context.colorScheme.onPrimary,
+                      );
+                      // _showDialog(
+                      //     context,
+                      //     context.lowValue,
+                      //     "Doğru kullanıcı adı ve şifre !",
+                      //     "Sisteme başarıyla giriş yapıldı.");
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: context.colorScheme.secondaryVariant,
@@ -189,7 +199,11 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     BodyText2Copy(data: content),
                     context.emptySizedHeightBoxLow,
-                     Icon(Icons.check_circle,size: context.dynamicHeight(0.1),color: context.colorScheme.onPrimary,)
+                    Icon(
+                      Icons.check_circle,
+                      size: context.dynamicHeight(0.1),
+                      color: context.colorScheme.onPrimary,
+                    )
                   ],
                 ),
               ),
