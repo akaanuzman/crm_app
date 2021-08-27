@@ -1,10 +1,11 @@
 import 'package:cool_alert/cool_alert.dart';
-import 'package:crm_app/core/components/text/body_text1_copy.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
-import 'package:crm_app/feature/home/bottomtab/view/bottomtab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
+import '../../../../core/components/text/body_text1_copy.dart';
+import '../../../../core/components/text/body_text2_copy.dart';
+import '../../../home/bottomtab/view/bottomtab_view.dart';
+import '../../reset_pass/view/reset_pass_view.dart';
 import '../viewmodel/login_view_model.dart';
 
 class LoginView extends StatefulWidget {
@@ -90,12 +91,17 @@ class _LoginViewState extends State<LoginView> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: context.paddingLow,
-                  child: Text(
-                    "Şifrenizi mi unuttunuz ?",
-                    style: TextStyle(
-                        color: context.colorScheme.surface,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ResetPass()));
+                      },
+                      child: Text(
+                        "Şifrenizi mi unuttunuz ?",
+                        style: TextStyle(
+                            color: context.colorScheme.surface,
+                            fontWeight: FontWeight.bold),
+                      )),
                 )),
             context.emptySizedHeightBoxLow3x,
             SizedBox(

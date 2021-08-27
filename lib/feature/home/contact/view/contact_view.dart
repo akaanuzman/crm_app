@@ -1,23 +1,19 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:cool_alert/cool_alert.dart';
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/core/constants/app/app_constants.dart';
 import 'package:dio/dio.dart';
-import 'package:image_picker/image_picker.dart';
-
-import '../contact_detail/view/contact_detail_guide_view.dart';
-
-import '../viewmodel/contact_view_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
 
+import '../contact_detail/view/contact_detail_guide_view.dart';
 import '../contact_detail/view/contact_detail_users_view.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:kartal/kartal.dart';
+import '../viewmodel/contact_view_model.dart';
 
 class ContactView extends StatefulWidget {
   const ContactView({Key? key}) : super(key: key);
