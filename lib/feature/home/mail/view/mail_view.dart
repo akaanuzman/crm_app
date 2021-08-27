@@ -1,3 +1,8 @@
+
+
+import 'package:crm_app/core/components/text/bold_text.dart';
+import 'package:flutter_html/flutter_html.dart';
+
 import '../../../../core/components/text/body_text1_copy.dart';
 import '../../../../core/components/text/body_text2_copy.dart';
 import '../../../../core/constants/app/app_constants.dart';
@@ -7,7 +12,6 @@ import 'send_mail/view/send_mail_view.dart';
 
 import '../viewmodel/mail_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -315,7 +319,7 @@ class MailView extends StatelessWidget {
             duration: context.durationNormal,
             padding: context.paddingNormal,
             height: viewModel.isContainerHeightChange
-                ? context.dynamicHeight(0.45)
+                ? context.dynamicHeight(0.48)
                 : context.dynamicHeight(0.9),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -378,9 +382,17 @@ class MailView extends StatelessWidget {
                 SizedBox(
                   height: context.dynamicHeight(0.1),
                   child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
                     child: Padding(
                       padding: context.horizontalPaddingNormal,
-                      child: Text(viewModel.items.emails?[index].content ?? ""),
+                      child: Html(
+                        data: viewModel.items.emails?[index].content ?? "",
+                        customRender: {
+                          "p": (context,child){
+                            return BoldText(data: "data");
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),

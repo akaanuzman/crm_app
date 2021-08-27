@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flutter_html: ^2.1.1
   cool_alert: ^1.1.0
   animated_splash_screen: ^1.1.0
   boardview: ^0.2.2

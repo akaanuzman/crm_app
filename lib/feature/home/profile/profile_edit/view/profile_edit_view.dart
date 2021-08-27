@@ -65,7 +65,8 @@ class ProfileEditView extends StatelessWidget {
                     child: const Text("İsim:"),
                   ),
                   context.emptySizedHeightBoxLow,
-                  TextField(
+                  TextFormField(
+                    initialValue: _viewModel.items.full_name ?? "",
                     controller: nameController,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.person),
