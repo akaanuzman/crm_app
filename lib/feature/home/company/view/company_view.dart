@@ -8,7 +8,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../viewmodel/company_view_model.dart';
 
-
 import '../company_detail/view/company_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
@@ -80,9 +79,9 @@ class CompanyView extends StatelessWidget {
                           data: _viewModel.items.company?[index].name ??
                               "Geçerli firma adı bulunamadı."),
                       leading: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            _viewModel.items.company?[index].photo ??
-                                "http://192.168.3.53/assets/images/companies/company.png"),
+                        backgroundImage: NetworkImage(_viewModel
+                                .items.company?[index].photo ??
+                            "http://192.168.3.53/assets/images/companies/company.png"),
                         backgroundColor: context.colorScheme.onSurface,
                       ),
                       expandedAlignment: Alignment.centerLeft,
@@ -443,12 +442,13 @@ class PopUpItemBody extends StatelessWidget {
                   ),
                   context.emptySizedWidthBoxLow,
                   ElevatedButton(
-                    onPressed: () async {
+                    onPressed: () {
                       String token = ApplicationConstants.instance!.token;
                       Dio dio = Dio();
-                      await dio.post(
+                      dio.post(
                           "http://192.168.3.53/api/Companys/new_company?token=$token&name=${nameController.text}&email=${mailController.text}&telephone=${phoneController.text}&web_site=${webSiteController.text}&tax_number=${taxNumberController.text}&tax_department=${taxDepartmentController.text}&detail=${detailController.text}&location=${locationController.text}");
                       viewModel.fetchItems(token);
+
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

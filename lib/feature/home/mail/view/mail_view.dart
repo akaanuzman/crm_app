@@ -389,7 +389,7 @@ class MailView extends StatelessWidget {
                         data: viewModel.items.emails?[index].content ?? "",
                         customRender: {
                           "p": (context,child){
-                            return BoldText(data: "data");
+                            return const BoldText(data: "data");
                           }
                         },
                       ),

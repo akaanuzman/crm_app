@@ -1,4 +1,9 @@
 
+// ignore_for_file: duplicate_import
+
+import 'package:crm_app/product/widgets/kanban/kanban.dart';
+import 'package:crm_app/product/widgets/kanban/kanban.dart';
+
 import '../../../../../core/components/text/body_text1_copy.dart';
 import '../../../../../core/components/text/body_text2_copy.dart';
 import '../../../../../core/components/text/bold_text.dart';
@@ -509,7 +514,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                             widget._viewModel.onChanged(value!);
                             value == "Kanban"
                                 ? Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const Scaffold()))
+                                    builder: (context) =>  BoardViewExample()))
                                 : null;
                           });
                         },

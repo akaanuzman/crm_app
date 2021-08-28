@@ -1,12 +1,28 @@
-class BoardListObject {
-  final String title;
-  List<BoardItemObject>? items;
-  BoardListObject({required this.title, this.items});
+// ignore_for_file: unnecessary_this
+
+class BoardItemObject{
+
+  String? title;
+
+  BoardItemObject({this.title}){
+    if(this.title == null){
+      this.title = "";
+    }
+  }
+
 }
 
-class BoardItemObject {
-  final String title;
-  final String from;
+class BoardListObject{
 
-  BoardItemObject({this.title = "", this.from = ""});
+  String? title;
+  List<BoardItemObject>? items;
+
+  BoardListObject({this.title,this.items}){
+    if(this.title == null){
+      this.title = "";
+    }
+    if(this.items == null){
+      this.items = [];
+    }
+  }
 }
