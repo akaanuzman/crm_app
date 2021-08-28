@@ -6,9 +6,7 @@ import 'package:crm_app/core/constants/app/app_constants.dart';
 import 'package:crm_app/feature/home/profile/viewmodel/profile/profile_view_model.dart';
 import 'package:dio/dio.dart';
 
-
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -16,19 +14,19 @@ import 'package:geira_icons/geira_icons.dart';
 import 'package:kartal/kartal.dart';
 
 class ProfileEditView extends StatelessWidget {
-  var nameController = TextEditingController();
-  var phoneController = TextEditingController();
-  var detailController = TextEditingController();
-  var jobController = TextEditingController();
-  var birthDayController = TextEditingController();
-  var webSiteController = TextEditingController();
-  var locationController = TextEditingController();
-  var instagramController = TextEditingController();
-  var linkedInController = TextEditingController();
-  var gitHubController = TextEditingController();
-  var twitterController = TextEditingController();
-  var facebookController = TextEditingController();
   final ProfileViewModel _viewModel = ProfileViewModel();
+  String name = "";
+  String phone = "";
+  String detail = "";
+  String location = "";
+  String birthDay = "";
+  String job = "";
+  String webSite = "";
+  String instagram = "";
+  String linkedIn = "";
+  String gitHub = "";
+  String twitter = "";
+  String facebook = "";
   ProfileEditView({Key? key}) : super(key: key) {
     _viewModel.fetchItems(ApplicationConstants.instance!.token, "");
   }
@@ -66,8 +64,7 @@ class ProfileEditView extends StatelessWidget {
                   ),
                   context.emptySizedHeightBoxLow,
                   TextFormField(
-                    initialValue: _viewModel.items.full_name ?? "",
-                    controller: nameController,
+                    initialValue: _viewModel.items.full_name,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.person),
                       labelText: 'İsim giriniz.',
@@ -83,6 +80,7 @@ class ProfileEditView extends StatelessWidget {
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
+                    onSaved: (value) => name = value!,
                   ),
                   context.emptySizedHeightBoxLow,
                   Padding(
@@ -90,8 +88,8 @@ class ProfileEditView extends StatelessWidget {
                     child: const Text("Telefon:"),
                   ),
                   context.emptySizedHeightBoxLow,
-                  TextField(
-                    controller: phoneController,
+                  TextFormField(
+                    initialValue: _viewModel.items.telephone,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.phone),
@@ -110,6 +108,7 @@ class ProfileEditView extends StatelessWidget {
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
+                    onSaved: (value) => phone = value!,
                   ),
                   context.emptySizedHeightBoxLow,
                   // Padding(
@@ -139,8 +138,8 @@ class ProfileEditView extends StatelessWidget {
                     child: const Text("Kısaca Hakkınızda:"),
                   ),
                   context.emptySizedHeightBoxLow,
-                  TextField(
-                    controller: detailController,
+                  TextFormField(
+                    initialValue: _viewModel.items.detail,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.description),
                       hintText: _viewModel.items.detail ??
@@ -159,6 +158,7 @@ class ProfileEditView extends StatelessWidget {
                     ),
                     cursorColor: context.colorScheme.onSecondary,
                     maxLines: 6,
+                    onSaved: (value) => detail = value!,
                   ),
                   context.emptySizedHeightBoxLow,
                   Padding(
@@ -166,12 +166,11 @@ class ProfileEditView extends StatelessWidget {
                     child: const Text("Konum:"),
                   ),
                   context.emptySizedHeightBoxLow,
-                  TextField(
-                    controller: locationController,
+                  TextFormField(
+                    initialValue: _viewModel.items.location,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.location_on),
-                      hintText:
-                          _viewModel.items.location ?? "Konumuzu giriniz.",
+                      hintText: "Konumuzu giriniz.",
                       labelText: 'Konum',
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -185,14 +184,15 @@ class ProfileEditView extends StatelessWidget {
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
+                    onSaved: (value) => location = value!,
                   ),
                   context.emptySizedHeightBoxLow,
                   Padding(
                     padding: context.paddingLow,
                     child: const Text("Başlama Tarihi"),
                   ),
-                  TextField(
-                    controller: birthDayController,
+                  TextFormField(
+                    initialValue: _viewModel.items.birthday,
                     decoration: InputDecoration(
                       hintText: 'mm/dd/yy',
                       prefixIcon: IconButton(
@@ -217,6 +217,7 @@ class ProfileEditView extends StatelessWidget {
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
+                    onSaved: (value) => birthDay = value!,
                   ),
                   context.emptySizedHeightBoxLow3x,
                   Center(
@@ -260,11 +261,11 @@ class ProfileEditView extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                            child: TextField(
+                            child: TextFormField(
+                              initialValue: _viewModel.items.company_name,
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(Icons.business),
-                                hintText: _viewModel.items.company_name ??
-                                    "Şirket ismi giriniz.",
+                                hintText: "Şirket ismi giriniz.",
                                 labelText: 'Şirket ismi',
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: context.lowBorderRadius,
@@ -282,12 +283,11 @@ class ProfileEditView extends StatelessWidget {
                           ),
                           context.emptySizedWidthBoxLow3x,
                           Expanded(
-                            child: TextField(
-                              controller: jobController,
+                            child: TextFormField(
+                              initialValue: _viewModel.items.job,
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(Icons.work),
-                                hintText:
-                                    _viewModel.items.job ?? "Meslek giriniz.",
+                                hintText: "Meslek giriniz.",
                                 labelText: 'Meslek',
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: context.lowBorderRadius,
@@ -301,6 +301,7 @@ class ProfileEditView extends StatelessWidget {
                                 ),
                               ),
                               cursorColor: context.colorScheme.onSecondary,
+                              onSaved: (value) => job = value!,
                             ),
                           ),
                         ],
@@ -334,10 +335,10 @@ class ProfileEditView extends StatelessWidget {
                     padding: context.paddingLow,
                     child: const Text("Kişisel Siteniz"),
                   ),
-                  TextField(
-                    controller: webSiteController,
+                  TextFormField(
+                    initialValue: _viewModel.items.web_site,
                     decoration: InputDecoration(
-                      hintText: _viewModel.items.web_site ?? 'Url',
+                      hintText: 'Url',
                       prefixIcon: const Icon(Icons.language),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -351,16 +352,18 @@ class ProfileEditView extends StatelessWidget {
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
+                    onSaved: (value) => webSite = value!,
+
                   ),
                   context.emptySizedHeightBoxLow,
                   Padding(
                     padding: context.paddingLow,
                     child: const Text("Instagram"),
                   ),
-                  TextField(
-                    controller: instagramController,
+                  TextFormField(
+                    initialValue: _viewModel.items.instagram,
                     decoration: InputDecoration(
-                      hintText: _viewModel.items.instagram ?? 'Url',
+                      hintText: 'Url',
                       prefixIcon: const Icon(
                         GIcons.instagram,
                         size: 34,
@@ -377,16 +380,18 @@ class ProfileEditView extends StatelessWidget {
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
+                    onSaved: (value) => instagram = value!,
+
                   ),
                   context.emptySizedHeightBoxLow,
                   Padding(
                     padding: context.paddingLow,
                     child: const Text("Linkedin"),
                   ),
-                  TextField(
-                    controller: linkedInController,
+                  TextFormField(
+                    initialValue: _viewModel.items.linkedin,
                     decoration: InputDecoration(
-                      hintText: _viewModel.items.linkedin ?? 'Url',
+                      hintText: 'Url',
                       prefixIcon: const Icon(
                         EvilIcons.sc_linkedin,
                       ),
@@ -402,16 +407,18 @@ class ProfileEditView extends StatelessWidget {
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
+                    onSaved: (value) => linkedIn = value!,
+
                   ),
                   context.emptySizedHeightBoxLow,
                   Padding(
                     padding: context.paddingLow,
                     child: const Text("Github"),
                   ),
-                  TextField(
-                    controller: gitHubController,
+                  TextFormField(
+                    initialValue: _viewModel.items.github,
                     decoration: InputDecoration(
-                      hintText: _viewModel.items.github ?? 'Url',
+                      hintText: 'Url',
                       prefixIcon: const Icon(EvilIcons.sc_github),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -425,16 +432,18 @@ class ProfileEditView extends StatelessWidget {
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
+                    onSaved: (value) => gitHub = value!,
+
                   ),
                   context.emptySizedHeightBoxLow,
                   Padding(
                     padding: context.paddingLow,
                     child: const Text("Twitter"),
                   ),
-                  TextField(
-                    controller: twitterController,
+                  TextFormField(
+                    initialValue: _viewModel.items.twitter,
                     decoration: InputDecoration(
-                      hintText: _viewModel.items.twitter ?? 'Url',
+                      hintText: 'Url',
                       prefixIcon: const Icon(EvilIcons.sc_twitter),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -448,16 +457,18 @@ class ProfileEditView extends StatelessWidget {
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
+                    onSaved: (value) => twitter = value!,
+
                   ),
                   context.emptySizedHeightBoxLow,
                   Padding(
                     padding: context.paddingLow,
                     child: const Text("Facebook"),
                   ),
-                  TextField(
-                    controller: facebookController,
+                  TextFormField(
+                    initialValue: _viewModel.items.facebook,
                     decoration: InputDecoration(
-                      hintText: _viewModel.items.facebook ?? 'Url',
+                      hintText: 'Url',
                       prefixIcon: const Icon(EvilIcons.sc_facebook),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -471,6 +482,8 @@ class ProfileEditView extends StatelessWidget {
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
+                    onSaved:  (value) => facebook = value!,
+
                   ),
                   context.emptySizedHeightBoxLow,
 
@@ -478,22 +491,23 @@ class ProfileEditView extends StatelessWidget {
                     alignment: Alignment.bottomRight,
                     child: ElevatedButton(
                       onPressed: () async {
-                        String token = ApplicationConstants.instance!.token;
-                        Dio dio = Dio();
-                        await dio.post(
-                            "http://192.168.3.53/api/Persons/update_my_profile?token=$token&full_name=${nameController.text}&telephone=${phoneController.text}&detail=${detailController.text}&company_id=1&job=${jobController.text}&birthday=${birthDayController.text}&web_site=${webSiteController.text}&location=${locationController.text}&instagram=${instagramController.text}&linkedin=${linkedInController.text}&github=${gitHubController.text}&twitter=${twitterController.text}&facebook=${facebookController.text}");
-                        _viewModel.fetchItems(token, "");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor:
-                                context.colorScheme.secondaryVariant,
-                            duration: context.durationSlow,
-                            content: BodyText2Copy(
-                              data: "Profil bilgileri başarıyla güncellendi !",
-                              color: context.colorScheme.onSurface,
-                            ),
-                          ),
-                        );
+                        debugPrint(name);
+                        // String token = ApplicationConstants.instance!.token;
+                        // Dio dio = Dio();
+                        // await dio.post(
+                        //     "http://192.168.3.53/api/Persons/update_my_profile?token=$token&full_name=${nameController.text}&telephone=${phoneController.text}&detail=${detailController.text}&company_id=1&job=${jobController.text}&birthday=${birthDayController.text}&web_site=${webSiteController.text}&location=${locationController.text}&instagram=${instagramController.text}&linkedin=${linkedInController.text}&github=${gitHubController.text}&twitter=${twitterController.text}&facebook=${facebookController.text}");
+                        // _viewModel.fetchItems(token, "");
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   SnackBar(
+                        //     backgroundColor:
+                        //         context.colorScheme.secondaryVariant,
+                        //     duration: context.durationSlow,
+                        //     content: BodyText2Copy(
+                        //       data: "Profil bilgileri başarıyla güncellendi !",
+                        //       color: context.colorScheme.onSurface,
+                        //     ),
+                        //   ),
+                        // );
                       },
                       child: BodyText2Copy(
                           data: "Kaydet", color: context.colorScheme.onSurface),

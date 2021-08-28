@@ -54,6 +54,16 @@ class ResetPass extends StatelessWidget {
                           height: context.dynamicHeight(0.07),
                           child: ElevatedButton(
                             onPressed: () async {
+                              CoolAlert.show(
+                                context: context,
+                                type: CoolAlertType.info,
+                                title: "",
+                                text:
+                                    'Şifre sıfırlama isteğiniz başarılı !\n Lütfen mail adresinize gelen doğrulama kodunu giriniz.',
+                                confirmBtnText: "Tamam",
+                                loopAnimation: false,
+                                confirmBtnColor: context.colorScheme.onPrimary,
+                              );
                               Dio dio = Dio();
                               final response = await dio.get(
                                   "http://192.168.3.53/api/Foreign/lost_key?email=${emailController.text}");
@@ -229,7 +239,8 @@ class ResetPass extends StatelessWidget {
                               primary: context.colorScheme.onError),
                           onPressed: () {
                             Dio dio = Dio();
-                            dio.post("http://192.168.3.53/api/Persons/new_pass?email=${emailController.text}&pass=${passController.text}");
+                            dio.post(
+                                "http://192.168.3.53/api/Persons/new_pass?email=${emailController.text}&pass=${passController.text}");
                             CoolAlert.show(
                                 context: context,
                                 type: CoolAlertType.success,

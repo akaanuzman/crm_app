@@ -17,6 +17,9 @@ abstract class _LoginViewModelBase with Store {
   @observable
   List<String>? item;
 
+  @observable
+  bool isRememberMe = false;
+
   _LoginViewModelBase() {
     _loginService = LoginService(NetworkManager.instance!.dio);
   }
@@ -28,6 +31,11 @@ abstract class _LoginViewModelBase with Store {
   @action
   Future<void> fetchItems(String email, String password) async {
     item = await _loginService.fetchAllTask(email, password);
+  }
+
+  @action
+  void changeRememberMe() {
+    isRememberMe = !isRememberMe;
   }
 
 

@@ -24,6 +24,21 @@ mixin _$LoginViewModel on _LoginViewModelBase, Store {
     });
   }
 
+  final _$isRememberMeAtom = Atom(name: '_LoginViewModelBase.isRememberMe');
+
+  @override
+  bool get isRememberMe {
+    _$isRememberMeAtom.reportRead();
+    return super.isRememberMe;
+  }
+
+  @override
+  set isRememberMe(bool value) {
+    _$isRememberMeAtom.reportWrite(value, super.isRememberMe, () {
+      super.isRememberMe = value;
+    });
+  }
+
   final _$fetchItemsAsyncAction = AsyncAction('_LoginViewModelBase.fetchItems');
 
   @override
@@ -31,10 +46,25 @@ mixin _$LoginViewModel on _LoginViewModelBase, Store {
     return _$fetchItemsAsyncAction.run(() => super.fetchItems(email, password));
   }
 
+  final _$_LoginViewModelBaseActionController =
+      ActionController(name: '_LoginViewModelBase');
+
+  @override
+  void changeRememberMe() {
+    final _$actionInfo = _$_LoginViewModelBaseActionController.startAction(
+        name: '_LoginViewModelBase.changeRememberMe');
+    try {
+      return super.changeRememberMe();
+    } finally {
+      _$_LoginViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-item: ${item}
+item: ${item},
+isRememberMe: ${isRememberMe}
     ''';
   }
 }

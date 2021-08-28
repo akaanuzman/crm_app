@@ -1,5 +1,8 @@
 import 'package:cool_alert/cool_alert.dart';
+import 'package:crm_app/core/cache/cache_manager.dart';
+import 'package:crm_app/core/constants/app/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
 
 import '../../../../core/components/text/body_text1_copy.dart';
@@ -15,7 +18,7 @@ class LoginView extends StatefulWidget {
   State<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginViewState extends State<LoginView> with CacheManager {
   final LoginViewModel _viewModel = LoginViewModel();
 
   var emailController = TextEditingController();
@@ -87,11 +90,14 @@ class _LoginViewState extends State<LoginView> {
               cursorColor: context.colorScheme.onSecondary,
             ),
             context.emptySizedHeightBoxLow,
-            Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: context.paddingLow,
-                  child: TextButton(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: context.paddingLow,
+                    child: TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ResetPass()));
@@ -101,8 +107,28 @@ class _LoginViewState extends State<LoginView> {
                         style: TextStyle(
                             color: context.colorScheme.surface,
                             fontWeight: FontWeight.bold),
-                      )),
-                )),
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Observer(
+                      builder: (_) => Checkbox(
+                          activeColor: context.colorScheme.secondaryVariant,
+                          value: _viewModel.isRememberMe,
+                          onChanged: (value) => _viewModel.changeRememberMe()),
+                    ),
+                    Text(
+                      "Beni hatırla",
+                      style: TextStyle(
+                          color: context.colorScheme.secondaryVariant,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ],
+            ),
             context.emptySizedHeightBoxLow3x,
             SizedBox(
               width: double.infinity,
@@ -114,6 +140,11 @@ class _LoginViewState extends State<LoginView> {
                 onPressed: () {
                   if (_viewModel.item?[1] != null) {
                     if (_viewModel.item![1] == 'success') {
+                      if (_viewModel.isRememberMe) {
+                        saveToken(
+                            token: _viewModel.item?[0] ??
+                                ApplicationConstants.instance!.token);
+                      }
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => BottomTabView()));
                       CoolAlert.show(
