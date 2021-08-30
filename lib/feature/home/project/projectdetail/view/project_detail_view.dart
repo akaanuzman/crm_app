@@ -514,7 +514,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                             widget._viewModel.onChanged(value!);
                             value == "Kanban"
                                 ? Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>  BoardViewExample()))
+                                    builder: (context) =>  MyHomePage(title: '',)))
                                 : null;
                           });
                         },

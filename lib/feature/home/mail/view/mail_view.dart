@@ -1,5 +1,3 @@
-
-
 import 'package:crm_app/core/components/text/bold_text.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -307,6 +305,9 @@ class MailView extends StatelessWidget {
       int index, String id, String token) {
     var titleController = TextEditingController();
     var contentController = TextEditingController();
+    String htmlData = """
+    ${viewModel.items.emails?[index].content}
+    """;
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -386,12 +387,7 @@ class MailView extends StatelessWidget {
                     child: Padding(
                       padding: context.horizontalPaddingNormal,
                       child: Html(
-                        data: viewModel.items.emails?[index].content ?? "",
-                        customRender: {
-                          "p": (context,child){
-                            return const BoldText(data: "data");
-                          }
-                        },
+                        data:htmlData,
                       ),
                     ),
                   ),

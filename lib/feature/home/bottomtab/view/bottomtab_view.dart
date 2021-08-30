@@ -1,3 +1,5 @@
+import 'package:crm_app/feature/home/dashboards/view/dashboard_view.dart';
+
 import '../../../../core/components/card/card_icon_text.dart';
 import '../../../../core/components/row/row_flag_text.dart';
 import '../../../../core/components/text/body_text1_copy.dart';
@@ -10,7 +12,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
-
 
 import '../../company/view/company_view.dart';
 import '../../contact/view/contact_view.dart';
@@ -28,6 +29,8 @@ class BottomTabView extends StatelessWidget {
     final List<BottomTabModel> items = [
       BottomTabModel(
           title: "Proje", icon: Icons.assignment, child: ProjectView()),
+      BottomTabModel(
+          title: "Katmanlar", icon: Icons.inventory_2, child: const DashboardView()),
       BottomTabModel(
           title: "Rehber",
           icon: Icons.contacts_sharp,
@@ -321,8 +324,7 @@ class BottomTabView extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(context.lowValue),
         ),
-        title: const BodyText1Copy(
-            data: "Çıkış işlemi başarılı !"),
+        title: const BodyText1Copy(data: "Çıkış işlemi başarılı !"),
         content: const BodyText2Copy(data: "Başarıyla çıkış yapıldı."),
         actions: [
           ElevatedButton(
