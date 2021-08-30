@@ -4,6 +4,7 @@ import 'package:crm_app/core/components/row/row_icon_text.dart';
 import 'package:crm_app/core/components/row/row_space_between_text.dart';
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/bold_text.dart';
+import 'package:crm_app/feature/home/dashboards/dashboard_detail/view/dashboard_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kartal/kartal.dart';
@@ -65,7 +66,10 @@ class DashboardView extends StatelessWidget {
             shape: RoundedRectangleBorder(
                 borderRadius: context.normalBorderRadius),
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DashboardDetailView()));
+              },
               title: Padding(
                 padding: context.verticalPaddingLow,
                 child: BodyText1Copy(data: "Katman ismi"),
@@ -86,9 +90,11 @@ class DashboardView extends StatelessWidget {
           Text("Katman içeriği"),
           Row(
             children: [
-              _buildRowIconTextText(context, index,Icons.list,"0","Alt Katman"),
+              _buildRowIconTextText(
+                  context, index, Icons.list, "0", "Alt Katman"),
               context.emptySizedWidthBoxLow3x,
-              _buildRowIconTextText(context, index,Icons.chat_bubble_outline,"0","Yorum"),
+              _buildRowIconTextText(
+                  context, index, Icons.chat_bubble_outline, "0", "Yorum"),
             ],
           ),
           SizedBox(
@@ -120,13 +126,15 @@ class DashboardView extends StatelessWidget {
         ),
       );
 
-  Row _buildRowIconTextText(BuildContext context, int index,IconData icon,String firstData,String secondData) => Row(
+  Row _buildRowIconTextText(BuildContext context, int index, IconData icon,
+          String firstData, String secondData) =>
+      Row(
         children: [
-           Icon(icon),
+          Icon(icon),
           context.emptySizedWidthBoxLow,
           BoldText(data: firstData),
           context.emptySizedWidthBoxLow,
-           Text(
+          Text(
             secondData,
           ),
           context.emptySizedHeightBoxHigh

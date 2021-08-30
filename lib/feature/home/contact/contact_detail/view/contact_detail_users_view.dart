@@ -38,7 +38,6 @@ class ContactUsersDetailView extends StatelessWidget {
                     padding: context.paddingNormal,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      // ignore: prefer_const_literals_to_create_immutables
                       children: [
                         CircleAvatar(
                           backgroundImage: NetworkImage(
