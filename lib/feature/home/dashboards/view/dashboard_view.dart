@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:crm_app/core/components/row/row_icon_text.dart';
-import 'package:crm_app/core/components/row/row_space_between_text.dart';
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/bold_text.dart';
 import 'package:crm_app/feature/home/dashboards/dashboard_detail/view/dashboard_detail_view.dart';

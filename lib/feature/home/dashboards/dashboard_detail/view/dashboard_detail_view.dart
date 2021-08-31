@@ -35,38 +35,45 @@ class DashboardDetailView extends StatelessWidget {
                 context.emptySizedHeightBoxLow3x,
                 Expanded(
                   child: Card(
-                    child: PieChart(
-                      PieChartData(
-                        sections: [
-                          PieChartSectionData(
-                            color: context.colorScheme.primaryVariant,
-                            value: 25,
-                            title: "25",
-                            titleStyle:
-                                TextStyle(color: context.colorScheme.onSurface),
-                          ),
-                          PieChartSectionData(
-                            color: context.colorScheme.onPrimary,
-                            value: 25,
-                            title: "25",
-                            titleStyle:
-                                TextStyle(color: context.colorScheme.onSurface),
-                          ),
-                          PieChartSectionData(
-                            color: context.colorScheme.onError,
-                            value: 25,
-                            title: "25",
-                            titleStyle:
-                                TextStyle(color: context.colorScheme.onSurface),
-                          ),
-                          PieChartSectionData(
-                            color: context.colorScheme.error,
-                            value: 25,
-                            title: "25",
-                            titleStyle:
-                                TextStyle(color: context.colorScheme.onSurface),
-                          ),
-                        ],
+                    child: Padding(
+                      padding: context.paddingNormal,
+                      child: PieChart(
+                        PieChartData(
+                          sections: [
+                            PieChartSectionData(
+                              color: context.colorScheme.primaryVariant,
+                              value: 30,
+                              title: "30",
+                              radius: 60,
+                              titleStyle:
+                                  TextStyle(color: context.colorScheme.onSurface),
+                            ),
+                            PieChartSectionData(
+                              color: context.colorScheme.onPrimary,
+                              value: 40,
+                              title: "40",
+                              radius: 80,
+                              titleStyle:
+                                  TextStyle(color: context.colorScheme.onSurface),
+                            ),
+                            PieChartSectionData(
+                              color: context.colorScheme.onError,
+                              value: 50,
+                              title: "50",
+                              radius: 100,
+                              titleStyle:
+                                  TextStyle(color: context.colorScheme.onSurface),
+                            ),
+                            // PieChartSectionData(
+                            //   color: context.colorScheme.error,
+                            //   value: 25,
+                            //   title: "25",
+                            //   radius: 50,
+                            //   titleStyle:
+                            //       TextStyle(color: context.colorScheme.onSurface),
+                            // ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

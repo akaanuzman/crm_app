@@ -4,7 +4,6 @@ import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/core/constants/app/app_constants.dart';
 import 'package:crm_app/feature/home/profile/viewmodel/profile/profile_view_model.dart';
-import 'package:dio/dio.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 

@@ -1,4 +1,3 @@
-import 'package:crm_app/core/components/text/bold_text.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import '../../../../core/components/text/body_text1_copy.dart';
@@ -308,6 +307,9 @@ class MailView extends StatelessWidget {
     String htmlData = """
     ${viewModel.items.emails?[index].content}
     """;
+
+    debugPrint(htmlData);
+
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,

@@ -1,6 +1,6 @@
 import 'package:cool_alert/cool_alert.dart';
-import 'package:crm_app/core/cache/cache_manager.dart';
-import 'package:crm_app/core/constants/app/app_constants.dart';
+import '../../../../core/cache/cache_manager.dart';
+import '../../../../core/constants/app/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';

@@ -1,14 +1,16 @@
 
+// ignore_for_file: avoid_function_literals_in_foreach_calls, unnecessary_new, prefer_const_constructors, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 const htmlData = r"""

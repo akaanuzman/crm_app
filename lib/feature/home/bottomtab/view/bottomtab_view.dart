@@ -1,4 +1,4 @@
-import 'package:crm_app/feature/home/dashboards/view/dashboard_view.dart';
+import '../../dashboards/view/dashboard_view.dart';
 
 import '../../../../core/components/card/card_icon_text.dart';
 import '../../../../core/components/row/row_flag_text.dart';
