@@ -165,7 +165,6 @@ class _ContactViewState extends State<ContactView> {
                 child: ListView.builder(
                   itemCount: _viewModel.items.guides?.length ?? 0,
                   physics: const BouncingScrollPhysics(),
-                  // ignore: prefer_const_constructors
                   itemBuilder: (context, index) => Observer(
                     builder: (context) => Slidable(
                       actionPane: const SlidableDrawerActionPane(),

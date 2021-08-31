@@ -20,8 +20,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:geira_icons/geira_icons.dart';
 import 'package:kartal/kartal.dart';
 
-
-
 class MyProfileView extends StatelessWidget {
   const MyProfileView({Key? key}) : super(key: key);
 
@@ -198,7 +196,7 @@ class MyProfileView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CircleAvatar(
-                                radius: 30,
+                                radius: 28,
                                 child: Icon(
                                   GIcons.instagram,
                                   size: 48,
@@ -207,7 +205,7 @@ class MyProfileView extends StatelessWidget {
                                 backgroundColor: Color(0xff9935B4),
                               ),
                               CircleAvatar(
-                                radius: 30,
+                                radius: 28,
                                 child: Icon(
                                   EvilIcons.sc_github,
                                   size: 48,
@@ -217,7 +215,7 @@ class MyProfileView extends StatelessWidget {
                                     context.colorScheme.secondaryVariant,
                               ),
                               CircleAvatar(
-                                radius: 30,
+                                radius: 28,
                                 child: Icon(
                                   EvilIcons.sc_linkedin,
                                   size: 48,
@@ -226,7 +224,7 @@ class MyProfileView extends StatelessWidget {
                                 backgroundColor: Color(0xff0A66C2),
                               ),
                               CircleAvatar(
-                                radius: 30,
+                                radius: 28,
                                 child: Icon(
                                   EvilIcons.sc_twitter,
                                   size: 48,
@@ -235,7 +233,7 @@ class MyProfileView extends StatelessWidget {
                                 backgroundColor: Color(0xff1DA1F2),
                               ),
                               CircleAvatar(
-                                radius: 30,
+                                radius: 28,
                                 child: Icon(
                                   EvilIcons.sc_facebook,
                                   size: 48,
@@ -244,7 +242,7 @@ class MyProfileView extends StatelessWidget {
                                 backgroundColor: Color(0xff17A8FD),
                               ),
                               CircleAvatar(
-                                radius: 30,
+                                radius: 28,
                                 child: Icon(
                                   Icons.language,
                                   size: 48,
@@ -283,7 +281,8 @@ class MyProfileView extends StatelessWidget {
                             child: ListView.builder(
                               physics: BouncingScrollPhysics(),
                               itemCount:
-                                  _experienceViewModel.items.timeline?.length,
+                                  _experienceViewModel.items.timeline?.length ??
+                                      0,
                               itemBuilder: (context, index) => Column(
                                 children: [
                                   Slidable(
@@ -677,12 +676,11 @@ class MyProfileView extends StatelessWidget {
                       style: TextStyle(color: context.colorScheme.onSurface)),
                   style: ElevatedButton.styleFrom(
                       primary: context.colorScheme.primaryVariant),
-                  onPressed: () {
+                  onPressed: () async {
                     String token = ApplicationConstants.instance!.token;
                     final Dio dio = Dio();
-                    dio.post(
+                    await dio.post(
                         "http://192.168.3.53/api/Persons/delete_timeline?token=$token&id=${viewModel.items.timeline?[index].id}");
-                    viewModel.fetchItems(token);
                     Navigator.of(context).pop();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -694,6 +692,7 @@ class MyProfileView extends StatelessWidget {
                         ),
                       ),
                     );
+                    viewModel.fetchItems(token);
                   },
                 ),
                 ElevatedButton(

@@ -135,7 +135,7 @@ class MailView extends StatelessWidget {
                             onTap: () async {
                               Dio dio = Dio();
                               await dio.post(
-                                  "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=snoozed&token=$token");
+                                  "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=spam&token=$token");
                               viewModel.fetchItems(token, "is_active");
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -159,7 +159,6 @@ class MailView extends StatelessWidget {
                               Dio dio = Dio();
                               await dio.post(
                                   "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=important&token=$token");
-                              viewModel.fetchItems(token, "is_active");
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   backgroundColor:
@@ -322,8 +321,8 @@ class MailView extends StatelessWidget {
             duration: context.durationNormal,
             padding: context.paddingNormal,
             height: viewModel.isContainerHeightChange
-                ? context.dynamicHeight(0.48)
-                : context.dynamicHeight(0.9),
+                ? context.dynamicHeight(0.5)
+                : context.dynamicHeight(0.95),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -404,6 +403,7 @@ class MailView extends StatelessWidget {
                     ? context.emptySizedWidthBoxLow
                     : Expanded(
                         child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
                           child: SizedBox(
                             height: context.dynamicHeight(0.5),
                             child: Padding(
@@ -474,7 +474,7 @@ class MailView extends StatelessWidget {
                         ),
                       ),
                 Padding(
-                  padding: context.paddingLow,
+                  padding: context.horizontalPaddingLow,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,

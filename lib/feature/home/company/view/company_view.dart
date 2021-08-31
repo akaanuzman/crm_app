@@ -12,6 +12,7 @@ import '../company_detail/view/company_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 // ignore: must_be_immutable
 class CompanyView extends StatelessWidget {
@@ -20,6 +21,7 @@ class CompanyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _viewModel.fetchItems(ApplicationConstants.instance!.token);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,122 +63,130 @@ class CompanyView extends StatelessWidget {
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
             itemCount: _viewModel.items.company?.length ?? 0,
-            itemBuilder: (context, index) => Column(
-              children: [
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: context.normalBorderRadius),
-                  elevation: 5,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CompanyDetailView(
-                                id: _viewModel.items.company?[index].id ?? "",
-                              )));
-                    },
-                    child: ExpansionTile(
-                      title: BodyText2Copy(
-                          data: _viewModel.items.company?[index].name ??
-                              "Geçerli firma adı bulunamadı."),
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(_viewModel
-                                .items.company?[index].photo ??
-                            "http://192.168.3.53/assets/images/companies/company.png"),
-                        backgroundColor: context.colorScheme.onSurface,
+            itemBuilder: (context, index) => Observer(
+              builder: (context) => Column(
+                children: [
+                  Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: context.normalBorderRadius),
+                    elevation: 5,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => CompanyDetailView(
+                              id: _viewModel.items.company?[index].id ?? "",
+                            ),
+                          ),
+                        );
+                      },
+                      child: ExpansionTile(
+                        title: BodyText2Copy(
+                            data: _viewModel.items.company?[index].name ??
+                                "Geçerli firma adı bulunamadı."),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(_viewModel
+                                  .items.company?[index].photo ??
+                              "http://192.168.3.53/assets/images/companies/company.png"),
+                          backgroundColor: context.colorScheme.onSurface,
+                        ),
+                        expandedAlignment: Alignment.centerLeft,
+                        children: [
+                          context.emptySizedHeightBoxLow,
+                          Padding(
+                            padding: context.horizontalPaddingNormal,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Email",
+                                  style: TextStyle(
+                                      color: context.colorScheme.onBackground),
+                                ),
+                                context.emptySizedWidthBoxLow3x,
+                                Text(_viewModel.items.company?[index].email ??
+                                    "Geçerli email adresi bulunamadı."),
+                              ],
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 2,
+                            indent: 15,
+                            endIndent: 15,
+                          ),
+                          context.emptySizedHeightBoxLow,
+                          Padding(
+                            padding: context.horizontalPaddingNormal,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Telefon",
+                                  style: TextStyle(
+                                      color: context.colorScheme.onBackground),
+                                ),
+                                context.emptySizedWidthBoxLow3x,
+                                Text(_viewModel
+                                        .items.company?[index].telephone ??
+                                    "Geçerli telefon numarası bulunamadı."),
+                              ],
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 2,
+                            indent: 15,
+                            endIndent: 15,
+                          ),
+                          context.emptySizedHeightBoxLow,
+                          Padding(
+                            padding: context.horizontalPaddingNormal,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Webiste",
+                                  style: TextStyle(
+                                      color: context.colorScheme.onBackground),
+                                ),
+                                context.emptySizedWidthBoxLow3x,
+                                Text(
+                                    _viewModel.items.company?[index].web_site ??
+                                        "Geçerli web sitesi bulunamadı."),
+                              ],
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 2,
+                            indent: 15,
+                            endIndent: 15,
+                          ),
+                          context.emptySizedHeightBoxLow,
+                          Padding(
+                            padding: context.horizontalPaddingNormal,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Konum",
+                                  style: TextStyle(
+                                      color: context.colorScheme.onBackground),
+                                ),
+                                context.emptySizedWidthBoxLow3x,
+                                Text(
+                                    _viewModel.items.company?[index].location ??
+                                        "Geçerli konum bilgisi bulunamadı."),
+                              ],
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 2,
+                            indent: 15,
+                            endIndent: 15,
+                          ),
+                          context.emptySizedHeightBoxLow3x,
+                        ],
                       ),
-                      expandedAlignment: Alignment.centerLeft,
-                      children: [
-                        context.emptySizedHeightBoxLow,
-                        Padding(
-                          padding: context.horizontalPaddingNormal,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Email",
-                                style: TextStyle(
-                                    color: context.colorScheme.onBackground),
-                              ),
-                              context.emptySizedWidthBoxLow3x,
-                              Text(_viewModel.items.company?[index].email ??
-                                  "Geçerli email adresi bulunamadı."),
-                            ],
-                          ),
-                        ),
-                        const Divider(
-                          thickness: 2,
-                          indent: 15,
-                          endIndent: 15,
-                        ),
-                        context.emptySizedHeightBoxLow,
-                        Padding(
-                          padding: context.horizontalPaddingNormal,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Telefon",
-                                style: TextStyle(
-                                    color: context.colorScheme.onBackground),
-                              ),
-                              context.emptySizedWidthBoxLow3x,
-                              Text(_viewModel.items.company?[index].telephone ??
-                                  "Geçerli telefon numarası bulunamadı."),
-                            ],
-                          ),
-                        ),
-                        const Divider(
-                          thickness: 2,
-                          indent: 15,
-                          endIndent: 15,
-                        ),
-                        context.emptySizedHeightBoxLow,
-                        Padding(
-                          padding: context.horizontalPaddingNormal,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Webiste",
-                                style: TextStyle(
-                                    color: context.colorScheme.onBackground),
-                              ),
-                              context.emptySizedWidthBoxLow3x,
-                              Text(_viewModel.items.company?[index].web_site ??
-                                  "Geçerli web sitesi bulunamadı."),
-                            ],
-                          ),
-                        ),
-                        const Divider(
-                          thickness: 2,
-                          indent: 15,
-                          endIndent: 15,
-                        ),
-                        context.emptySizedHeightBoxLow,
-                        Padding(
-                          padding: context.horizontalPaddingNormal,
-                          child: Row(
-                            children: [
-                              Text(
-                                "Konum",
-                                style: TextStyle(
-                                    color: context.colorScheme.onBackground),
-                              ),
-                              context.emptySizedWidthBoxLow3x,
-                              Text(_viewModel.items.company?[index].location ??
-                                  "Geçerli konum bilgisi bulunamadı."),
-                            ],
-                          ),
-                        ),
-                        const Divider(
-                          thickness: 2,
-                          indent: 15,
-                          endIndent: 15,
-                        ),
-                        context.emptySizedHeightBoxLow3x,
-                      ],
                     ),
                   ),
-                ),
-                context.emptySizedHeightBoxLow,
-              ],
+                  context.emptySizedHeightBoxLow,
+                ],
+              ),
             ),
           ),
         ),
@@ -185,18 +195,39 @@ class CompanyView extends StatelessWidget {
   }
 }
 
-class PopUpItemBody extends StatelessWidget {
-  var nameController = TextEditingController();
-  var mailController = TextEditingController();
-  var phoneController = TextEditingController();
-  var webSiteController = TextEditingController();
-  var taxNumberController = TextEditingController();
-  var taxDepartmentController = TextEditingController();
-  var detailController = TextEditingController();
-  var locationController = TextEditingController();
+class PopUpItemBody extends StatefulWidget {
   final CompanyViewModel viewModel;
 
   PopUpItemBody({Key? key, required this.viewModel}) : super(key: key);
+
+  @override
+  State<PopUpItemBody> createState() => _PopUpItemBodyState();
+}
+
+class _PopUpItemBodyState extends State<PopUpItemBody> {
+  late final CompanyViewModel viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel = widget.viewModel;
+  }
+
+  var nameController = TextEditingController();
+
+  var mailController = TextEditingController();
+
+  var phoneController = TextEditingController();
+
+  var webSiteController = TextEditingController();
+
+  var taxNumberController = TextEditingController();
+
+  var taxDepartmentController = TextEditingController();
+
+  var detailController = TextEditingController();
+
+  var locationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +239,7 @@ class PopUpItemBody extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.topRight,
-              child: InkWell(
+              child: GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -442,14 +473,12 @@ class PopUpItemBody extends StatelessWidget {
                   ),
                   context.emptySizedWidthBoxLow,
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       String token = ApplicationConstants.instance!.token;
                       Dio dio = Dio();
-                      dio.post(
+                      await dio.post(
                           "http://192.168.3.53/api/Companys/new_company?token=$token&name=${nameController.text}&email=${mailController.text}&telephone=${phoneController.text}&web_site=${webSiteController.text}&tax_number=${taxNumberController.text}&tax_department=${taxDepartmentController.text}&detail=${detailController.text}&location=${locationController.text}");
-                      viewModel.fetchItems(token);
 
-                      Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: context.colorScheme.secondaryVariant,
@@ -460,6 +489,12 @@ class PopUpItemBody extends StatelessWidget {
                           ),
                         ),
                       );
+                      setState(() {
+                        viewModel.fetchItems(token);
+                      });
+
+                      Navigator.of(context).pop();
+        
                     },
                     child: BodyText2Copy(
                         data: "Ekle", color: context.colorScheme.onSurface),

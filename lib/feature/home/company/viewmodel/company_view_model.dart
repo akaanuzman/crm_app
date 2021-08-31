@@ -21,7 +21,6 @@ abstract class _CompanyViewModelBase with Store {
 
   _CompanyViewModelBase() {
     companyService = CompanyService(NetworkManager.instance!.dio);
-    fetchItems(ApplicationConstants.instance!.token);
   }
 
   void setContext(BuildContext context) {
