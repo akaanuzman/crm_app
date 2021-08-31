@@ -1,3 +1,7 @@
+import 'package:crm_app/core/components/text/subtitle1_copy.dart';
+import 'package:crm_app/feature/home/bottomtab/viewmodel/notification_view_model.dart';
+import 'package:flutter_html/flutter_html.dart';
+
 import '../../dashboards/view/dashboard_view.dart';
 
 import '../../../../core/components/card/card_icon_text.dart';
@@ -22,6 +26,7 @@ import '../model/bottomtab_model.dart';
 
 class BottomTabView extends StatelessWidget {
   final ProfileViewModel viewModel = ProfileViewModel();
+  final NotificationViewModel notificationViewModel = NotificationViewModel();
   BottomTabView({Key? key}) : super(key: key);
 
   @override
@@ -30,7 +35,9 @@ class BottomTabView extends StatelessWidget {
       BottomTabModel(
           title: "Proje", icon: Icons.assignment, child: ProjectView()),
       BottomTabModel(
-          title: "Katmanlar", icon: Icons.inventory_2, child: const DashboardView()),
+          title: "Katmanlar",
+          icon: Icons.inventory_2,
+          child: const DashboardView()),
       BottomTabModel(
           title: "Rehber",
           icon: Icons.contacts_sharp,
@@ -136,7 +143,7 @@ class BottomTabView extends StatelessWidget {
           Expanded(
             child: InkWell(
               onTap: () {
-                _showModalBottomSheet(context, radius);
+                _showModalBottomSheet(context, radius, notificationViewModel);
               },
               child: CardIconText(
                 cardColor: context.colorScheme.secondaryVariant,
@@ -245,7 +252,8 @@ class BottomTabView extends StatelessWidget {
         children: items.map((e) => e.child).toList(),
       );
 
-  _showModalBottomSheet(context, double radius) {
+  _showModalBottomSheet(
+      context, double radius, NotificationViewModel viewModel) {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -282,32 +290,45 @@ class BottomTabView extends StatelessWidget {
               Expanded(
                 child: GridView.builder(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 6,
+                  itemCount: viewModel.items.emails?.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, childAspectRatio: 0.8),
-                  itemBuilder: (context, index) => Padding(
-                    padding: context.paddingLow,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: context.lowBorderRadius),
-                      color: context.colorScheme.secondary,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        // ignore: prefer_const_literals_to_create_immutables
-                        children: [
-                          // ignore: prefer_const_constructors
-                          ListTile(
-                            leading: const Icon(Icons.notifications),
-                            title: const Text("Bildirim"),
-                          ),
-                          Padding(
-                            padding: context.paddingNormal,
-                            child: const Text("Bildirim içeriği"),
-                          )
-                        ],
+                      crossAxisCount: 2, childAspectRatio: 0.65),
+                  itemBuilder: (context, index) {
+                    String htmlData = """
+        ${viewModel.items.emails?[index].content}
+        """;
+                    return Padding(
+                      padding: context.paddingLow,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: context.lowBorderRadius),
+                        color: context.colorScheme.secondary,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListTile(
+                                leading: const CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      "http://192.168.3.53/assets/images/users/user0.jpg"),
+                                ),
+                                title: Subtitle1Copy(
+                                    data: viewModel
+                                            .items.emails?[index].user_name ??
+                                        "")),
+                            Padding(
+                              padding: context.paddingNormal,
+                              child: Html(
+                                data: htmlData,
+                              ),
+                            ),
+                            Center(
+                                child: Text(
+                                    viewModel.items.emails?[index].date ?? "")),
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               )
             ],
