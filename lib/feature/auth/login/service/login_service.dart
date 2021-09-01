@@ -22,13 +22,10 @@ class LoginService extends ILoginService {
       var a = jsonDecode(data);
       debugPrint("Token1: "+a['token']);
       await dio.post("Projects/get_projects?token=${a['token']}");
-      //debugPrint(b.toString());
       ApplicationConstants.instance!.token = a['token'];
       items.add(a['token']);
       items.add(a['status']);
       return items;
-
-      //return a.map((e) => LoginModel.fromJson(e)).toList();
     }
     return [];
   }

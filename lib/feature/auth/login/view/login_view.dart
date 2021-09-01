@@ -157,11 +157,7 @@ class _LoginViewState extends State<LoginView> with CacheManager {
                         loopAnimation: false,
                         confirmBtnColor: context.colorScheme.onPrimary,
                       );
-                      // _showDialog(
-                      //     context,
-                      //     context.lowValue,
-                      //     "Doğru kullanıcı adı ve şifre !",
-                      //     "Sisteme başarıyla giriş yapıldı.");
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: context.colorScheme.secondaryVariant,
