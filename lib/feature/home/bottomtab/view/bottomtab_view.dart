@@ -1,5 +1,5 @@
-import 'package:crm_app/core/components/text/subtitle1_copy.dart';
-import 'package:crm_app/feature/home/bottomtab/viewmodel/notification_view_model.dart';
+import '../../../../core/components/text/subtitle1_copy.dart';
+import '../viewmodel/notification_view_model.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import '../../dashboards/view/dashboard_view.dart';

@@ -4,6 +4,8 @@ import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/core/components/text/bold_text.dart';
 import 'package:crm_app/core/components/text/subtitle1_copy.dart';
+import 'package:crm_app/feature/home/bottomtab/model/bottomtab_model.dart';
+import 'package:crm_app/feature/home/dashboards/dashboard_detail/view/comments_view.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
@@ -34,9 +36,26 @@ class DashboardDetailView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BodyText1Copy(
-                  data: "Katmanlar",
-                  fontWeight: FontWeight.bold,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BodyText1Copy(
+                      data: "Katmanlar",
+                      fontWeight: FontWeight.bold,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _showModalBottomSheet(context, context.lowValue);
+                      },
+                      child: Icon(
+                        Icons.settings,
+                        color: context.colorScheme.onSurface,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: context.colorScheme.secondaryVariant,
+                      ),
+                    ),
+                  ],
                 ),
                 context.emptySizedHeightBoxLow3x,
                 Expanded(
@@ -300,5 +319,50 @@ class DashboardDetailView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _showModalBottomSheet(context, double radius) {
+    final List<BottomTabModel> items = [
+      BottomTabModel(title: "Yorumlar", icon: Icons.comment, child: CommentsView()),
+      BottomTabModel(
+          title: "Erişim Sahipleri",
+          icon: Icons.inventory_2,
+          child: const Scaffold()),
+      BottomTabModel(
+          title: "Ayarlar",
+          icon: Icons.contacts_sharp,
+          child: const Scaffold()),
+      BottomTabModel(
+          title: "Log Kayıtları", icon: Icons.email, child: const Scaffold()),
+    ];
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(radius),
+        ),
+        builder: (BuildContext context) {
+          return DefaultTabController(
+            length: items.length,
+            child: Scaffold(
+              bottomNavigationBar: BottomAppBar(
+                child: Container(
+                  color: context.colorScheme.secondaryVariant,
+                  child: TabBar(
+                    labelPadding: context.horizontalPaddingLow,
+                    tabs: List.generate(
+                      items.length,
+                      (index) => Tab(
+                        text: items[index].title,
+                        icon: Icon(items[index].icon),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              body: TabBarView(children: items.map((e) => e.child).toList()),
+            ),
+          );
+        });
   }
 }
