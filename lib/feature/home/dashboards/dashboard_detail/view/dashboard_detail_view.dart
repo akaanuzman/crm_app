@@ -5,6 +5,7 @@ import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/core/components/text/bold_text.dart';
 import 'package:crm_app/core/components/text/subtitle1_copy.dart';
 import 'package:crm_app/feature/home/bottomtab/model/bottomtab_model.dart';
+import 'package:crm_app/feature/home/dashboards/dashboard_detail/view/access_view.dart';
 import 'package:crm_app/feature/home/dashboards/dashboard_detail/view/comments_view.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -323,17 +324,14 @@ class DashboardDetailView extends StatelessWidget {
 
   _showModalBottomSheet(context, double radius) {
     final List<BottomTabModel> items = [
-      BottomTabModel(title: "Yorumlar", icon: Icons.comment, child: CommentsView()),
       BottomTabModel(
-          title: "Erişim Sahipleri",
-          icon: Icons.inventory_2,
-          child: const Scaffold()),
+          title: "Yorumlar", icon: Icons.comment, child: CommentsView()),
       BottomTabModel(
-          title: "Ayarlar",
-          icon: Icons.contacts_sharp,
-          child: const Scaffold()),
+          title: "Erişim Sahipleri", icon: Icons.people, child: AccesView()),
       BottomTabModel(
-          title: "Log Kayıtları", icon: Icons.email, child: const Scaffold()),
+          title: "Ayarlar", icon: Icons.settings, child: const Scaffold()),
+      BottomTabModel(
+          title: "Log Kayıtları", icon: Icons.save, child: const Scaffold()),
     ];
     showModalBottomSheet(
         isScrollControlled: true,
