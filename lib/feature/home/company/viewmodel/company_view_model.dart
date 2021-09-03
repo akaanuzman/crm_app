@@ -1,4 +1,3 @@
-import '../../../../core/constants/app/app_constants.dart';
 import '../../../../core/init/network/network_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';

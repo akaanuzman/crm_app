@@ -21,7 +21,8 @@ class AccesView extends StatefulWidget {
 class _AccesViewState extends State<AccesView> {
   late final AccessViewModel _viewModel;
   late final ContactViewModel _contactViewModel;
-  String dropdownValue = 'Yorum Atabilir';
+  String firstDropdownValue = 'Görüntüleyebilir';
+  String secondDropdownValue = 'Görüntüleyebilir';
   String token = ApplicationConstants.instance!.token;
 
   @override
@@ -45,7 +46,8 @@ class _AccesViewState extends State<AccesView> {
               padding: context.paddingLow,
               child: Card(
                 elevation: 5,
-                shape: RoundedRectangleBorder(borderRadius: context.lowBorderRadius),
+                shape: RoundedRectangleBorder(
+                    borderRadius: context.lowBorderRadius),
                 child: Padding(
                   padding: context.paddingNormal,
                   child: Column(
@@ -79,13 +81,14 @@ class _AccesViewState extends State<AccesView> {
                                 Text("Erişim:"),
                                 context.emptySizedWidthBoxLow3x,
                                 DropdownButton<String>(
-                                  value: dropdownValue,
+                                  value: firstDropdownValue,
                                   onChanged: (String? newValue) {
-                                    setState(() => dropdownValue = newValue!);
+                                    setState(
+                                        () => firstDropdownValue = newValue!);
                                   },
                                   items: <String>[
-                                    'Yorum Atabilir',
                                     'Görüntüleyebilir',
+                                    'Yorum Atabilir',
                                     'Düzenleyebilir',
                                     'Paylaşabilir',
                                     'Tam Erişim',
@@ -132,6 +135,50 @@ class _AccesViewState extends State<AccesView> {
                                   "",
                           userId:
                               _contactViewModel.items.users?[index].id ?? "0",
+                          child: Padding(
+                            padding: context.horizontalPaddingNormal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text("Erişim:"),
+                                    context.emptySizedWidthBoxLow3x,
+                                    DropdownButton<String>(
+                                      value: secondDropdownValue,
+                                      onChanged: (String? newValue) {
+                                        setState(() =>
+                                            secondDropdownValue = newValue!);
+                                      },
+                                      items: <String>[
+                                        'Görüntüleyebilir',
+                                        'Yorum Atabilir',
+                                        'Düzenleyebilir',
+                                        'Paylaşabilir',
+                                        'Tam Erişim',
+                                        'Erişimi Kaldır'
+                                      ].map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        },
+                                      ).toList(),
+                                    ),
+                                  ],
+                                ),
+                                context.emptySizedWidthBoxLow3x,
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: Icon(
+                                    Icons.add,
+                                    color: context.colorScheme.onSurface,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         )
                       : const SizedBox(),
                 ),

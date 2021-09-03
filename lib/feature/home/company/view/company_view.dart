@@ -12,7 +12,6 @@ import '../company_detail/view/company_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:popup_card/popup_card.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 // ignore: must_be_immutable
 class CompanyView extends StatelessWidget {
@@ -198,7 +197,7 @@ class CompanyView extends StatelessWidget {
 class PopUpItemBody extends StatefulWidget {
   final CompanyViewModel viewModel;
 
-  PopUpItemBody({Key? key, required this.viewModel}) : super(key: key);
+  const PopUpItemBody({Key? key, required this.viewModel}) : super(key: key);
 
   @override
   State<PopUpItemBody> createState() => _PopUpItemBodyState();

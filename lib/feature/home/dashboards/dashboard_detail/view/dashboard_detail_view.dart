@@ -1,9 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
-import 'package:crm_app/core/components/text/body_text2_copy.dart';
-import 'package:crm_app/core/components/text/bold_text.dart';
-import 'package:crm_app/core/components/text/subtitle1_copy.dart';
 import 'package:crm_app/feature/home/bottomtab/model/bottomtab_model.dart';
 import 'package:crm_app/feature/home/dashboards/dashboard_detail/view/access_view.dart';
 import 'package:crm_app/feature/home/dashboards/dashboard_detail/view/comments_view.dart';

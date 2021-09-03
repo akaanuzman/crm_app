@@ -8,12 +8,15 @@ class CheckBoxCard extends StatefulWidget {
   final String data;
   final String? guiId;
   final String? userId;
+  final Widget? child;
+
   const CheckBoxCard(
       {Key? key,
       required this.isSelect,
       required this.data,
       this.guiId,
-      this.userId})
+      this.userId,
+      this.child})
       : super(key: key);
 
   @override
@@ -24,6 +27,7 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
   bool isSelected = false;
   String guiId = "";
   String userId = "";
+
   @override
   void initState() {
     super.initState();
@@ -39,24 +43,29 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
         Card(
           color: isSelected ? Colors.green[100] : null,
           elevation: 5,
-          child: CheckboxListTile(
-            value: isSelected,
-            onChanged: (value) {
-              setState(() {
-                isSelected = value!;
-              });
+          child: Column(
+            children: [
+              CheckboxListTile(
+                value: isSelected,
+                onChanged: (value) {
+                  setState(() => isSelected = value!);
 
-              if (isSelected) {
-                ApplicationConstants.instance!.guiId.add(guiId);
-                ApplicationConstants.instance!.userId.add(userId);
-              } else {
-                ApplicationConstants.instance!.guiId.remove(guiId);
-                ApplicationConstants.instance!.userId.remove(userId);
-              }
-            },
-            title: Text(widget.data),
-            secondary: const Icon(Icons.person),
-            activeColor: context.colorScheme.onPrimary,
+                  if (isSelected) {
+                    ApplicationConstants.instance!.guiId.add(guiId);
+                    ApplicationConstants.instance!.userId.add(userId);
+                  } else {
+                    ApplicationConstants.instance!.guiId.remove(guiId);
+                    ApplicationConstants.instance!.userId.remove(userId);
+                  }
+                },
+                title: Text(widget.data),
+                secondary: const Icon(Icons.person),
+                activeColor: context.colorScheme.onPrimary,
+              ),
+              isSelected
+                  ? widget.child ?? context.emptySizedHeightBoxLow
+                  : context.emptySizedHeightBoxLow,
+            ],
           ),
         ),
         context.emptySizedHeightBoxLow,
