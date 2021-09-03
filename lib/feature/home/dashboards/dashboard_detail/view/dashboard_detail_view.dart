@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
+import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/feature/home/bottomtab/model/bottomtab_model.dart';
 import 'package:crm_app/feature/home/dashboards/dashboard_detail/view/access_view.dart';
 import 'package:crm_app/feature/home/dashboards/dashboard_detail/view/comments_view.dart';
+import 'package:crm_app/feature/home/dashboards/dashboard_detail/view/log_records_view.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
@@ -28,7 +30,7 @@ class DashboardDetailView extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: SizedBox(
-          height: context.dynamicHeight(1.8),
+          height: context.dynamicHeight(2.2),
           child: Padding(
             padding: context.paddingNormal,
             child: Column(
@@ -311,6 +313,36 @@ class DashboardDetailView extends StatelessWidget {
                   ),
                 ),
                 context.emptySizedHeightBoxLow3x,
+                Expanded(
+                  flex: 2,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Card(
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: DataTable(
+                          columns: [
+                            DataColumn(label: BodyText2Copy(data: "İsim")),
+                            DataColumn(
+                                label: BodyText2Copy(data: "Aktif Görev"))
+                          ],
+                          rows: List.generate(
+                            4,
+                            (index) => DataRow(
+                                color: MaterialStateColor.resolveWith(
+                                    (states) => index % 2 == 0
+                                        ? context.colorScheme.secondary
+                                        : context.colorScheme.onSurface),
+                                cells: [
+                                  DataCell(Text("data")),
+                                  DataCell(Text("data")),
+                                ]),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -328,7 +360,9 @@ class DashboardDetailView extends StatelessWidget {
       BottomTabModel(
           title: "Ayarlar", icon: Icons.settings, child: const Scaffold()),
       BottomTabModel(
-          title: "Log Kayıtları", icon: Icons.save, child: const Scaffold()),
+          title: "Log Kayıtları",
+          icon: Icons.save,
+          child: const LogRecordsView()),
     ];
     showModalBottomSheet(
         isScrollControlled: true,
