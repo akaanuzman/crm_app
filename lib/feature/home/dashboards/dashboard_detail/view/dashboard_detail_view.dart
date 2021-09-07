@@ -70,7 +70,7 @@ class DashboardDetailView extends StatelessWidget {
                               color: context.colorScheme.primaryVariant,
                               value: 30,
                               title: "30",
-                              radius: 60,
+                              radius: 50,
                               titleStyle: TextStyle(
                                   color: context.colorScheme.onSurface),
                             ),
@@ -78,7 +78,7 @@ class DashboardDetailView extends StatelessWidget {
                               color: context.colorScheme.onPrimary,
                               value: 40,
                               title: "40",
-                              radius: 80,
+                              radius: 50,
                               titleStyle: TextStyle(
                                   color: context.colorScheme.onSurface),
                             ),
@@ -86,7 +86,7 @@ class DashboardDetailView extends StatelessWidget {
                               color: context.colorScheme.onError,
                               value: 50,
                               title: "50",
-                              radius: 100,
+                              radius: 50,
                               titleStyle: TextStyle(
                                   color: context.colorScheme.onSurface),
                             ),

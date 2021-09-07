@@ -102,7 +102,7 @@ class BottomTabView extends StatelessWidget {
 
   Container _buildProfileContainer(BuildContext context, double radius) =>
       Container(
-        color: ColorSchemeLight.instance.limedSpruce,
+        color: context.colorScheme.background,
         child: Padding(
           padding: context.paddingLow,
           child: _buildProfileColumn(context, radius),
@@ -134,19 +134,19 @@ class BottomTabView extends StatelessWidget {
                     builder: (context) => const ProfileTabbarView()));
               },
               child: CardIconText(
-                cardColor: ColorSchemeLight.instance.limedSpruce,
+                cardColor: context.colorScheme.background,
                 text: "Profilim",
                 icon: Icons.account_circle,
               ),
             ),
           ),
           Expanded(
-            child: InkWell(
+            child: GestureDetector(
               onTap: () {
                 _showModalBottomSheet(context, radius, notificationViewModel);
               },
               child: CardIconText(
-                cardColor: context.colorScheme.secondaryVariant,
+                cardColor: context.colorScheme.background,
                 text: "Bildirimler",
                 icon: Icons.notifications,
               ),
@@ -173,7 +173,7 @@ class BottomTabView extends StatelessWidget {
                 _showDialog(context);
               },
               child: CardIconText(
-                cardColor: ColorSchemeLight.instance.limedSpruce,
+                cardColor: context.colorScheme.background,
                 text: "Çıkış Yap",
                 icon: Icons.exit_to_app,
               ),
@@ -237,7 +237,7 @@ class BottomTabView extends StatelessWidget {
   TabBar _buildTabBar(List<BottomTabModel> items, BuildContext context) =>
       TabBar(
         tabs: _buildTabs(items),
-        indicatorColor: context.colorScheme.surface,
+        indicatorColor: context.colorScheme.background,
       );
 
   List<Widget> _buildTabs(List<BottomTabModel> items) => List.generate(

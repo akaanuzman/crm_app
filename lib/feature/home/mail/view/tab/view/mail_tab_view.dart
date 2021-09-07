@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
 import 'package:crm_app/feature/home/bottomtab/model/bottomtab_model.dart';
 import 'package:crm_app/feature/home/mail/view/inbox/view/inbox_view.dart';
 import 'package:crm_app/feature/home/mail/view/postponed/view/postponed_view.dart';
@@ -74,9 +75,8 @@ class MailTabView extends StatelessWidget {
   TabBar _buildTabBar(BuildContext context, List<BottomTabModel> _items) =>
       TabBar(
         isScrollable: true,
-        labelColor: context.colorScheme.surface,
-        unselectedLabelColor: context.colorScheme.secondaryVariant,
-        indicatorColor: context.colorScheme.background,
+        labelColor: context.colorScheme.onBackground,
+        indicatorColor: context.colorScheme.onBackground,
         tabs: _buildTabs(_items),
       );
 

@@ -26,11 +26,15 @@ class AppThemeLight extends IAppTheme with ILightTheme {
           ),
         ),
         tabBarTheme: TabBarTheme(
-          labelColor: _colorScheme.surface,
+          labelColor: colorSchemeLight.finn,
           unselectedLabelColor: colorSchemeLight.white,
         ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: colorSchemeLight.finn
+        ),
+
         appBarTheme: AppBarTheme(
-          color: colorSchemeLight.limedSpruce,
+          color: colorSchemeLight.carnation,
           titleTextStyle: const TextStyle(fontSize: 18),
         ),
         scaffoldBackgroundColor: colorSchemeLight.athensGray,
@@ -41,13 +45,13 @@ class AppThemeLight extends IAppTheme with ILightTheme {
       primaryVariant: colorSchemeLight.mandy,
       secondary: colorSchemeLight.athensGray,
       secondaryVariant: colorSchemeLight.limedSpruce,
-      surface: colorSchemeLight.doggerBlue, //xx
-      background: Colors.grey.shade300, //xx
+      surface: colorSchemeLight.doggerBlue, //xxß
+      background: colorSchemeLight.finn, //xx
       error: colorSchemeLight.sun,
       onPrimary: colorSchemeLight.shamrock,
       onSecondary: Colors.black, //x
       onSurface: Colors.white,
-      onBackground: Colors.grey,
+      onBackground: colorSchemeLight.carnation,
       onError: colorSchemeLight.royalBlue, //xx
       brightness: Brightness.light);
 }

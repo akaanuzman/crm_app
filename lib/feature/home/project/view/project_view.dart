@@ -1,5 +1,6 @@
 import 'package:boardview/boardview_controller.dart';
 import 'package:cool_alert/cool_alert.dart';
+import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
 import '../../../../core/components/row/row_icon_text.dart';
 import '../../../../core/components/row/row_space_between_text.dart';
 import '../../../../core/components/text/body_text1_copy.dart';
@@ -68,7 +69,7 @@ class _ProjectViewState extends State<ProjectView> {
           child: Icon(
             Icons.add_rounded,
             size: 48,
-            color: context.colorScheme.onSurface,
+            color: ColorSchemeLight.instance.shamrock,
           ),
         ),
         popUp: PopUpItem(

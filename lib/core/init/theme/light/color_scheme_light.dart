@@ -28,5 +28,10 @@ class ColorSchemeLight {
   final Color mandy = const Color(0xffE95C5C);
   final Color whisper = const Color(0xffF4F5F9);
   final Color royalBlue = const Color(0xff6658DD);
+  final Color carnation = const Color(0xffF64E60);
+  final Color finn = const Color(0xff663259);
+  final Color hummingBird = const Color(0xffC9F7F5);
+
+
 
 }
