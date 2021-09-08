@@ -1,3 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:crm_app/core/components/text/subtitle1_copy.dart';
+import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import '../../../../core/components/text/body_text1_copy.dart';
@@ -225,31 +229,53 @@ class MailView extends StatelessWidget {
                               borderRadius: context.lowBorderRadius),
                           elevation: 5,
                           child: ListTile(
-                            leading: IconButton(
-                              onPressed: () async {
-                                Dio dio = Dio();
-                                await dio.post(
-                                    "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=starred&token=$token");
-                                viewModel.fetchItems(token, "is_active");
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    backgroundColor:
-                                        context.colorScheme.secondaryVariant,
-                                    duration: context.durationSlow,
-                                    content: BodyText2Copy(
-                                      data: "Mail yıldızlı klasörüne taşındı !",
-                                      color: context.colorScheme.onSurface,
+                            leading: SizedBox(
+                              width: context.dynamicWidth(0.21),
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () async {
+                                      Dio dio = Dio();
+                                      await dio.post(
+                                          "http://192.168.3.53/api/Email/email_move?id=${viewModel.items.emails?[index].id}&folder=starred&token=$token");
+                                      viewModel.fetchItems(token, "is_active");
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: context
+                                              .colorScheme.secondaryVariant,
+                                          duration: context.durationSlow,
+                                          content: BodyText2Copy(
+                                            data:
+                                                "Mail yıldızlı klasörüne taşındı !",
+                                            color:
+                                                context.colorScheme.onSurface,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.star,
+                                      color: Colors.grey,
                                     ),
+                                    color: context.colorScheme.primaryVariant,
                                   ),
-                                );
-                              },
-                              icon: const Icon(Icons.star_border_outlined),
-                              color: context.colorScheme.primaryVariant,
+                                  CircleAvatar(
+                                    backgroundImage: NetworkImage(viewModel
+                                            .items.emails?[index].user_photo ??
+                                        "http://192.168.3.53/assets/images/users/user0.jpg"),
+                                  )
+                                ],
+                              ),
                             ),
-                            title: Text(viewModel.items.emails?[index].title ??
-                                "Geçerli mail başlığı bulunamadı."),
-                            trailing: Text(
-                                viewModel.items.emails?[index].date ??
+                            title: Text(
+                                viewModel.items.emails?[index].user_name ??
+                                    "Geçerli isim bulunamadı."),
+                            subtitle: Subtitle1Copy(
+                                data: viewModel.items.emails?[index].title ??
+                                    "Geçerli mail başlığı bulunamadı."),
+                            trailing: Subtitle1Copy(
+                                data: viewModel.items.emails?[index].date ??
                                     "Geçerli tarih bulunamadı."),
                             onTap: () {
                               _showModalBottomSheet(
@@ -277,18 +303,36 @@ class MailView extends StatelessWidget {
                 maxLines: 2,
               ),
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: context.paddingLow,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SendMailView()));
-                  },
-                  child: Text(
-                    "Email Gönder",
-                    style: TextStyle(color: context.colorScheme.onSurface),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: context.paddingLow,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SendMailView()));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.email,
+                          color: context.colorScheme.onSurface,
+                        ),
+                        context.emptySizedWidthBoxLow,
+                        Text(
+                          "Email Gönder",
+                          style:
+                              TextStyle(color: context.colorScheme.onSurface),
+                        ),
+                      ],
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: context.colorScheme.background,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: context.lowBorderRadius),
+                    ),
                   ),
                 ),
               ),
@@ -333,12 +377,12 @@ class MailView extends StatelessWidget {
                     width: context.dynamicWidth(0.2),
                     decoration: BoxDecoration(
                         borderRadius: context.lowBorderRadius,
-                        color: context.colorScheme.background),
+                        color: Colors.grey),
                   ),
                 ),
                 context.emptySizedHeightBoxLow3x,
                 Divider(
-                  color: context.colorScheme.onBackground,
+                  color: Colors.grey,
                   indent: 20,
                   endIndent: 20,
                 ),
@@ -363,13 +407,14 @@ class MailView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               BodyText2Copy(
-                                  data: "Kimden Geldi: ",
-                                  color: context.colorScheme.onBackground),
+                                data: "Kimden Geldi: ",
+                                color: Colors.grey,
+                              ),
                               BodyText2Copy(
                                   data: viewModel
                                           .items.emails?[index].user_email ??
                                       "Geçerli eposta adresi bulunamadı.",
-                                  color: context.colorScheme.onBackground),
+                                  color: Colors.grey),
                               context.emptySizedHeightBoxLow,
                             ],
                           ),
@@ -388,14 +433,14 @@ class MailView extends StatelessWidget {
                     child: Padding(
                       padding: context.horizontalPaddingNormal,
                       child: Html(
-                        data:htmlData,
+                        data: htmlData,
                       ),
                     ),
                   ),
                 ),
                 context.emptySizedHeightBoxLow,
                 Divider(
-                  color: context.colorScheme.onBackground,
+                  color: Colors.grey,
                   indent: 20,
                   endIndent: 20,
                 ),
@@ -425,9 +470,8 @@ class MailView extends StatelessWidget {
                                       labelText: 'Başlık',
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: context.lowBorderRadius,
-                                        borderSide: BorderSide(
-                                            color: context
-                                                .colorScheme.onBackground),
+                                        borderSide:
+                                            BorderSide(color: Colors.grey),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: context.lowBorderRadius,
@@ -453,9 +497,8 @@ class MailView extends StatelessWidget {
                                       labelText: 'İçerik',
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: context.lowBorderRadius,
-                                        borderSide: BorderSide(
-                                            color: context
-                                                .colorScheme.onBackground),
+                                        borderSide:
+                                            BorderSide(color: Colors.grey),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: context.lowBorderRadius,
@@ -500,25 +543,48 @@ class MailView extends StatelessWidget {
                                   ),
                                 );
                               },
-                              child: const BodyText2Copy(data: "Gönder"),
+                              child: BodyText2Copy(
+                                data: "Gönder",
+                                color: context.colorScheme.primaryVariant,
+                              ),
                               style: ElevatedButton.styleFrom(
-                                  primary: context.colorScheme.primaryVariant),
+                                primary: ColorSchemeLight.instance.pippin,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: context.lowBorderRadius,
+                                ),
+                              ),
                             ),
-                      context.emptySizedWidthBoxLow,
+                      context.emptySizedWidthBoxLow3x,
                       ElevatedButton(
                         onPressed: () {
                           viewModel.changeContainerHeight();
                         },
-                        child: const BodyText2Copy(data: "Yanıtla"),
+                        child: BodyText2Copy(
+                          data: "Yanıtla",
+                          color: context.colorScheme.onPrimary,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: ColorSchemeLight.instance.hummingBird,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: context.lowBorderRadius,
+                          ),
+                        ),
                       ),
-                      context.emptySizedWidthBoxLow,
+                      context.emptySizedWidthBoxLow3x,
                       ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: const BodyText2Copy(data: "Vazgeç"),
+                        child: BodyText2Copy(
+                          data: "Vazgeç",
+                          color: context.colorScheme.background,
+                        ),
                         style: ElevatedButton.styleFrom(
-                            primary: context.colorScheme.surface),
+                          primary: ColorSchemeLight.instance.amour,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: context.lowBorderRadius,
+                          ),
+                        ),
                       ),
                     ],
                   ),

@@ -237,7 +237,7 @@ class BottomTabView extends StatelessWidget {
   TabBar _buildTabBar(List<BottomTabModel> items, BuildContext context) =>
       TabBar(
         tabs: _buildTabs(items),
-        indicatorColor: context.colorScheme.background,
+        indicatorColor: context.colorScheme.primary,
       );
 
   List<Widget> _buildTabs(List<BottomTabModel> items) => List.generate(

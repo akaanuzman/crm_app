@@ -1,3 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
+
 import '../../../../../core/components/text/body_text1_copy.dart';
 import '../../../../../core/components/text/body_text2_copy.dart';
 
@@ -6,11 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
-
-
 class ContactUsersDetailView extends StatelessWidget {
   final Users? user;
-  const ContactUsersDetailView({Key? key,this.user}) : super(key: key);
+  const ContactUsersDetailView({Key? key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class ContactUsersDetailView extends StatelessWidget {
       body: Padding(
         padding: context.paddingNormal,
         child: SizedBox(
-          height: context.dynamicHeight(0.65),
+          height: context.dynamicHeight(0.67),
           child: Card(
             shape: RoundedRectangleBorder(
                 borderRadius: context.normalBorderRadius),
@@ -40,8 +42,8 @@ class ContactUsersDetailView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              user?.photo ?? "http://192.168.3.53/assets/images/users/user0.jpg"),
+                          backgroundImage: NetworkImage(user?.photo ??
+                              "http://192.168.3.53/assets/images/users/user0.jpg"),
                           radius: 50,
                         ),
                         context.emptySizedWidthBoxLow,
@@ -53,15 +55,16 @@ class ContactUsersDetailView extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(Icons.business,
-                                        color:
-                                            context.colorScheme.onBackground),
+                                        color: ColorSchemeLight
+                                            .instance.piegonPost),
                                     context.emptySizedWidthBoxLow,
                                     Text(
                                       user?.company ?? "",
                                       style: context.textTheme.caption!
                                           .copyWith(
-                                              color: context
-                                                  .colorScheme.onBackground),
+                                              color: ColorSchemeLight
+                                                  .instance.piegonPost,
+                                              fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
@@ -71,24 +74,33 @@ class ContactUsersDetailView extends StatelessWidget {
                                     ElevatedButton(
                                       onPressed: () {},
                                       child: Text(
-                                        "Düzenle",
+                                        "Görüntüleyebilir",
                                         style: TextStyle(
                                             color:
-                                                context.colorScheme.onSurface),
+                                                ColorSchemeLight.instance.java),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: ColorSchemeLight
+                                            .instance.hummingBird,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: context.lowBorderRadius,
+                                        ),
                                       ),
                                     ),
                                     context.emptySizedWidthBoxLow,
                                     ElevatedButton(
                                       onPressed: () {},
-                                      child: Text(
-                                        "Ara",
-                                        style: TextStyle(
-                                            color:
-                                                context.colorScheme.onSurface),
+                                      child: Icon(
+                                        Icons.more_horiz,
+                                        color: context.colorScheme.background,
                                       ),
                                       style: ElevatedButton.styleFrom(
-                                          primary: context
-                                              .colorScheme.secondaryVariant),
+                                        primary:
+                                            ColorSchemeLight.instance.amour,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: context.lowBorderRadius,
+                                        ),
+                                      ),
                                     )
                                   ],
                                 ),
@@ -108,21 +120,23 @@ class ContactUsersDetailView extends StatelessWidget {
                     child: Column(
                       // ignore: prefer_const_literals_to_create_immutables
                       children: [
-                        // ignore: prefer_const_constructors
                         Center(
                           child: Container(
                             width: double.infinity,
                             height: context.dynamicHeight(0.05),
                             padding: context.paddingLow,
-                            color: context.colorScheme.onBackground,
+                            decoration: BoxDecoration(
+                                color: context.colorScheme.secondary,
+                                borderRadius: context.lowBorderRadius),
                             child: Wrap(
-                              // ignore: prefer_const_literals_to_create_immutables
                               crossAxisAlignment: WrapCrossAlignment.center,
                               spacing: 5,
                               // ignore: prefer_const_literals_to_create_immutables
                               children: [
-                                const Icon(Icons.account_circle),
-                                const BodyText2Copy(
+                                Icon(
+                                  Icons.account_circle,
+                                ),
+                                BodyText2Copy(
                                   data: "KİŞİSEL BİLGİLER",
                                   fontWeight: FontWeight.bold,
                                 )
@@ -135,7 +149,7 @@ class ContactUsersDetailView extends StatelessWidget {
                           children: [
                             BodyText2Copy(
                               data: "HAKKIMDA : ",
-                              color: context.colorScheme.onBackground,
+                              fontWeight: FontWeight.bold,
                             ),
                             Text(user?.detail ?? ""),
                           ],
@@ -145,7 +159,7 @@ class ContactUsersDetailView extends StatelessWidget {
                           children: [
                             BodyText2Copy(
                               data: "DOĞUM TARİHİ : ",
-                              color: context.colorScheme.onBackground,
+                              fontWeight: FontWeight.bold,
                             ),
                             Text(user?.birthday ?? ""),
                           ],
@@ -155,7 +169,7 @@ class ContactUsersDetailView extends StatelessWidget {
                           children: [
                             BodyText2Copy(
                               data: "FİRMA : ",
-                              color: context.colorScheme.onBackground,
+                              fontWeight: FontWeight.bold,
                             ),
                             Text(user?.company ?? ""),
                           ],
@@ -165,7 +179,7 @@ class ContactUsersDetailView extends StatelessWidget {
                           children: [
                             BodyText2Copy(
                               data: "MESLEK : ",
-                              color: context.colorScheme.onBackground,
+                              fontWeight: FontWeight.bold,
                             ),
                             Text(user?.job ?? ""),
                           ],
@@ -175,7 +189,7 @@ class ContactUsersDetailView extends StatelessWidget {
                           children: [
                             BodyText2Copy(
                               data: "EPOSTA : ",
-                              color: context.colorScheme.onBackground,
+                              fontWeight: FontWeight.bold,
                             ),
                             Text(user?.email ?? ""),
                           ],
@@ -185,17 +199,33 @@ class ContactUsersDetailView extends StatelessWidget {
                           children: [
                             BodyText2Copy(
                               data: "TELEFON : ",
-                              color: context.colorScheme.onBackground,
+                              fontWeight: FontWeight.bold,
                             ),
-                             Text(user?.telephone ?? ""),
+                            Text(user?.telephone ?? ""),
                           ],
                         ),
-                        context.emptySizedHeightBoxLow3x,
+                        context.emptySizedHeightBoxLow,
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: Text(
+                              "MESAJ GÖNDER",
+                              style: TextStyle(
+                                  color: ColorSchemeLight.instance.java,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              primary: ColorSchemeLight.instance.hummingBird,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: context.lowBorderRadius,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
-                //Expanded(flex: 2, child: Container())
               ],
             ),
           ),

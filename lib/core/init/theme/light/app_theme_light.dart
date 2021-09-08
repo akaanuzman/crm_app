@@ -20,17 +20,14 @@ class AppThemeLight extends IAppTheme with ILightTheme {
   ThemeData get themeDataLight => ThemeData.light().copyWith(
         colorScheme: _colorScheme,
         textTheme: textThemeLight.textTheme,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            primary: colorSchemeLight.shamrock,
-          ),
-        ),
+  
         tabBarTheme: TabBarTheme(
-          labelColor: colorSchemeLight.finn,
+          labelColor: Colors.black,
           unselectedLabelColor: colorSchemeLight.white,
         ),
         bottomAppBarTheme: BottomAppBarTheme(
-          color: colorSchemeLight.finn
+          color: colorSchemeLight.athensGray,
+          elevation: 0
         ),
 
         appBarTheme: AppBarTheme(

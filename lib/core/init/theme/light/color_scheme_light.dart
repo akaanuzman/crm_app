@@ -31,6 +31,13 @@ class ColorSchemeLight {
   final Color carnation = const Color(0xffF64E60);
   final Color finn = const Color(0xff663259);
   final Color hummingBird = const Color(0xffC9F7F5);
+  final Color java = const Color(0xff1BC7C8);
+  final Color amour = const Color(0xffF4E1F0);
+  final Color piegonPost = const Color(0xffB5C5DE);
+  final Color pippin = const Color(0xffFFE2E5);
+
+
+  
 
 
 

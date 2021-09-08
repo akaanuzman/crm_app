@@ -75,8 +75,9 @@ class MailTabView extends StatelessWidget {
   TabBar _buildTabBar(BuildContext context, List<BottomTabModel> _items) =>
       TabBar(
         isScrollable: true,
-        labelColor: context.colorScheme.onBackground,
-        indicatorColor: context.colorScheme.onBackground,
+        unselectedLabelColor: context.colorScheme.primary,
+        labelColor: context.colorScheme.background,
+        indicatorColor: context.colorScheme.background,
         tabs: _buildTabs(_items),
       );
 
