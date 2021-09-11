@@ -84,7 +84,7 @@ class ProfileView extends StatelessWidget {
                         child: Text(
                           "Tam isim:",
                           style: TextStyle(
-                              color: context.colorScheme.onBackground,
+                              color: context.colorScheme.primary,
                               fontWeight: FontWeight.bold),
                         ),
                       ),

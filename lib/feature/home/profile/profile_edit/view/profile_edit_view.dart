@@ -1,8 +1,9 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/core/constants/app/app_constants.dart';
+import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
 import 'package:crm_app/feature/home/profile/viewmodel/profile/profile_view_model.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -65,17 +66,18 @@ class ProfileEditView extends StatelessWidget {
                   TextFormField(
                     initialValue: _viewModel.items.full_name,
                     decoration: InputDecoration(
+                      filled: true,
                       prefixIcon: const Icon(Icons.person),
                       labelText: 'İsim giriniz.',
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.surface),
+                            BorderSide(color: context.colorScheme.onSecondary),
                       ),
                     ),
                     cursorColor: context.colorScheme.onSecondary,
@@ -91,6 +93,7 @@ class ProfileEditView extends StatelessWidget {
                     initialValue: _viewModel.items.telephone,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
+                      filled: true,
                       prefixIcon: const Icon(Icons.phone),
                       hintText: _viewModel.items.telephone ??
                           'Telefon numarası giriniz.',
@@ -98,7 +101,7 @@ class ProfileEditView extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -121,7 +124,7 @@ class ProfileEditView extends StatelessWidget {
                   //     enabledBorder: OutlineInputBorder(
                   //       borderRadius: context.lowBorderRadius,
                   //       borderSide:
-                  //           BorderSide(color: context.colorScheme.onBackground),
+                  //           BorderSide(color: Colors.grey),
                   //     ),
                   //     focusedBorder: OutlineInputBorder(
                   //       borderRadius: context.lowBorderRadius,
@@ -140,6 +143,7 @@ class ProfileEditView extends StatelessWidget {
                   TextFormField(
                     initialValue: _viewModel.items.detail,
                     decoration: InputDecoration(
+                      filled: true,
                       prefixIcon: const Icon(Icons.description),
                       hintText: _viewModel.items.detail ??
                           "Hakkınzda kısa bilgi giriniz.",
@@ -147,7 +151,7 @@ class ProfileEditView extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -168,13 +172,14 @@ class ProfileEditView extends StatelessWidget {
                   TextFormField(
                     initialValue: _viewModel.items.location,
                     decoration: InputDecoration(
+                      filled: true,
                       prefixIcon: const Icon(Icons.location_on),
                       hintText: "Konumuzu giriniz.",
                       labelText: 'Konum',
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -193,6 +198,7 @@ class ProfileEditView extends StatelessWidget {
                   TextFormField(
                     initialValue: _viewModel.items.birthday,
                     decoration: InputDecoration(
+                      filled: true,
                       hintText: 'mm/dd/yy',
                       prefixIcon: IconButton(
                           onPressed: () {
@@ -207,7 +213,7 @@ class ProfileEditView extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -224,7 +230,7 @@ class ProfileEditView extends StatelessWidget {
                       width: double.infinity,
                       height: context.dynamicHeight(0.05),
                       padding: context.paddingLow,
-                      color: context.colorScheme.onBackground,
+                      color: Color(0xffC0C0C0),
                       child: Wrap(
                         // ignore: prefer_const_literals_to_create_immutables
                         crossAxisAlignment: WrapCrossAlignment.center,
@@ -263,13 +269,14 @@ class ProfileEditView extends StatelessWidget {
                             child: TextFormField(
                               initialValue: _viewModel.items.company_name,
                               decoration: InputDecoration(
+                                filled: true,
                                 prefixIcon: const Icon(Icons.business),
                                 hintText: "Şirket ismi giriniz.",
                                 labelText: 'Şirket ismi',
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: context.lowBorderRadius,
                                   borderSide: BorderSide(
-                                      color: context.colorScheme.onBackground),
+                                      color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: context.lowBorderRadius,
@@ -285,13 +292,14 @@ class ProfileEditView extends StatelessWidget {
                             child: TextFormField(
                               initialValue: _viewModel.items.job,
                               decoration: InputDecoration(
+                                filled: true,
                                 prefixIcon: const Icon(Icons.work),
                                 hintText: "Meslek giriniz.",
                                 labelText: 'Meslek',
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: context.lowBorderRadius,
                                   borderSide: BorderSide(
-                                      color: context.colorScheme.onBackground),
+                                      color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: context.lowBorderRadius,
@@ -313,7 +321,7 @@ class ProfileEditView extends StatelessWidget {
                       width: double.infinity,
                       height: context.dynamicHeight(0.05),
                       padding: context.paddingLow,
-                      color: context.colorScheme.onBackground,
+                      color: Color(0xffC0C0C0),
                       child: Wrap(
                         // ignore: prefer_const_literals_to_create_immutables
                         crossAxisAlignment: WrapCrossAlignment.center,
@@ -337,12 +345,13 @@ class ProfileEditView extends StatelessWidget {
                   TextFormField(
                     initialValue: _viewModel.items.web_site,
                     decoration: InputDecoration(
+                      filled: true,
                       hintText: 'Url',
                       prefixIcon: const Icon(Icons.language),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -362,6 +371,7 @@ class ProfileEditView extends StatelessWidget {
                   TextFormField(
                     initialValue: _viewModel.items.instagram,
                     decoration: InputDecoration(
+                      filled: true,
                       hintText: 'Url',
                       prefixIcon: const Icon(
                         GIcons.instagram,
@@ -370,7 +380,7 @@ class ProfileEditView extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -390,6 +400,7 @@ class ProfileEditView extends StatelessWidget {
                   TextFormField(
                     initialValue: _viewModel.items.linkedin,
                     decoration: InputDecoration(
+                      filled: true,
                       hintText: 'Url',
                       prefixIcon: const Icon(
                         EvilIcons.sc_linkedin,
@@ -397,7 +408,7 @@ class ProfileEditView extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -417,12 +428,13 @@ class ProfileEditView extends StatelessWidget {
                   TextFormField(
                     initialValue: _viewModel.items.github,
                     decoration: InputDecoration(
+                      filled: true,
                       hintText: 'Url',
                       prefixIcon: const Icon(EvilIcons.sc_github),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -442,12 +454,13 @@ class ProfileEditView extends StatelessWidget {
                   TextFormField(
                     initialValue: _viewModel.items.twitter,
                     decoration: InputDecoration(
+                      filled: true,
                       hintText: 'Url',
                       prefixIcon: const Icon(EvilIcons.sc_twitter),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -467,12 +480,13 @@ class ProfileEditView extends StatelessWidget {
                   TextFormField(
                     initialValue: _viewModel.items.facebook,
                     decoration: InputDecoration(
+                      filled: true,
                       hintText: 'Url',
                       prefixIcon: const Icon(EvilIcons.sc_facebook),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
                         borderSide:
-                            BorderSide(color: context.colorScheme.onBackground),
+                            BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: context.lowBorderRadius,
@@ -488,28 +502,40 @@ class ProfileEditView extends StatelessWidget {
 
                   Align(
                     alignment: Alignment.bottomRight,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        debugPrint(name);
-                        // String token = ApplicationConstants.instance!.token;
-                        // Dio dio = Dio();
-                        // await dio.post(
-                        //     "http://192.168.3.53/api/Persons/update_my_profile?token=$token&full_name=${nameController.text}&telephone=${phoneController.text}&detail=${detailController.text}&company_id=1&job=${jobController.text}&birthday=${birthDayController.text}&web_site=${webSiteController.text}&location=${locationController.text}&instagram=${instagramController.text}&linkedin=${linkedInController.text}&github=${gitHubController.text}&twitter=${twitterController.text}&facebook=${facebookController.text}");
-                        // _viewModel.fetchItems(token, "");
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   SnackBar(
-                        //     backgroundColor:
-                        //         context.colorScheme.secondaryVariant,
-                        //     duration: context.durationSlow,
-                        //     content: BodyText2Copy(
-                        //       data: "Profil bilgileri başarıyla güncellendi !",
-                        //       color: context.colorScheme.onSurface,
-                        //     ),
-                        //   ),
-                        // );
-                      },
-                      child: BodyText2Copy(
-                          data: "Kaydet", color: context.colorScheme.onSurface),
+                    child: SizedBox(
+                      width: context.dynamicWidth(0.25),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          debugPrint(name);
+                          // String token = ApplicationConstants.instance!.token;
+                          // Dio dio = Dio();
+                          // await dio.post(
+                          //     "http://192.168.3.53/api/Persons/update_my_profile?token=$token&full_name=${nameController.text}&telephone=${phoneController.text}&detail=${detailController.text}&company_id=1&job=${jobController.text}&birthday=${birthDayController.text}&web_site=${webSiteController.text}&location=${locationController.text}&instagram=${instagramController.text}&linkedin=${linkedInController.text}&github=${gitHubController.text}&twitter=${twitterController.text}&facebook=${facebookController.text}");
+                          // _viewModel.fetchItems(token, "");
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //   SnackBar(
+                          //     backgroundColor:
+                          //         context.colorScheme.secondaryVariant,
+                          //     duration: context.durationSlow,
+                          //     content: BodyText2Copy(
+                          //       data: "Profil bilgileri başarıyla güncellendi !",
+                          //       color: context.colorScheme.onSurface,
+                          //     ),
+                          //   ),
+                          // );
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Icons.save,color: ColorSchemeLight.instance.java),
+                            context.emptySizedHeightBoxLow3x,
+                            BodyText2Copy(
+                                data: "Kaydet", color: ColorSchemeLight.instance.java),
+                          ],
+
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: ColorSchemeLight.instance.hummingBird)
+                      ),
                     ),
                   ),
                 ],

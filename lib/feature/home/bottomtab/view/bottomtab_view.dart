@@ -9,7 +9,6 @@ import '../../../../core/components/row/row_flag_text.dart';
 import '../../../../core/components/text/body_text1_copy.dart';
 import '../../../../core/components/text/body_text2_copy.dart';
 import '../../../../core/constants/app/app_constants.dart';
-import '../../../../core/init/theme/light/color_scheme_light.dart';
 
 import '../../profile/viewmodel/profile/profile_view_model.dart';
 import 'package:dio/dio.dart';

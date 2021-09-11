@@ -5,6 +5,9 @@ import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/core/components/text/bold_text.dart';
 import 'package:crm_app/core/components/text/subtitle1_copy.dart';
 import 'package:crm_app/core/constants/app/app_constants.dart';
+import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
+import 'package:crm_app/feature/home/company/view/company_view.dart';
+import 'package:crm_app/feature/home/contact/view/contact_view.dart';
 import 'package:crm_app/feature/home/profile/viewmodel/experience/experience_view_model.dart';
 import 'package:crm_app/feature/home/profile/viewmodel/profile/profile_view_model.dart';
 import 'package:crm_app/feature/home/project/projectdetail/view/project_detail_view.dart';
@@ -69,19 +72,89 @@ class MyProfileView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ElevatedButton(
-                              onPressed: () {},
-                              child: BodyText2Copy(
-                                  data: "Follow",
-                                  color: context.colorScheme.onSurface),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ContactView()));
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.group,
+                                    color: ColorSchemeLight.instance.mandy,
+                                  ),
+                                  context.emptySizedWidthBoxLow,
+                                  BodyText2Copy(
+                                      data: "Kişilerim",
+                                      color: ColorSchemeLight.instance.mandy),
+                                ],
+                              ),
+                              style: ButtonStyle(
+                                overlayColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.hovered)) {
+                                      return context.colorScheme.onBackground
+                                          .withOpacity(0.2);
+                                    }
+                                    if (states
+                                            .contains(MaterialState.focused) ||
+                                        states
+                                            .contains(MaterialState.pressed)) {
+                                      return context.colorScheme.onBackground
+                                          .withOpacity(0.2);
+                                    }
+                                    return Colors
+                                        .red; // Defer to the widget's default.
+                                  },
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        ColorSchemeLight.instance.pippin),
+                              ),
                             ),
                             context.emptySizedWidthBoxLow,
                             ElevatedButton(
-                              onPressed: () {},
-                              child: BodyText2Copy(
-                                  data: "Message",
-                                  color: context.colorScheme.onSurface),
-                              style: ElevatedButton.styleFrom(
-                                  primary: context.colorScheme.primaryVariant),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CompanyView()));
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.apartment,
+                                    color: context.colorScheme.surface,
+                                  ),
+                                  context.emptySizedWidthBoxLow,
+                                  BodyText2Copy(
+                                      data: "Firmalarım",
+                                      color: context.colorScheme.surface),
+                                ],
+                              ),
+                              style: ButtonStyle(
+                                overlayColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.hovered)) {
+                                      return context.colorScheme.surface
+                                          .withOpacity(0.2);
+                                    }
+                                    if (states
+                                            .contains(MaterialState.focused) ||
+                                        states
+                                            .contains(MaterialState.pressed)) {
+                                      return context.colorScheme.surface
+                                          .withOpacity(0.2);
+                                    }
+                                    return Colors
+                                        .red; // Defer to the widget's default.
+                                  },
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Color(0xffe8f4f8)),
+                              ),
                             ),
                           ],
                         ),
@@ -110,9 +183,7 @@ class MyProfileView extends StatelessWidget {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   "Tam isim:",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                               context.emptySizedWidthBoxLow,
@@ -132,9 +203,7 @@ class MyProfileView extends StatelessWidget {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   "Telefon :",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                               context.emptySizedWidthBoxLow,
@@ -154,9 +223,7 @@ class MyProfileView extends StatelessWidget {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   "Eposta :",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                               context.emptySizedWidthBoxLow,
@@ -176,9 +243,7 @@ class MyProfileView extends StatelessWidget {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   "Şirket :",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ),
                               context.emptySizedWidthBoxLow,
@@ -345,7 +410,7 @@ class MyProfileView extends StatelessWidget {
                                   ),
                                   context.emptySizedHeightBoxLow,
                                   Divider(
-                                    color: context.colorScheme.onBackground,
+                                    color: Colors.grey,
                                     indent: 15,
                                     endIndent: 15,
                                   ),
@@ -353,18 +418,52 @@ class MyProfileView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              _showModalBottomSheet(
-                                  context, radius, _experienceViewModel, true);
-                            },
-                            child: Text(
-                              "Deneyim Ekle",
-                              style: TextStyle(
-                                  color: context.colorScheme.onSurface),
+                          SizedBox(
+                            width: context.dynamicWidth(0.352),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                _showModalBottomSheet(context, radius,
+                                    _experienceViewModel, true);
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.note_add,
+                                    color: context.colorScheme.onError,
+                                  ),
+                                  context.emptySizedHeightBoxLow,
+                                  Text(
+                                    "Deneyim Ekle",
+                                    style: TextStyle(
+                                        color: context.colorScheme.onError),
+                                  ),
+                                ],
+                              ),
+                              style: ButtonStyle(
+                                overlayColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.hovered)) {
+                                      return context.colorScheme.onError
+                                          .withOpacity(0.2);
+                                    }
+                                    if (states
+                                            .contains(MaterialState.focused) ||
+                                        states
+                                            .contains(MaterialState.pressed)) {
+                                      return context.colorScheme.onError
+                                          .withOpacity(0.2);
+                                    }
+                                    return Colors
+                                        .red; // Defer to the widget's default.
+                                  },
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Color(0xffE6E6FA)),
+                              ),
                             ),
-                            style: ElevatedButton.styleFrom(
-                                primary: context.colorScheme.onError),
                           ),
                           context.emptySizedHeightBoxLow3x,
                           Expanded(
@@ -389,27 +488,28 @@ class MyProfileView extends StatelessWidget {
                                       children: [
                                         ListTile(
                                           onTap: () {
-                                            Navigator.of(context)
-                                                .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ProjectDetailView(
-                                                allTask: _projectViewModel
-                                                        .items
-                                                        .projects?[index]
-                                                        .allgorev ??
-                                                    0,
-                                                okTask: _projectViewModel
-                                                        .items
-                                                        .projects?[index]
-                                                        .okgorev ??
-                                                    0,
-                                                projectId: _projectViewModel
-                                                        .items
-                                                        .projects?[index]
-                                                        .id ??
-                                                    "0",
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProjectDetailView(
+                                                  allTask: _projectViewModel
+                                                          .items
+                                                          .projects?[index]
+                                                          .allgorev ??
+                                                      0,
+                                                  okTask: _projectViewModel
+                                                          .items
+                                                          .projects?[index]
+                                                          .okgorev ??
+                                                      0,
+                                                  projectId: _projectViewModel
+                                                          .items
+                                                          .projects?[index]
+                                                          .id ??
+                                                      "0",
+                                                ),
                                               ),
-                                            ));
+                                            );
                                           },
                                           leading: Icon(Icons.event),
                                           title: BodyText2Copy(
@@ -428,8 +528,7 @@ class MyProfileView extends StatelessWidget {
                                               Icon(Icons.keyboard_arrow_right),
                                         ),
                                         Divider(
-                                          color:
-                                              context.colorScheme.onBackground,
+                                          color: Colors.grey,
                                           indent: 15,
                                           endIndent: 15,
                                         ),
@@ -487,7 +586,7 @@ class MyProfileView extends StatelessWidget {
                   width: context.dynamicWidth(0.2),
                   decoration: BoxDecoration(
                       borderRadius: context.lowBorderRadius,
-                      color: context.colorScheme.background),
+                      color: Colors.grey),
                 ),
               ),
               context.emptySizedHeightBoxLow3x,
@@ -498,11 +597,11 @@ class MyProfileView extends StatelessWidget {
               TextField(
                 controller: titleController,
                 decoration: InputDecoration(
+                  filled: true,
                   hintText: 'Örn: Bilgisayar Mühendisi',
                   enabledBorder: OutlineInputBorder(
                     borderRadius: context.lowBorderRadius,
-                    borderSide:
-                        BorderSide(color: context.colorScheme.onBackground),
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: context.lowBorderRadius,
@@ -519,11 +618,11 @@ class MyProfileView extends StatelessWidget {
               TextField(
                 controller: subtitleController,
                 decoration: InputDecoration(
+                  filled: true,
                   hintText: 'Örn: Kuvarssoft',
                   enabledBorder: OutlineInputBorder(
                     borderRadius: context.lowBorderRadius,
-                    borderSide:
-                        BorderSide(color: context.colorScheme.onBackground),
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: context.lowBorderRadius,
@@ -540,6 +639,7 @@ class MyProfileView extends StatelessWidget {
               TextField(
                 controller: dateController,
                 decoration: InputDecoration(
+                  filled: true,
                   hintText: 'mm/dd/yy',
                   prefixIcon: IconButton(
                       onPressed: () {
@@ -553,8 +653,7 @@ class MyProfileView extends StatelessWidget {
                       icon: const Icon(Icons.calendar_today)),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: context.lowBorderRadius,
-                    borderSide:
-                        BorderSide(color: context.colorScheme.onBackground),
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: context.lowBorderRadius,
@@ -571,10 +670,10 @@ class MyProfileView extends StatelessWidget {
               TextField(
                 controller: detailController,
                 decoration: InputDecoration(
+                  filled: true,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: context.lowBorderRadius,
-                    borderSide:
-                        BorderSide(color: context.colorScheme.onBackground),
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: context.lowBorderRadius,
@@ -586,7 +685,7 @@ class MyProfileView extends StatelessWidget {
               ),
               context.emptySizedHeightBoxLow3x,
               Divider(
-                color: context.colorScheme.onBackground,
+                color: Colors.grey,
               ),
               Padding(
                 padding: context.paddingLow,
@@ -598,10 +697,36 @@ class MyProfileView extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: BodyText2Copy(
-                          data: "Vazgeç", color: context.colorScheme.onSurface),
-                      style: ElevatedButton.styleFrom(
-                          primary: context.colorScheme.secondaryVariant),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.close,
+                            color: ColorSchemeLight.instance.mandy,
+                          ),
+                          BodyText2Copy(
+                            data: "Vazgeç",
+                            color: ColorSchemeLight.instance.mandy,
+                          ),
+                        ],
+                      ),
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.hovered)) {
+                              return context.colorScheme.onError
+                                  .withOpacity(0.2);
+                            }
+                            if (states.contains(MaterialState.focused) ||
+                                states.contains(MaterialState.pressed)) {
+                              return context.colorScheme.onError
+                                  .withOpacity(0.2);
+                            }
+                            return Colors.red; // Defer to the widget's default.
+                          },
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            ColorSchemeLight.instance.pippin),
+                      ),
                     ),
                     context.emptySizedWidthBoxLow,
                     ElevatedButton(
@@ -642,11 +767,18 @@ class MyProfileView extends StatelessWidget {
                           );
                         }
                       },
-                      child: BodyText2Copy(
-                          data: addOrEdit ? "Ekle" : "Kaydet",
-                          color: context.colorScheme.onSurface),
+                      child: Row(
+                        children: [
+                          Icon(addOrEdit ? Icons.add : Icons.edit,
+                              color: ColorSchemeLight.instance.java),
+                          context.emptySizedWidthBoxLow,
+                          BodyText2Copy(
+                              data: addOrEdit ? "Ekle" : "Kaydet",
+                              color: ColorSchemeLight.instance.java),
+                        ],
+                      ),
                       style: ElevatedButton.styleFrom(
-                          primary: context.colorScheme.surface),
+                          primary: ColorSchemeLight.instance.hummingBird),
                     ),
                   ],
                 ),

@@ -328,10 +328,30 @@ class MailView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    style: ElevatedButton.styleFrom(
-                      primary: context.colorScheme.background,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: context.lowBorderRadius),
+                    // style: ElevatedButton.styleFrom(
+                    //   primary: context.colorScheme.background,
+                    //   shape: RoundedRectangleBorder(
+                    //       borderRadius: context.lowBorderRadius),
+                    //),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          context.colorScheme.background),
+                      overlayColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.hovered)) {
+                            return context.colorScheme.onBackground
+                                .withOpacity(0.2);
+                          }
+                          if (states.contains(MaterialState.focused) ||
+                              states.contains(MaterialState.pressed)) {
+                            return context.colorScheme.onBackground
+                                .withOpacity(0.2);
+                          }
+                          return Colors.red; // Defer to the widget's default.
+                        },
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          context.colorScheme.background),
                     ),
                   ),
                 ),

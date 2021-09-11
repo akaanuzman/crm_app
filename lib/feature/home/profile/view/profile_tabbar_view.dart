@@ -36,7 +36,7 @@ class ProfileTabbarView extends StatelessWidget {
       TabBar(
         unselectedLabelColor: context.colorScheme.onSurface,
         tabs: _buildTabs(items),
-        indicatorColor: context.colorScheme.surface,
+        indicatorColor: context.colorScheme.primary,
         isScrollable: true,
       );
 

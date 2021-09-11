@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
 import 'package:crm_app/feature/home/bottomtab/model/bottomtab_model.dart';
 import 'package:crm_app/feature/home/mail/view/inbox/view/inbox_view.dart';
 import 'package:crm_app/feature/home/mail/view/postponed/view/postponed_view.dart';

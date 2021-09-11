@@ -3,6 +3,7 @@
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/body_text2_copy.dart';
 import 'package:crm_app/core/constants/app/app_constants.dart';
+import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -133,7 +134,6 @@ class _ContactViewState extends State<ContactView> {
                           child: ListView.builder(
                             itemCount: _viewModel.items.users?.length ?? 0,
                             physics: const BouncingScrollPhysics(),
-                            // ignore: prefer_const_constructors
                             itemBuilder: (context, index) => Padding(
                               padding: context.paddingLow,
                               child: Card(
@@ -195,7 +195,38 @@ class _ContactViewState extends State<ContactView> {
                               context.lowValue,
                               context.normalValue,
                               context.lowValue),
-                          child: const Text("Sisteme kayıtlı olmayan kişiler"),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              Text("Sisteme kayıtlı olmayan kişiler"),
+                              ElevatedButton(
+                                onPressed: () {},
+                                child: Row(
+                                  // ignore: prefer_const_literals_to_create_immutables
+                                  children: [
+                                    Icon(
+                                      Icons.person_add,
+                                      color: ColorSchemeLight.instance.java,
+                                    ),
+                                    context.emptySizedWidthBoxLow,
+                                    Text(
+                                      "Kişi Ekle",
+                                      style: TextStyle(
+                                        color: ColorSchemeLight.instance.java,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  primary:
+                                      ColorSchemeLight.instance.hummingBird,
+                                  shadowColor: ColorSchemeLight.instance.java,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                         context.emptySizedHeightBoxLow,
                         Expanded(
