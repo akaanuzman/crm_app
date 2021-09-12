@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cool_alert/cool_alert.dart';
+import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
 import '../../../../core/cache/cache_manager.dart';
 import '../../../../core/constants/app/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -54,8 +57,7 @@ class _LoginViewState extends State<LoginView> with CacheManager {
                 labelText: "Email",
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
+                  borderSide: BorderSide(color: Colors.grey),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
@@ -79,8 +81,7 @@ class _LoginViewState extends State<LoginView> with CacheManager {
                 labelText: "Şifre",
                 enabledBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
-                  borderSide:
-                      BorderSide(color: context.colorScheme.onBackground),
+                  borderSide: BorderSide(color: Colors.grey),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: context.lowBorderRadius,
@@ -134,9 +135,6 @@ class _LoginViewState extends State<LoginView> with CacheManager {
               width: double.infinity,
               height: context.dynamicHeight(0.065),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: context.highBorderRadius)),
                 onPressed: () {
                   if (_viewModel.item?[1] != null) {
                     if (_viewModel.item![1] == 'success') {
@@ -186,8 +184,37 @@ class _LoginViewState extends State<LoginView> with CacheManager {
                         emailController.text, passController.text);
                   }
                 },
-                child: BodyText2Copy(
-                    data: "Giriş", color: context.colorScheme.onSurface),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.login,
+                      color: context.colorScheme.surface,
+                    ),
+                    context.emptySizedWidthBoxLow,
+                    BodyText2Copy(
+                      data: "Giriş",
+                      color: context.colorScheme.surface,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
+                ),
+                style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.hovered)) {
+                        return context.colorScheme.surface.withOpacity(0.2);
+                      }
+                      if (states.contains(MaterialState.focused) ||
+                          states.contains(MaterialState.pressed)) {
+                        return context.colorScheme.surface.withOpacity(0.2);
+                      }
+                      return Colors.red; // Defer to the widget's default.
+                    },
+                  ),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Color(0xffe8f4f8)),
+                ),
               ),
             ),
             context.emptySizedHeightBoxLow3x,
@@ -195,16 +222,39 @@ class _LoginViewState extends State<LoginView> with CacheManager {
               width: double.infinity,
               height: context.dynamicHeight(0.065),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: context.highBorderRadius),
-                    primary: context.colorScheme.onError),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const Scaffold()));
                 },
-                child: BodyText2Copy(
-                    data: "Kayıt Ol", color: context.colorScheme.onSurface),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.how_to_reg,
+                        color: context.colorScheme.background),
+                    context.emptySizedWidthBoxLow,
+                    BodyText2Copy(
+                      data: "Kayıt Ol",
+                      color: context.colorScheme.background,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
+                ),
+                style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.hovered)) {
+                        return context.colorScheme.background.withOpacity(0.2);
+                      }
+                      if (states.contains(MaterialState.focused) ||
+                          states.contains(MaterialState.pressed)) {
+                        return context.colorScheme.background.withOpacity(0.2);
+                      }
+                      return Colors.red; // Defer to the widget's default.
+                    },
+                  ),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      ColorSchemeLight.instance.pippin),
+                ),
               ),
             )
           ],

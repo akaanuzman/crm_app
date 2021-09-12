@@ -1,8 +1,7 @@
-import '../../../../../../core/constants/app/app_constants.dart';
-
-import '../../../viewmodel/mail_view_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../core/constants/app/app_constants.dart';
+import '../../../viewmodel/mail_view_model.dart';
 import '../../mail_view.dart';
 
 class BinView extends StatelessWidget {

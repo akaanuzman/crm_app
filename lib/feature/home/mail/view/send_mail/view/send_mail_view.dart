@@ -1,3 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
+
 import '../../../../../../core/components/text/body_text1_copy.dart';
 import '../../../../../../core/components/text/body_text2_copy.dart';
 import '../../../../../../core/constants/app/app_constants.dart';
@@ -6,7 +10,6 @@ import 'package:dio/dio.dart';
 
 import '../../../../contact/viewmodel/contact_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
@@ -140,14 +143,13 @@ class _SendMailViewState extends State<SendMailView> {
                               TextField(
                                 controller: nameController,
                                 decoration: InputDecoration(
+                                  filled: true,
                                   prefixIcon: const Icon(Icons.portrait),
                                   hintText: 'Kişinin adı soyadını giriniz.',
                                   labelText: 'Ad soyad',
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
-                                    borderSide: BorderSide(
-                                        color:
-                                            context.colorScheme.onBackground),
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
@@ -162,15 +164,13 @@ class _SendMailViewState extends State<SendMailView> {
                                 controller: eMailController,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
-                                  prefixIcon:
-                                      const Icon(Icons.mail_outline_outlined),
+                                  filled: true,
+                                  prefixIcon: Icon(Icons.mail_outline_outlined),
                                   hintText: 'Kişinin emailini giriniz.',
                                   labelText: 'Email',
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
-                                    borderSide: BorderSide(
-                                        color:
-                                            context.colorScheme.onBackground),
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
@@ -182,31 +182,53 @@ class _SendMailViewState extends State<SendMailView> {
                               ),
                               context.emptySizedHeightBoxLow,
                               Center(
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    Dio dio = Dio();
-                                    await dio.post(
-                                        "http://192.168.3.53/api/Persons/new_guide?token=${ApplicationConstants.instance!.token}&name=${nameController.text}&email=${eMailController.text}");
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        backgroundColor: context
-                                            .colorScheme.secondaryVariant,
-                                        duration: context.durationSlow,
-                                        content: BodyText2Copy(
-                                          data: "Kişi başarıyla eklendi !",
-                                          color: context.colorScheme.onSurface,
+                                child: SizedBox(
+                                  width: context.dynamicWidth(0.385),
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      Dio dio = Dio();
+                                      await dio.post(
+                                          "http://192.168.3.53/api/Persons/new_guide?token=${ApplicationConstants.instance!.token}&name=${nameController.text}&email=${eMailController.text}");
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: context
+                                              .colorScheme.secondaryVariant,
+                                          duration: context.durationSlow,
+                                          content: BodyText2Copy(
+                                            data: "Kişi başarıyla eklendi !",
+                                            color:
+                                                context.colorScheme.onSurface,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                    setState(() {
-                                      _viewModel.fetchItems(
-                                          ApplicationConstants.instance!.token);
-                                    });
-                                  },
-                                  child: Text(
-                                    "Kişilerime Ekle",
-                                    style: TextStyle(
-                                        color: context.colorScheme.onSurface),
+                                      );
+                                      setState(() {
+                                        _viewModel.fetchItems(
+                                            ApplicationConstants
+                                                .instance!.token);
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.person_add,
+                                          color: ColorSchemeLight.instance.java,
+                                        ),
+                                        context.emptySizedWidthBoxLow,
+                                        Text(
+                                          "Kişilerime Ekle",
+                                          style: TextStyle(
+                                              color: ColorSchemeLight
+                                                  .instance.java),
+                                        ),
+                                      ],
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      primary:
+                                          ColorSchemeLight.instance.hummingBird,
+                                      shadowColor:
+                                          ColorSchemeLight.instance.java,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -239,14 +261,13 @@ class _SendMailViewState extends State<SendMailView> {
                               TextField(
                                 controller: titleController,
                                 decoration: InputDecoration(
+                                  filled: true,
                                   hintText: 'Mailin başlığını giriniz.',
                                   labelText: "Başlık",
                                   prefixIcon: const Icon(Icons.title),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
-                                    borderSide: BorderSide(
-                                        color:
-                                            context.colorScheme.onBackground),
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
@@ -264,14 +285,13 @@ class _SendMailViewState extends State<SendMailView> {
                               TextField(
                                 controller: contentController,
                                 decoration: InputDecoration(
+                                  filled: true,
                                   hintText: 'İçerik',
                                   labelText: "Mail içeriğini giriniz.",
                                   prefixIcon: const Icon(Icons.content_paste),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
-                                    borderSide: BorderSide(
-                                        color:
-                                            context.colorScheme.onBackground),
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: context.lowBorderRadius,
@@ -293,52 +313,85 @@ class _SendMailViewState extends State<SendMailView> {
                     alignment: Alignment.bottomRight,
                     child: Padding(
                       padding: context.horizontalPaddingMedium,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          List<String> userId =
-                              ApplicationConstants.instance!.userId;
-                          List<String> guiId =
-                              ApplicationConstants.instance!.guiId;
-                          String token = ApplicationConstants.instance!.token;
-                          Dio dio = Dio();
-                          if (userId.isNotEmpty && guiId.isEmpty) {
-                            for (var i = 0; i < userId.length; i++) {
-                              dio.post(
-                                  "http://192.168.3.53/api/Email/send_email?user_id=u${userId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
-                            }
-                          } else if (userId.isEmpty && guiId.isNotEmpty) {
-                            for (var i = 0; i < userId.length; i++) {
-                              dio.post(
-                                  "http://192.168.3.53/api/Email/send_email?user_id=g${guiId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
-                            }
-                          } else if (userId.isNotEmpty && guiId.isNotEmpty) {
-                            for (var i = 0; i < userId.length; i++) {
-                              dio.post(
-                                  "http://192.168.3.53/api/Email/send_email?user_id=g${guiId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
-                            }
-                            for (var i = 0; i < userId.length; i++) {
-                              dio.post(
-                                  "http://192.168.3.53/api/Email/send_email?user_id=u${userId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
-                            }
-                          }
-                          Navigator.of(context).pop();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor:
-                                  context.colorScheme.secondaryVariant,
-                              duration: context.durationSlow,
-                              content: BodyText2Copy(
-                                data: "Mail başarıyla gönderildi!",
-                                color: context.colorScheme.onSurface,
-                              ),
+                      child: SizedBox(
+                        width: context.dynamicWidth(0.39),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              List<String> userId =
+                                  ApplicationConstants.instance!.userId;
+                              List<String> guiId =
+                                  ApplicationConstants.instance!.guiId;
+                              String token =
+                                  ApplicationConstants.instance!.token;
+                              Dio dio = Dio();
+                              if (userId.isNotEmpty && guiId.isEmpty) {
+                                for (var i = 0; i < userId.length; i++) {
+                                  dio.post(
+                                      "http://192.168.3.53/api/Email/send_email?user_id=u${userId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
+                                }
+                              } else if (userId.isEmpty && guiId.isNotEmpty) {
+                                for (var i = 0; i < userId.length; i++) {
+                                  dio.post(
+                                      "http://192.168.3.53/api/Email/send_email?user_id=g${guiId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
+                                }
+                              } else if (userId.isNotEmpty &&
+                                  guiId.isNotEmpty) {
+                                for (var i = 0; i < userId.length; i++) {
+                                  dio.post(
+                                      "http://192.168.3.53/api/Email/send_email?user_id=g${guiId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
+                                }
+                                for (var i = 0; i < userId.length; i++) {
+                                  dio.post(
+                                      "http://192.168.3.53/api/Email/send_email?user_id=u${userId[i]}&token=$token&title=${titleController.text}&content=${contentController.text}");
+                                }
+                              }
+                              Navigator.of(context).pop();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor:
+                                      context.colorScheme.secondaryVariant,
+                                  duration: context.durationSlow,
+                                  content: BodyText2Copy(
+                                    data: "Mail başarıyla gönderildi!",
+                                    color: context.colorScheme.onSurface,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.send,
+                                  color: context.colorScheme.surface,
+                                ),
+                                context.emptySizedWidthBoxLow,
+                                Text(
+                                  "Eposta Gönder",
+                                  style: TextStyle(
+                                      color: context.colorScheme.surface),
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                        child: Text(
-                          "Eposta Gönder",
-                          style:
-                              TextStyle(color: context.colorScheme.onSurface),
-                        ),
+                            style: ButtonStyle(
+                              overlayColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.hovered)) {
+                                    return context.colorScheme.surface
+                                        .withOpacity(0.2);
+                                  }
+                                  if (states.contains(MaterialState.focused) ||
+                                      states.contains(MaterialState.pressed)) {
+                                    return context.colorScheme.surface
+                                        .withOpacity(0.2);
+                                  }
+                                  return Colors
+                                      .red; // Defer to the widget's default.
+                                },
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Color(0xffe8f4f8)),
+                            )),
                       ),
                     ),
                   ),

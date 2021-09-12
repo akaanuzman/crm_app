@@ -1,7 +1,8 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import '../../auth/login/view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
+
+import '../../auth/login/view/login_view.dart';
 
 
 class SplashView extends StatelessWidget {

@@ -41,7 +41,7 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
     return Column(
       children: [
         Card(
-          color: isSelected ? Colors.green[100] : null,
+          color: isSelected ? Colors.green[100] : context.colorScheme.secondary,
           elevation: 5,
           child: Column(
             children: [

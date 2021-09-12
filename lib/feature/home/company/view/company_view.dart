@@ -1,7 +1,8 @@
-// ignore_for_file: must_be_immutable, duplicate_ignore
+// ignore_for_file: must_be_immutable, duplicate_ignore, prefer_const_constructors
 
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/body_text2_copy.dart';
+import 'package:crm_app/core/components/text/bold_text.dart';
 import 'package:crm_app/core/constants/app/app_constants.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -96,10 +97,8 @@ class CompanyView extends StatelessWidget {
                             padding: context.horizontalPaddingNormal,
                             child: Row(
                               children: [
-                                Text(
-                                  "Email",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground),
+                                BoldText(
+                                  data: "Email :",
                                 ),
                                 context.emptySizedWidthBoxLow3x,
                                 Text(_viewModel.items.company?[index].email ??
@@ -117,10 +116,8 @@ class CompanyView extends StatelessWidget {
                             padding: context.horizontalPaddingNormal,
                             child: Row(
                               children: [
-                                Text(
-                                  "Telefon",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground),
+                                BoldText(
+                                  data: "Telefon : ",
                                 ),
                                 context.emptySizedWidthBoxLow3x,
                                 Text(_viewModel
@@ -139,10 +136,8 @@ class CompanyView extends StatelessWidget {
                             padding: context.horizontalPaddingNormal,
                             child: Row(
                               children: [
-                                Text(
-                                  "Webiste",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground),
+                                BoldText(
+                                  data: "Webisite :",
                                 ),
                                 context.emptySizedWidthBoxLow3x,
                                 Text(
@@ -161,10 +156,8 @@ class CompanyView extends StatelessWidget {
                             padding: context.horizontalPaddingNormal,
                             child: Row(
                               children: [
-                                Text(
-                                  "Konum",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground),
+                                BoldText(
+                                  data: "Konum :",
                                 ),
                                 context.emptySizedWidthBoxLow3x,
                                 Text(
@@ -493,7 +486,6 @@ class _PopUpItemBodyState extends State<PopUpItemBody> {
                       });
 
                       Navigator.of(context).pop();
-        
                     },
                     child: BodyText2Copy(
                         data: "Ekle", color: context.colorScheme.onSurface),

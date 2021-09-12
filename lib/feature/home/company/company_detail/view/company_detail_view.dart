@@ -1,9 +1,10 @@
-// ignore_for_file: must_be_immutable
-
+// ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:crm_app/core/components/text/body_text1_copy.dart';
 import 'package:crm_app/core/components/text/body_text2_copy.dart';
+import 'package:crm_app/core/components/text/bold_text.dart';
 import 'package:crm_app/core/constants/app/app_constants.dart';
+import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
 import 'package:crm_app/feature/home/company/viewmodel/company_view_model.dart';
 import 'package:crm_app/feature/home/contact/model/contact_model.dart';
 import 'package:crm_app/feature/home/contact/viewmodel/contact_view_model.dart';
@@ -13,7 +14,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../viewmodel/company_detail_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
@@ -58,32 +58,31 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
       ),
       floatingActionButton:
           // _viewModel.items.access == "2" || _viewModel.items.access == "3" ?
-               PopupItemLauncher(
-                  tag: 'Proje Ekle',
-                  child: Material(
-                    color: context.colorScheme.surface,
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: context.highBorderRadius),
-                    child: Icon(
-                      Icons.more_vert,
-                      size: 48,
-                      color: context.colorScheme.onSurface,
-                    ),
-                  ),
-                  popUp: PopUpItem(
-                    padding: EdgeInsets.zero,
-                    color: context.colorScheme.onSurface,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: context.normalBorderRadius),
-                    elevation: 2,
-                    tag: 'Proje Ekle',
-                    child: PopUpItemBody(
-                      viewModel: _viewModel,
-                    ),
-                  ),
-                ),
-              // : null,
+          PopupItemLauncher(
+        tag: 'Proje Ekle',
+        child: Material(
+          color: context.colorScheme.surface,
+          elevation: 2,
+          shape: RoundedRectangleBorder(borderRadius: context.highBorderRadius),
+          child: Icon(
+            Icons.more_vert,
+            size: 48,
+            color: context.colorScheme.onSurface,
+          ),
+        ),
+        popUp: PopUpItem(
+          padding: EdgeInsets.zero,
+          color: context.colorScheme.onSurface,
+          shape:
+              RoundedRectangleBorder(borderRadius: context.normalBorderRadius),
+          elevation: 2,
+          tag: 'Proje Ekle',
+          child: PopUpItemBody(
+            viewModel: _viewModel,
+          ),
+        ),
+      ),
+      // : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       body: Observer(
         builder: (context) => SingleChildScrollView(
@@ -103,7 +102,6 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                   ),
                 ),
                 Expanded(
-                  // ignore: prefer_const_constructors
                   child: Column(
                     children: [
                       Expanded(
@@ -148,7 +146,6 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                   ),
                 ),
                 Expanded(
-                  // ignore: prefer_const_constructors
                   child: Column(
                     children: [
                       Expanded(
@@ -194,7 +191,6 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                   ),
                 ),
                 Expanded(
-                  // ignore: prefer_const_constructors
                   child: Column(
                     children: [
                       Expanded(
@@ -241,7 +237,6 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                   ),
                 ),
                 Expanded(
-                  // ignore: prefer_const_constructors
                   child: Column(
                     children: [
                       Expanded(
@@ -334,16 +329,47 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                           );
                                           _companyViewModel.fetchItems(token);
                                         },
-                                        child: Text(
-                                          "Firmayı sil",
-                                          style: TextStyle(
-                                            color:
-                                                context.colorScheme.onSurface,
-                                          ),
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.delete,
+                                                color: ColorSchemeLight
+                                                    .instance.mandy),
+                                            context.emptySizedWidthBoxLow,
+                                            Text(
+                                              "Firmayı sil",
+                                              style: TextStyle(
+                                                color: ColorSchemeLight
+                                                    .instance.mandy,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        style: ElevatedButton.styleFrom(
-                                          primary: context
-                                              .colorScheme.primaryVariant,
+                                        style: ButtonStyle(
+                                          overlayColor: MaterialStateProperty
+                                              .resolveWith<Color>(
+                                            (Set<MaterialState> states) {
+                                              if (states.contains(
+                                                  MaterialState.hovered)) {
+                                                return context
+                                                    .colorScheme.onBackground
+                                                    .withOpacity(0.2);
+                                              }
+                                              if (states.contains(
+                                                      MaterialState.focused) ||
+                                                  states.contains(
+                                                      MaterialState.pressed)) {
+                                                return context
+                                                    .colorScheme.onBackground
+                                                    .withOpacity(0.2);
+                                              }
+                                              return Colors
+                                                  .red; // Defer to the widget's default.
+                                            },
+                                          ),
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  ColorSchemeLight
+                                                      .instance.pippin),
                                         ),
                                       ),
                                     )
@@ -362,12 +388,10 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                             padding: context.horizontalPaddingNormal,
                             child: Row(
                               children: [
-                                Text(
-                                  "Email",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground),
+                                BoldText(
+                                  data: "Email :",
                                 ),
-                                context.emptySizedWidthBoxLow3x,
+                                context.emptySizedWidthBoxLow,
                                 Text(_viewModel.items.email ??
                                     "Geçerli mail adresi bulunamadı."),
                               ],
@@ -383,12 +407,10 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                             padding: context.horizontalPaddingNormal,
                             child: Row(
                               children: [
-                                Text(
-                                  "Telefon",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground),
+                                BoldText(
+                                  data: "Telefon :",
                                 ),
-                                context.emptySizedWidthBoxLow3x,
+                                context.emptySizedWidthBoxLow,
                                 Text(_viewModel.items.telephone ??
                                     "Geçerli telefon numarası bulunamadı."),
                               ],
@@ -404,12 +426,10 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                             padding: context.horizontalPaddingNormal,
                             child: Row(
                               children: [
-                                Text(
-                                  "Vergi Dairesi",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground),
+                                BoldText(
+                                  data: "Vergi Dairesi :",
                                 ),
-                                context.emptySizedWidthBoxLow3x,
+                                context.emptySizedWidthBoxLow,
                                 Text(_viewModel.items.tax_department ??
                                     "Geçerli vergi dairesi bulunamadı."),
                               ],
@@ -425,12 +445,10 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                             padding: context.horizontalPaddingNormal,
                             child: Row(
                               children: [
-                                Text(
-                                  "Vergi Numarası",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground),
+                                BoldText(
+                                  data: "Vergi Numarası :",
                                 ),
-                                context.emptySizedWidthBoxLow3x,
+                                context.emptySizedWidthBoxLow,
                                 Text(_viewModel.items.tax_number ??
                                     "Geçerli vergi numarası bulunamadı."),
                               ],
@@ -446,12 +464,10 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                             padding: context.horizontalPaddingNormal,
                             child: Row(
                               children: [
-                                Text(
-                                  "Konum",
-                                  style: TextStyle(
-                                      color: context.colorScheme.onBackground),
+                                BoldText(
+                                  data: "Konum :",
                                 ),
-                                context.emptySizedWidthBoxLow3x,
+                                context.emptySizedWidthBoxLow,
                                 Text(_viewModel.items.location ??
                                     "Geçerli konum bulunamadı."),
                               ],
@@ -510,15 +526,49 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                                 radius,
                                                 _contactViewModel.items.users);
                                           },
-                                          child: Text(
-                                            "Çalışan Ekle",
-                                            style: TextStyle(
-                                                color: context
-                                                    .colorScheme.onSurface),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.person_add,
+                                                color:
+                                                    context.colorScheme.onError,
+                                              ),
+                                              context.emptySizedWidthBoxLow,
+                                              Text(
+                                                "Çalışan Ekle",
+                                                style: TextStyle(
+                                                    color: context
+                                                        .colorScheme.onError),
+                                              ),
+                                            ],
                                           ),
-                                          style: ElevatedButton.styleFrom(
-                                            primary:
-                                                context.colorScheme.onError,
+                                          style: ButtonStyle(
+                                            overlayColor: MaterialStateProperty
+                                                .resolveWith<Color>(
+                                              (Set<MaterialState> states) {
+                                                if (states.contains(
+                                                    MaterialState.hovered)) {
+                                                  return context
+                                                      .colorScheme.onError
+                                                      .withOpacity(0.2);
+                                                }
+                                                if (states.contains(
+                                                        MaterialState
+                                                            .focused) ||
+                                                    states.contains(
+                                                        MaterialState
+                                                            .pressed)) {
+                                                  return context
+                                                      .colorScheme.onError
+                                                      .withOpacity(0.2);
+                                                }
+                                                return Colors
+                                                    .red; // Defer to the widget's default.
+                                              },
+                                            ),
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Color(0xffE6E6FA)),
                                           ),
                                         ),
                                       )
@@ -547,10 +597,14 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                             caption: 'Sil',
                                             icon: Icons.delete,
                                             onTap: () async {
-                                              String token = ApplicationConstants.instance!.token;
+                                              String token =
+                                                  ApplicationConstants
+                                                      .instance!.token;
                                               Dio dio = Dio();
-                                              await dio.post("http://192.168.3.53/api/Companys/delete_access?token=$token&user_id=${_viewModel.items.worker?[index].id}&company_id=${_viewModel.items.id}");
-                                              _viewModel.fetchItems(token, _viewModel.items.id ?? "");
+                                              await dio.post(
+                                                  "http://192.168.3.53/api/Companys/delete_access?token=$token&user_id=${_viewModel.items.worker?[index].id}&company_id=${_viewModel.items.id}");
+                                              _viewModel.fetchItems(token,
+                                                  _viewModel.items.id ?? "");
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
@@ -607,15 +661,10 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                                   .horizontalPaddingNormal,
                                               child: Row(
                                                 children: [
-                                                  Text(
-                                                    "Meslek: ",
-                                                    style: TextStyle(
-                                                        color: context
-                                                            .colorScheme
-                                                            .onBackground),
+                                                  BoldText(
+                                                    data: "Meslek: ",
                                                   ),
-                                                  context
-                                                      .emptySizedWidthBoxLow3x,
+                                                  context.emptySizedWidthBoxLow,
                                                   Text(_viewModel.items
                                                           .worker?[index].job ??
                                                       "Geçerli meslek bulunamadı."),
@@ -633,15 +682,10 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                                   .horizontalPaddingNormal,
                                               child: Row(
                                                 children: [
-                                                  Text(
-                                                    "Doğum Tarihi",
-                                                    style: TextStyle(
-                                                        color: context
-                                                            .colorScheme
-                                                            .onBackground),
+                                                  BoldText(
+                                                    data: "Doğum Tarihi :",
                                                   ),
-                                                  context
-                                                      .emptySizedWidthBoxLow3x,
+                                                  context.emptySizedWidthBoxLow,
                                                   Text(_viewModel
                                                           .items
                                                           .worker?[index]
@@ -709,8 +753,9 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                   height: context.dynamicWidth(0.03),
                   width: context.dynamicWidth(0.2),
                   decoration: BoxDecoration(
-                      borderRadius: context.lowBorderRadius,
-                      color: context.colorScheme.background),
+                    borderRadius: context.lowBorderRadius,
+                    color: Colors.grey,
+                  ),
                 ),
               ),
               context.emptySizedHeightBoxLow3x,
@@ -756,10 +801,36 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: BodyText2Copy(
-                          data: "Vazgeç", color: context.colorScheme.onSurface),
-                      style: ElevatedButton.styleFrom(
-                          primary: context.colorScheme.secondaryVariant),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.close,
+                            color: ColorSchemeLight.instance.mandy,
+                          ),
+                          BodyText2Copy(
+                            data: "Vazgeç",
+                            color: ColorSchemeLight.instance.mandy,
+                          ),
+                        ],
+                      ),
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.hovered)) {
+                              return context.colorScheme.onError
+                                  .withOpacity(0.2);
+                            }
+                            if (states.contains(MaterialState.focused) ||
+                                states.contains(MaterialState.pressed)) {
+                              return context.colorScheme.onError
+                                  .withOpacity(0.2);
+                            }
+                            return Colors.red; // Defer to the widget's default.
+                          },
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            ColorSchemeLight.instance.pippin),
+                      ),
                     ),
                     context.emptySizedWidthBoxLow,
                     ElevatedButton(
@@ -782,10 +853,16 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                           Navigator.of(context).pop();
                         }
                       },
-                      child: BodyText2Copy(
-                          data: "Ekle", color: context.colorScheme.onSurface),
+                      child: Row(
+                        children: [
+                          Icon(Icons.add),
+                          BodyText2Copy(
+                              data: "Ekle",
+                              color: ColorSchemeLight.instance.java),
+                        ],
+                      ),
                       style: ElevatedButton.styleFrom(
-                          primary: context.colorScheme.surface),
+                          primary: ColorSchemeLight.instance.hummingBird),
                     ),
                   ],
                 ),

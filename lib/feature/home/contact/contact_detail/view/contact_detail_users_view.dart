@@ -1,14 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
-
-import '../../../../../core/components/text/body_text1_copy.dart';
-import '../../../../../core/components/text/body_text2_copy.dart';
-
-import '../../model/contact_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
+
+import '../../../../../core/components/text/body_text1_copy.dart';
+import '../../../../../core/components/text/body_text2_copy.dart';
+import '../../model/contact_model.dart';
 
 class ContactUsersDetailView extends StatelessWidget {
   final Users? user;
