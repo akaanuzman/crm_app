@@ -520,7 +520,6 @@ class _CompanyDetailViewState extends State<CompanyDetailView> {
                                             ApplicationConstants
                                                 .instance!.userId
                                                 .clear();
-
                                             _showModalBottomSheet(
                                                 context,
                                                 radius,

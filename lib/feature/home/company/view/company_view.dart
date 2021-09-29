@@ -25,7 +25,7 @@ class CompanyView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Firmalar",
+          "Firma Yönetimi",
           style: TextStyle(color: context.colorScheme.onSecondary),
         ),
         backgroundColor: Colors.transparent,

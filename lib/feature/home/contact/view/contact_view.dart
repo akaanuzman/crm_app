@@ -51,7 +51,7 @@ class _ContactViewState extends State<ContactView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Kişileriniz",
+          "Kişi Yönetimi",
           style: TextStyle(color: context.colorScheme.onSecondary),
         ),
         backgroundColor: Colors.transparent,
@@ -201,7 +201,9 @@ class _ContactViewState extends State<ContactView> {
                             children: [
                               Text("Sisteme kayıtlı olmayan kişiler"),
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  debugPrint("statement");
+                                },
                                 child: Row(
                                   // ignore: prefer_const_literals_to_create_immutables
                                   children: [
@@ -272,6 +274,32 @@ class _ContactViewState extends State<ContactView> {
                                     },
                                   ),
                                 ],
+                                secondaryActions: [
+                                  IconSlideAction(
+                                    color: context.colorScheme.onError,
+                                    foregroundColor:
+                                        context.colorScheme.onSurface,
+                                    caption: 'Ara',
+                                    icon: Icons.call,
+                                    onTap: () {
+                                      _showModalBottomSheet(
+                                          context, radius, index);
+                                      debugPrint(_viewModel.items.message);
+                                    },
+                                  ),
+                                  IconSlideAction(
+                                    color: context.colorScheme.background,
+                                    foregroundColor:
+                                        context.colorScheme.onSurface,
+                                    caption: 'Mesaj',
+                                    icon: Icons.message,
+                                    onTap: () {
+                                      _showModalBottomSheet(
+                                          context, radius, index);
+                                      debugPrint(_viewModel.items.message);
+                                    },
+                                  ),
+                                ],
                                 child: Padding(
                                   padding: context.paddingLow,
                                   child: Card(
@@ -332,6 +360,7 @@ class _ContactViewState extends State<ContactView> {
       ),
     );
   }
+  
 
   _showModalBottomSheet(context, double radius, int index) {
     var nameController = TextEditingController();

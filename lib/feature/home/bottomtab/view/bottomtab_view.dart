@@ -1,3 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:crm_app/feature/home/company/tab/view/company_tab.dart';
+
 import '../../../../core/components/text/subtitle1_copy.dart';
 import '../viewmodel/notification_view_model.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -44,7 +48,7 @@ class BottomTabView extends StatelessWidget {
       BottomTabModel(
           title: "Email", icon: Icons.email, child: const MailTabView()),
       BottomTabModel(
-          title: "Şirket", icon: Icons.business, child: CompanyView()),
+          title: "Şirket", icon: Icons.business, child: CompanyTab()),
     ];
 
     MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -235,6 +239,7 @@ class BottomTabView extends StatelessWidget {
 
   TabBar _buildTabBar(List<BottomTabModel> items, BuildContext context) =>
       TabBar(
+        labelPadding: context.paddingLow,
         tabs: _buildTabs(items),
         indicatorColor: context.colorScheme.primary,
       );
@@ -277,7 +282,7 @@ class BottomTabView extends StatelessWidget {
                   width: context.dynamicWidth(0.2),
                   decoration: BoxDecoration(
                       borderRadius: context.lowBorderRadius,
-                      color: context.colorScheme.background),
+                      color: Colors.grey),
                 ),
               ),
               context.emptySizedHeightBoxLow3x,

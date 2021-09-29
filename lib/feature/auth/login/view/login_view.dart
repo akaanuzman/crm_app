@@ -2,6 +2,7 @@
 
 import 'package:cool_alert/cool_alert.dart';
 import 'package:crm_app/core/init/theme/light/color_scheme_light.dart';
+import 'package:crm_app/feature/auth/register/view/register_view.dart';
 import '../../../../core/cache/cache_manager.dart';
 import '../../../../core/constants/app/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -223,8 +224,8 @@ class _LoginViewState extends State<LoginView> with CacheManager {
               height: context.dynamicHeight(0.065),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const Scaffold()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => RegisterView()));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -256,7 +257,8 @@ class _LoginViewState extends State<LoginView> with CacheManager {
                       ColorSchemeLight.instance.pippin),
                 ),
               ),
-            )
+            ),
+            context.emptySizedHeightBoxLow,
           ],
         ),
       ),
