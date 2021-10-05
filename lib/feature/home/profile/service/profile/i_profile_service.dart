@@ -1,5 +1,6 @@
-import '../../model/profile/profile_model.dart';
 import 'package:dio/dio.dart';
+
+import '../../model/profile/profile_model.dart';
 
 
 

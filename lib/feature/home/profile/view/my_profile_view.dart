@@ -10,8 +10,7 @@ import 'package:crm_app/feature/home/company/view/company_view.dart';
 import 'package:crm_app/feature/home/contact/view/contact_view.dart';
 import 'package:crm_app/feature/home/profile/viewmodel/experience/experience_view_model.dart';
 import 'package:crm_app/feature/home/profile/viewmodel/profile/profile_view_model.dart';
-import 'package:crm_app/feature/home/project/projectdetail/view/project_detail_view.dart';
-import 'package:crm_app/feature/home/project/viewmodel/project_view_model.dart';
+
 
 import 'package:dio/dio.dart';
 import 'package:evil_icons_flutter/evil_icons_flutter.dart';
@@ -35,7 +34,6 @@ class MyProfileView extends StatelessWidget {
     double radius = height * 0.02;
 
     final ProfileViewModel _viewModel = ProfileViewModel();
-    final ProjectViewModel _projectViewModel = ProjectViewModel();
     final ExperienceViewModel _experienceViewModel = ExperienceViewModel();
 
     _viewModel.fetchItems(ApplicationConstants.instance!.token, "");
@@ -478,64 +476,7 @@ class MyProfileView extends StatelessWidget {
                                   ],
                                 ),
                                 context.emptySizedHeightBoxLow3x,
-                                Expanded(
-                                  child: ListView.builder(
-                                    physics: BouncingScrollPhysics(),
-                                    itemCount: _projectViewModel
-                                            .items.projects?.length ??
-                                        0,
-                                    itemBuilder: (context, index) => Column(
-                                      children: [
-                                        ListTile(
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProjectDetailView(
-                                                  allTask: _projectViewModel
-                                                          .items
-                                                          .projects?[index]
-                                                          .allgorev ??
-                                                      0,
-                                                  okTask: _projectViewModel
-                                                          .items
-                                                          .projects?[index]
-                                                          .okgorev ??
-                                                      0,
-                                                  projectId: _projectViewModel
-                                                          .items
-                                                          .projects?[index]
-                                                          .id ??
-                                                      "0",
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          leading: Icon(Icons.event),
-                                          title: BodyText2Copy(
-                                            data: _projectViewModel.items
-                                                    .projects?[index].name ??
-                                                "Geçerli proje ismi bulunamadı.",
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          subtitle: Subtitle1Copy(
-                                              data: _projectViewModel
-                                                      .items
-                                                      .projects?[index]
-                                                      .detail ??
-                                                  "Geçerli detay bulunamadı."),
-                                          trailing:
-                                              Icon(Icons.keyboard_arrow_right),
-                                        ),
-                                        Divider(
-                                          color: Colors.grey,
-                                          indent: 15,
-                                          endIndent: 15,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
+                               
                               ],
                             ),
                           )

@@ -1,30 +1,31 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:crm_app/feature/home/company/home/view/company_home_view.dart';
-import 'package:crm_app/feature/home/company/home/view/company_setting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-class CompanyTab extends StatefulWidget {
-  const CompanyTab({Key? key}) : super(key: key);
+class ProjectTab extends StatefulWidget {
+  const ProjectTab({Key? key}) : super(key: key);
 
   @override
-  State<CompanyTab> createState() => _CompanyViewV2State();
+  _ProjectTabState createState() => _ProjectTabState();
 }
 
-class _CompanyViewV2State extends State<CompanyTab> {
+class _ProjectTabState extends State<ProjectTab> {
   int _currentIndex = 0;
   List<Widget> tabs = [
-    CompanyHomeView(),
     Center(
-      child: Text("Ayarlar"),
+      child: Text("Detay"),
     ),
-    CompanySettingView(),
     Center(
-      child: Text("Çalışanlar"),
+      child: Text("Görevler"),
+    ),
+    Center(
+      child: Text("Belgeler"),
+    ),
+    Center(
+      child: Text("Erişim Sahipleri"),
     ),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

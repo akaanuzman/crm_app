@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:crm_app/feature/home/company/tab/view/company_tab.dart';
+import 'package:crm_app/feature/home/project/tab/project_tab.dart';
 
 import '../../../../core/components/text/subtitle1_copy.dart';
 import '../viewmodel/notification_view_model.dart';
@@ -20,11 +21,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
 
-import '../../company/view/company_view.dart';
 import '../../contact/view/contact_view.dart';
 import '../../mail/view/tab/view/mail_tab_view.dart';
 import '../../profile/view/profile_tabbar_view.dart';
-import '../../project/view/project_view.dart';
 import '../model/bottomtab_model.dart';
 
 class BottomTabView extends StatelessWidget {
@@ -36,7 +35,7 @@ class BottomTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<BottomTabModel> items = [
       BottomTabModel(
-          title: "Proje", icon: Icons.assignment, child: ProjectView()),
+          title: "Proje", icon: Icons.assignment, child: ProjectTab()),
       BottomTabModel(
           title: "Katmanlar",
           icon: Icons.inventory_2,

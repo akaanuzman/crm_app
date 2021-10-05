@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+
 part 'acces_view_model.g.dart';
 
 class AccessViewModel = _AccessViewModelBase with _$AccessViewModel;
