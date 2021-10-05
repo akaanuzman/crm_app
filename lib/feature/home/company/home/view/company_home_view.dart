@@ -16,7 +16,7 @@ class CompanyHomeView extends StatelessWidget {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: SizedBox(
-          height: context.dynamicHeight(2.5),
+          height: context.dynamicHeight(2.6),
           child: Padding(
             padding: context.paddingLow,
             child: Column(
@@ -158,7 +158,6 @@ class CompanyHomeView extends StatelessWidget {
                       padding: context.paddingNormal,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           BoldText(data: "Authors"),
                           context.emptySizedHeightBoxLow,
@@ -174,7 +173,10 @@ class CompanyHomeView extends StatelessWidget {
                                       color: Color(0xffC9F7F5),
                                       borderRadius: context.lowBorderRadius),
                                 ),
-                                title: BodyText2Copy(data: "Ricky Hunt"),
+                                title: BodyText2Copy(
+                                  data: "Ricky Hunt",
+                                  fontWeight: FontWeight.w500,
+                                ),
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   // ignore: prefer_const_literals_to_create_immutables
@@ -194,6 +196,7 @@ class CompanyHomeView extends StatelessWidget {
                     ),
                   ),
                 ),
+                context.emptySizedHeightBoxLow3x,
                 Expanded(
                   flex: 3,
                   child: Card(
@@ -261,61 +264,306 @@ class CompanyHomeView extends StatelessWidget {
                                 fontSize: 11),
                           ),
                           context.emptySizedHeightBoxLow3x,
-                          Padding(
-                            padding: context.paddingLow,
-                            child: Text(
-                              "First Name :",
-                              style: context.textTheme.caption!.copyWith(
-                                fontWeight: FontWeight.w500,
+                          Row(
+                            children: [
+                              Padding(
+                                padding: context.paddingLow,
+                                child: Text(
+                                  "First Name :",
+                                  style: context.textTheme.caption!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          context.emptySizedHeightBoxLow,
-                          TextFormField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              prefixIcon: const Icon(Icons.person),
-                              labelText: 'Please enter first name.',
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: context.lowBorderRadius,
-                                borderSide: BorderSide(color: Colors.grey),
+                              context.emptySizedHeightBoxLow,
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    prefixIcon: const Icon(Icons.person),
+                                    labelText: 'Please enter first name.',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color:
+                                              context.colorScheme.onSecondary),
+                                    ),
+                                  ),
+                                  cursorColor: context.colorScheme.onSecondary,
+                                ),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: context.lowBorderRadius,
-                                borderSide: BorderSide(
-                                    color: context.colorScheme.onSecondary),
-                              ),
-                            ),
-                            cursorColor: context.colorScheme.onSecondary,
+                            ],
                           ),
                           context.emptySizedHeightBoxLow3x,
-                          Padding(
-                            padding: context.paddingLow,
-                            child: const Text("Last Name:"),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: context.paddingLow,
+                                child: Text(
+                                  "Last Name :",
+                                  style: context.textTheme.caption!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              context.emptySizedHeightBoxLow,
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    prefixIcon: const Icon(Icons.person),
+                                    labelText: 'Please enter last name.',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color:
+                                              context.colorScheme.onSecondary),
+                                    ),
+                                  ),
+                                  cursorColor: context.colorScheme.onSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          context.emptySizedHeightBoxLow3x,
+                          Row(
+                            children: [
+                              Padding(
+                                padding: context.paddingLow,
+                                child: Text(
+                                  "Company Name :",
+                                  style: context.textTheme.caption!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              context.emptySizedHeightBoxLow,
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    prefixIcon: const Icon(Icons.person),
+                                    labelText: 'Please enter company name.',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color:
+                                              context.colorScheme.onSecondary),
+                                    ),
+                                  ),
+                                  cursorColor: context.colorScheme.onSecondary,
+                                ),
+                              ),
+                            ],
                           ),
                           context.emptySizedHeightBoxLow,
-                          TextFormField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              prefixIcon: const Icon(Icons.person),
-                              labelText: 'Please enter last name.',
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: context.lowBorderRadius,
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: context.lowBorderRadius,
-                                borderSide: BorderSide(
-                                    color: context.colorScheme.onSecondary),
-                              ),
-                            ),
-                            cursorColor: context.colorScheme.onSecondary,
+                          Divider(
+                            thickness: 2,
                           ),
+                          context.emptySizedHeightBoxLow,
+                          BoldText(data: "Contact Info"),
+                          context.emptySizedHeightBoxLow3x,
+                          Row(
+                            children: [
+                              Padding(
+                                padding: context.paddingLow,
+                                child: Text(
+                                  "Contact Phone :",
+                                  style: context.textTheme.caption!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              context.emptySizedHeightBoxLow,
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    prefixIcon: const Icon(Icons.call),
+                                    labelText: 'Please enter phone.',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color:
+                                              context.colorScheme.onSecondary),
+                                    ),
+                                  ),
+                                  cursorColor: context.colorScheme.onSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          context.emptySizedHeightBoxLow3x,
+                          Row(
+                            children: [
+                              Padding(
+                                padding: context.paddingLow,
+                                child: Text(
+                                  "Email Address :",
+                                  style: context.textTheme.caption!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              context.emptySizedHeightBoxLow,
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    prefixIcon: const Icon(Icons.mail),
+                                    labelText: 'Please enter email address.',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color:
+                                              context.colorScheme.onSecondary),
+                                    ),
+                                  ),
+                                  cursorColor: context.colorScheme.onSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          context.emptySizedHeightBoxLow3x,
+                          Row(
+                            children: [
+                              Padding(
+                                padding: context.paddingLow,
+                                child: Text(
+                                  "Company Site :",
+                                  style: context.textTheme.caption!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              context.emptySizedHeightBoxLow,
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    prefixIcon: const Icon(Icons.language),
+                                    labelText: 'Please enter company site.',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: context.lowBorderRadius,
+                                      borderSide: BorderSide(
+                                          color:
+                                              context.colorScheme.onSecondary),
+                                    ),
+                                  ),
+                                  cursorColor: context.colorScheme.onSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          context.emptySizedHeightBoxLow3x,
                         ],
                       ),
                     ),
                   ),
                 ),
+                context.emptySizedHeightBoxLow3x,
+                Expanded(
+                  child: Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: context.lowBorderRadius),
+                    child: Padding(
+                      padding: context.paddingNormal,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BoldText(data: "Upcoming Events"),
+                          context.emptySizedHeightBoxLow,
+                          Text(
+                            "Next Event is in 9 days",
+                            style: context.textTheme.caption!.copyWith(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          context.emptySizedHeightBoxLow3x,
+                          Expanded(
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (context, index) => ListTile(
+                                leading: Container(
+                                  child: Icon(
+                                    Icons.music_note_rounded,
+                                    color: Color(0xff1BC5BD),
+                                    size: context.dynamicHeight(0.05),
+                                  ),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xffC9F7F5),
+                                      borderRadius: context.lowBorderRadius),
+                                ),
+                                title: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  // ignore: prefer_const_literals_to_create_immutables
+                                  children: [
+                                    BodyText2Copy(
+                                      data: "School Music Festival",
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    BodyText2Copy(
+                                      data: "03 Sep, 4:20PM",
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ],
+                                ),
+                                subtitle: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  // ignore: prefer_const_literals_to_create_immutables
+                                  children: [
+                                    Subtitle1Copy(
+                                      data: "By Rose Liam",
+                                      color: Colors.grey,
+                                    ),
+                                    Subtitle1Copy(
+                                      data: "Time",
+                                      color: Colors.grey,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
