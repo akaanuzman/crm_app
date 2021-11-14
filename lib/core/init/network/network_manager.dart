@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 
 import '../../constants/app/app_constants.dart';
 
-
 class NetworkManager {
   static NetworkManager? _instance;
   static NetworkManager? get instance {
@@ -16,12 +15,15 @@ class NetworkManager {
 
   late final Dio dio;
 
-  NetworkManager.init(){
+  NetworkManager.init() {
     dio = Dio(BaseOptions(baseUrl: ApplicationConstants.instance!.baseUrl));
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options,handler){
-        handler.next(options);
-      }
-    ));
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          handler.next(options);
+        },
+      ),
+    );
   }
 }
+
