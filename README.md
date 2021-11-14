@@ -72,6 +72,7 @@ class NetworkManager {
 
 ## 📚 Software Architectural Pattern
 I used MVVM software architectural pattern in this project.
+<img src="assets/images/mvvm.png">
 <img src="https://api.hackathonturkiye.com/media/hosting/images/mvvm.jpg">
 
 ## 🔍 Preview
