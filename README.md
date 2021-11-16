@@ -1,3 +1,5 @@
+# 🔥 Crm Application
+
 ## 📱 State Management
 I used MobX state management in this proeject.
 <br>
@@ -81,6 +83,13 @@ I used MVVM software architectural pattern in this project.
 I divided the whole project into 3 core products and features.
 <br>
 <img src="assets/images/foldering.png">
+
+## 🎁 Packages 
+I used the "kartal" package in this project because it provides convenience in design.
+<br/>
+If you want to reach the ["kartal"](https://pub.dev/packages/kartal) package:
+<br/>
+<br/>
 
 ## 🔍 Preview
 #### 🔥 Login Page View
